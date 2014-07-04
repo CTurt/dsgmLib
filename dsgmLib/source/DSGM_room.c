@@ -1,0 +1,204 @@
+#include "DSGM.h"
+
+void DSGM_SetupViews(DSGM_Room *room) {
+	room->view[DSGM_TOP].x = room->initialView[DSGM_TOP].x;
+	room->view[DSGM_BOTTOM].x = room->initialView[DSGM_BOTTOM].x;
+	room->view[DSGM_TOP].y = room->initialView[DSGM_TOP].y;
+	room->view[DSGM_BOTTOM].y = room->initialView[DSGM_BOTTOM].y;
+}
+
+void DSGM_LoadRoom(DSGM_Room *room) {
+	u8 screen;
+	int layer;
+	int group;
+	int object;
+	
+	DSGM_Debug("Loading room...\n");
+	
+	for(screen = 0; screen < 2; screen++) {
+		// Load backgrounds
+		for(layer = 0; layer < 4; layer++) {
+			if(room->backgroundInstances[screen][layer].background != DSGM_NO_BACKGROUND) {
+				DSGM_Debug("Screen %d, layer %d, background %p\n", screen, layer, room->backgroundInstances[screen][layer].background);
+				if(room->backgroundInstances[screen][layer].background == DSGM_TEXT_BACKGROUND) DSGM_InitText(&room->backgroundInstances[screen][layer]);
+				else DSGM_LoadBackgroundFull(&room->backgroundInstances[screen][layer]);
+				DSGM_ScrollBackgroundFull(&room->view[screen], &room->backgroundInstances[screen][layer]);
+				bgUpdate();
+			}
+		}
+	}
+	
+	for(screen = 0; screen < 2; screen++) {
+		// Load sprites (all DSGM_ObjectInstances who have a sprite)
+		for(group = 0; group < room->objectGroupCount[screen]; group++) {
+			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
+				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
+				DSGM_Sprite *sprite = objectInstance->object->sprite;
+				DSGM_Palette *palette = sprite->palette;
+				int spriteNumber = -1;
+				
+				if(sprite != DSGM_NO_SPRITE) {
+					spriteNumber = DSGM_NextFreeSpriteNumber(screen);
+					objectInstance->spriteNumber = spriteNumber;
+					objectInstance->screen = screen;
+					
+					if(!DSGM_PaletteLoaded(screen, palette)) {
+						DSGM_LoadPaletteFull(screen, palette);
+					}
+					
+					if(!DSGM_SpriteLoaded(screen, sprite)) {
+						DSGM_LoadSpriteFull(screen, sprite);
+					}
+					
+					int x = objectInstance->x - room->view[screen].x;
+					int y = objectInstance->y - room->view[screen].y;
+					if(x < 256 && x > -128 && y < 192 && y > -128 && !objectInstance->hide) {
+						x = objectInstance->angle ? x - DSGM_GetSpriteWidth(objectInstance->object->sprite) / 2 : x;
+						y = objectInstance->angle ? y - DSGM_GetSpriteHeight(objectInstance->object->sprite) / 2 : y;
+					}
+					else {
+						x = 255;
+						y = 191;
+					}
+					
+					// Run create event before creating sprite so the create event can change the position, frame, flipping, etc...
+					if(objectInstance->object->create) objectInstance->object->create(objectInstance);
+					
+					DSGM_CreateSprite(screen, spriteNumber, x, y, objectInstance->priority, objectInstance->frame, objectInstance->hFlip, objectInstance->vFlip, sprite);
+				}
+			}
+		}
+	}
+	
+	DSGM_Debug("Loaded\n");
+}
+
+//int res = 0;
+
+void DSGM_LoopRoom(DSGM_Room *room) {
+	u8 screen;
+	int layer;
+	int group;
+	int object;
+	int sound;
+	int rotset;
+	
+	//if(!res) {
+	//	mmStop();
+	//	mmStart(/*DSGM_Sounds[FlatOutLies].ID*/0, MM_PLAY_LOOP);
+	//	res = 1;
+	//}
+	
+	//+1?
+	for(sound = 0; sound < DSGM_soundInstanceCount; sound++) {
+		DSGM_SetSoundInstanceVolumeFull(&DSGM_soundInstances[sound], DSGM_soundInstances[sound].volume);
+		DSGM_SetSoundInstancePanningFull(&DSGM_soundInstances[sound], DSGM_soundInstances[sound].panning);
+	}
+	
+	for(screen = 0; screen < 2; screen++) {
+		for(layer = 0; layer < 4; layer++) {
+			if(room->backgroundInstances[screen][layer].background != DSGM_NO_BACKGROUND) {
+				DSGM_ScrollBackgroundFull(&room->view[screen], &room->backgroundInstances[screen][layer]);
+			}
+		}
+		
+		for(rotset = 0; rotset < 32; rotset++) {
+			DSGM_SetRotsetRotation(screen, rotset, DSGM_rotations[screen][rotset]);
+		}
+		
+		//DSGM_Debug("Group count %d\n", room->objectGroupCount[screen]);
+		for(group = 0; group < room->objectGroupCount[screen]; group++) {
+			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
+				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
+				
+				int x = objectInstance->x - room->view[screen].x;
+				int y = objectInstance->y - room->view[screen].y;
+				if(x < 256 && x > -128 && y < 192 && y > -128 && !objectInstance->hide) DSGM_SetSpriteXY(screen, objectInstance->spriteNumber, objectInstance->angle ? x - DSGM_GetSpriteWidth(objectInstance->object->sprite) / 2 : x, objectInstance->angle ? y - DSGM_GetSpriteHeight(objectInstance->object->sprite) / 2 : y);
+				else DSGM_SetSpriteXY(screen, objectInstance->spriteNumber, 255, 191);
+				DSGM_SetSpriteFrame(screen, objectInstance->spriteNumber, objectInstance->object->sprite, objectInstance->frame);
+				DSGM_SetSpriteHFlip(screen, objectInstance->spriteNumber, objectInstance->hFlip);
+				DSGM_SetSpriteVFlip(screen, objectInstance->spriteNumber, objectInstance->vFlip);
+				DSGM_SetSpritePriority(screen, objectInstance->spriteNumber, objectInstance->priority);
+				
+				if(objectInstance->object->loop) objectInstance->object->loop(objectInstance);
+				
+				if(screen == DSGM_BOTTOM && objectInstance->object->touch) {
+					if(DSGM_newpress.Touch && DSGM_StylusOverObjectInstanceFull(room, objectInstance)) objectInstance->object->touch(objectInstance);
+				}
+				
+				int collisionEvent;
+				for(collisionEvent = 0; collisionEvent < objectInstance->object->collisionEventCount; collisionEvent++) {
+					int collider;
+					DSGM_ObjectGroup *colliderGroup = DSGM_GetObjectGroupFull(room, screen, objectInstance->object->collisionEvents[collisionEvent].collider);
+					for(collider = 0; collider < colliderGroup->objectInstanceCount; collider++) {
+						if(DSGM_ObjectInstanceCollision(objectInstance, &colliderGroup->objectInstances[collider])) {
+							objectInstance->object->collisionEvents[collisionEvent].function(objectInstance, &colliderGroup->objectInstances[collider]);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	//if(!res) {
+	//	mmStop();
+	//	mmStart(/*DSGM_Sounds[FlatOutLies].ID*/0, MM_PLAY_LOOP);
+	//	res = 1;
+	//}
+}
+
+void DSGM_LeaveRoom(DSGM_Room *room) {
+	DSGM_Debug("Leaving room\n");
+	
+	u8 screen;
+	int group;
+	
+	for(screen = 0; screen < 2; screen++) {
+		for(group = 0; group < room->objectGroupCount[screen]; group++) {
+			DSGM_Debug("Freeing object events at %p\n", room->objectGroups[screen][group].objectInstances[0].object->collisionEvents);
+			free(room->objectGroups[screen][group].objectInstances[0].object->collisionEvents);
+			room->objectGroups[screen][group].objectInstances[0].object->collisionEvents = NULL;
+			room->objectGroups[screen][group].objectInstances[0].object->collisionEventCount = 0;
+			DSGM_Debug("Freeing object instances at address %p on %s screen\n", room->objectGroups[screen][group].objectInstances, screen == DSGM_TOP ? "top" : "bottom");
+			free(room->objectGroups[screen][group].objectInstances);
+		}
+		
+		DSGM_Debug("Freeing object groups at address %p on %s screen\n", room->objectGroups[screen], screen == DSGM_TOP ? "top" : "bottom");
+		free(room->objectGroups[screen]);
+	}
+}
+
+unsigned char DSGM_SaveRoom(DSGM_Room *room, char *filename) {
+	/*u8 screen;
+	int layer;
+	int group;
+	int object;
+	FILE *f = fopen(filename, "ab");
+	if(!f) return 0;
+	
+	DSGM_Debug("Saving room...\n");
+	
+	for(screen = 0; screen < 2; screen++) {
+		// Save backgrounds
+		for(layer = 0; layer < 4; layer++) {
+			// Store pointer to background
+			fwrite(&room->backgroundInstances[screen][layer].background, sizeof(DSGM_Background *), 1, f) {
+		}
+	}
+	
+	for(screen = 0; screen < 2; screen++) {
+		// Save object instances
+		for(group = 0; group < room->objectGroupCount[screen]; group++) {
+			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
+				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
+				fwrite(objectInstance, sizeof(DSGM_ObjectInstance), 1, f);
+			}
+		}
+	}
+	
+	fclose(f);
+	
+	DSGM_Debug("Saved\n");*/
+	
+	return 1;
+}
