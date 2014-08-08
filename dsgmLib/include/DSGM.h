@@ -33,6 +33,8 @@
 #define DSGM_TOP 1
 #define DSGM_BOTTOM 0
 
+typedef char DSGM_StructLabel[0];
+
 void DSGM_Debug(char *text, ...);
 
 void DSGM_InitGFX(void);
