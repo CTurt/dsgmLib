@@ -25,10 +25,10 @@ DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
 	// ball
 	{
 		&DSGM_Sprites[ballSprite],
-		ball_create,
+		DSGM_NO_EVENT,
 		ball_loop,
 		DSGM_NO_EVENT,
-		ball_touch,
+		DSGM_NO_EVENT,
 		
 		NULL, 0
 	},
