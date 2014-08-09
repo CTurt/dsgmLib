@@ -13,6 +13,11 @@
 #include <dirent.h>
 #include <unistd.h>
 
+#define DSGM_TOP 1
+#define DSGM_BOTTOM 0
+
+typedef char DSGM_StructLabel[0];
+
 #include "DSGM_malloc.h"
 #include "DSGM_file.h"
 #include "DSGM_input.h"
@@ -29,11 +34,6 @@
 #ifndef BUILDINGLIB
 	#include "project.h"
 #endif
-
-#define DSGM_TOP 1
-#define DSGM_BOTTOM 0
-
-typedef char DSGM_StructLabel[0];
 
 void DSGM_Debug(char *text, ...);
 
