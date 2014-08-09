@@ -26,15 +26,17 @@ typedef struct DSGM_object {
 
 typedef struct DSGM_objectInstance {
 	DSGM_Object *object;
-	u8 screen;
 	int spriteNumber;
+	u8 screen;
+	int x;
+	int y;
 	u8 frame;
 	int animationTimer;
 	int *angle;
 	bool hide;
 	
 	DSGM_StructLabel oam;
-	SpriteEntry;
+	DSGM_SpriteEntry;
 } DSGM_ObjectInstance;
 
 typedef struct {
