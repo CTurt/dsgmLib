@@ -65,6 +65,9 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 					if(objectInstance->object->create) objectInstance->object->create(objectInstance);
 					
 					DSGM_CreateSprite(screen, spriteNumber, x, y, objectInstance->priority, objectInstance->frame, objectInstance->hFlip, objectInstance->vFlip, sprite);
+					
+					// Extract DSGM_SpriteEntry properties into objectInstance
+					memcpy(&objectInstance->oam, &(objectInstance->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[objectInstance->spriteNumber], sizeof(DSGM_SpriteEntry));
 				}
 			}
 		}
@@ -111,14 +114,32 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
 				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
 				
+				// Calculate position
 				int x = objectInstance->x - room->view[screen].x;
 				int y = objectInstance->y - room->view[screen].y;
-				if(x < 256 && x > -128 && y < 192 && y > -128 && !objectInstance->hide) DSGM_SetSpriteXY(screen, objectInstance->spriteNumber, objectInstance->angle ? x - DSGM_GetSpriteWidth(objectInstance->object->sprite) / 2 : x, objectInstance->angle ? y - DSGM_GetSpriteHeight(objectInstance->object->sprite) / 2 : y);
-				else DSGM_SetSpriteXY(screen, objectInstance->spriteNumber, 255, 191);
-				DSGM_SetSpriteFrame(screen, objectInstance->spriteNumber, objectInstance->object->sprite, objectInstance->frame);
-				DSGM_SetSpriteHFlip(screen, objectInstance->spriteNumber, objectInstance->hFlip);
-				DSGM_SetSpriteVFlip(screen, objectInstance->spriteNumber, objectInstance->vFlip);
-				DSGM_SetSpritePriority(screen, objectInstance->spriteNumber, objectInstance->priority);
+				if(x < 256 && x > -128 && y < 192 && y > -128 && !objectInstance->hide) {
+					x = objectInstance->angle ? x - DSGM_GetSpriteWidth(objectInstance->object->sprite) / 2 : x;
+					y = objectInstance->angle ? y - DSGM_GetSpriteHeight(objectInstance->object->sprite) / 2 : y;
+				}
+				else {
+					x = 255;
+					y = 191;
+				}
+				
+				objectInstance->absoluteX = x;
+				objectInstance->absoluteY = y;
+				
+				// Calculate GFX index
+				objectInstance->gfxIndex = oamGfxPtrToOffset(objectInstance->screen == DSGM_TOP ? &oamMain : &oamSub, (objectInstance->screen == DSGM_TOP ? objectInstance->object->sprite->topTiles : objectInstance->object->sprite->bottomTiles)[objectInstance->frame]);
+				
+				// Copy into OAM
+				memcpy(&(objectInstance->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[objectInstance->spriteNumber], &objectInstance->oam, sizeof(DSGM_SpriteEntry));
+				
+				// Maybe one of these is better than memcpy?
+				//DC_FlushAll();
+				//dmaCopy();
+				//dmaCopyHalfWords();
+				//swifastcopy();
 				
 				if(objectInstance->object->loop) objectInstance->object->loop(objectInstance);
 				
