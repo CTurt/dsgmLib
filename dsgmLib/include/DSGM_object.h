@@ -35,7 +35,7 @@ typedef struct DSGM_objectInstance {
 	int *angle;
 	bool hide;
 	
-	DSGM_StructLabel oam;
+	DSGM_OAMStructLabel oam;
 	DSGM_SpriteEntry;
 } DSGM_ObjectInstance;
 

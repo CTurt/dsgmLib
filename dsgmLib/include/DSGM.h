@@ -16,7 +16,10 @@
 #define DSGM_TOP 1
 #define DSGM_BOTTOM 0
 
-typedef char DSGM_StructLabel[0];
+typedef char DSGM_CharStructLabel[0];
+typedef short DSGM_ShortStructLabel[0];
+typedef int DSGM_IntStructLabel[0];
+typedef DSGM_SpriteEntry DSGM_OAMStructLabel[0];
 
 #include "DSGM_malloc.h"
 #include "DSGM_file.h"
