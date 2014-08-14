@@ -22,6 +22,7 @@ void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 
 	else group->objectInstances = NULL;
 	va_start(properties, objectInstanceCount);
 	for(i = 0; i < objectInstanceCount; i++) {
+		// Needs to be updated for new DSGM_ObjectInstance struct
 		group->objectInstances[i].object = object;
 		group->objectInstances[i].screen = screen;
 		group->objectInstances[i].x = va_arg(properties, int);

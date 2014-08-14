@@ -1,8 +1,7 @@
 #pragma once
 
 #define DSGM_NO_EVENT NULL
-#define DSGM_SetObjectCustomVariablesSize(object) DSGM_Objects[object].variablesSize = sizeof(object##Variables)
-	
+
 struct DSGM_customVariables;
 
 struct DSGM_objectInstance;
