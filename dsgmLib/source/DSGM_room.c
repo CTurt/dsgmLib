@@ -173,9 +173,14 @@ void DSGM_LeaveRoom(DSGM_Room *room) {
 	
 	u8 screen;
 	int group;
+	int object;
 	
 	for(screen = 0; screen < 2; screen++) {
 		for(group = 0; group < room->objectGroupCount[screen]; group++) {
+			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
+				DSGM_Debug("Freeing object instance custom variables\n");
+				free(room->objectGroups[screen][group].objectInstances[object].variables);
+			}
 			DSGM_Debug("Freeing object events at %p\n", room->objectGroups[screen][group].objectInstances[0].object->collisionEvents);
 			free(room->objectGroups[screen][group].objectInstances[0].object->collisionEvents);
 			room->objectGroups[screen][group].objectInstances[0].object->collisionEvents = NULL;

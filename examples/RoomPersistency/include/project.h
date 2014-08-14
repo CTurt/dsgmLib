@@ -41,6 +41,10 @@ typedef enum {
 	Room_2,
 } DSGM_RoomNames;
 
+typedef struct {
+	int test;
+} playerVariables;
+
 extern DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT];
 extern DSGM_Background DSGM_Backgrounds[DSGM_BACKGROUND_COUNT];
 extern DSGM_Palette DSGM_Palettes[DSGM_PALETTE_COUNT];

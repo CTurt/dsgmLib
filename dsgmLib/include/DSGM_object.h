@@ -1,6 +1,9 @@
 #pragma once
 
 #define DSGM_NO_EVENT NULL
+#define DSGM_SetObjectCustomVariablesSize(object) DSGM_Objects[object].variablesSize = sizeof(object##Variables)
+	
+struct DSGM_customVariables;
 
 struct DSGM_objectInstance;
 
@@ -22,18 +25,21 @@ typedef struct DSGM_object {
 	
 	DSGM_CollisionEvent *collisionEvents;
 	unsigned int collisionEventCount;
+	
+	size_t customVariablesSize;
 } DSGM_Object;
 
 typedef struct DSGM_objectInstance {
 	DSGM_Object *object;
-	int spriteNumber;
 	u8 screen;
+	int spriteNumber;
 	int x;
 	int y;
 	u8 frame;
 	int animationTimer;
 	int *angle;
 	bool hide;
+	struct DSGM_customVariables *variables;
 	
 	DSGM_OAMStructLabel oam;
 	DSGM_SpriteEntry;

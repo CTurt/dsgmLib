@@ -78,7 +78,9 @@ DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
 		DSGM_NO_EVENT,
 		player_touch,
 		
-		NULL, 0
+		NULL, 0,
+		
+		sizeof(playerVariables)
 	},
 };
 
@@ -328,6 +330,11 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 
 int DSGM_currentRoom = Room_1;
 
+//void DSGM_SetupObjects(void) {
+	//DSGM_Objects[player].variablesSize = sizeof(playerVariables);
+	//DSGM_SetObjectCustomVariablesSize(player);
+//}
+
 void DSGM_SetupRooms(int room) {
 	if(room != DSGM_ALL_ROOMS) {
 		switch(room) {
@@ -370,6 +377,8 @@ void DSGM_SetupRooms(int room) {
 }
 
 void player_create(DSGM_ObjectInstance *me) {
+	struct DSGM_customVariables { playerVariables; };
+	
 	DSGM_DrawText(DSGM_BOTTOM, 18, 22, "DS Game Maker");
 	DSGM_DrawText(DSGM_TOP, 1, 1, "Room persistency demo");
 	DSGM_DrawText(DSGM_TOP, 1, 3, "Touch player to switch rooms");
@@ -452,6 +461,8 @@ void player_loop(DSGM_ObjectInstance *me) {
 }
 
 void player_touch(DSGM_ObjectInstance *me) {
+	struct DSGM_customVariables { playerVariables; };
+	
 	//mmStop();
 	//DSGM_Sounds[FlatOutLies].loaded = false;
 	//DSGM_PlaySound(FlatOutLies);

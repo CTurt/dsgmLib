@@ -33,6 +33,7 @@ void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 
 		group->objectInstances[i].vFlip = false;
 		group->objectInstances[i].angle = NULL;
 		group->objectInstances[i].hide = false;
+		group->objectInstances[i].variables = malloc(object->customVariablesSize);
 	}
 	va_end(properties);
 }
