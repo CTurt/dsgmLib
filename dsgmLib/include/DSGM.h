@@ -16,10 +16,10 @@
 #define DSGM_TOP 1
 #define DSGM_BOTTOM 0
 
-#define DSGM_ALIGN_CHAR __attribute__((aligned(1)))
-#define DSGM_ALIGN_SHORT __attribute__((aligned(2)))
-#define DSGM_ALIGN_INT __attribute__((aligned(4)))
-#define DSGM_ALIGN_LONG __attribute__((aligned(8)))
+#define DSGM_ALIGN_CHAR __attribute__((aligned(sizeof(char))))
+#define DSGM_ALIGN_SHORT __attribute__((aligned(sizeof(short))))
+#define DSGM_ALIGN_INT __attribute__((aligned(sizeof(int))))
+#define DSGM_ALIGN_LONG __attribute__((aligned(sizeof(long))))
 
 typedef char DSGM_CharStructLabel[0];
 typedef short DSGM_ShortStructLabel[0];
