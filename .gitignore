@@ -1,7 +1,3 @@
 dsgmLib/build/
-examples/RoomPersistency/build/
-examples/RoomPersistency/RoomPersistency.elf
-examples/Collision/build/
-examples/Collision/Collision.elf
-examples/Priority/build/
-examples/Priority/Priority.elf
+examples/*/build/
+examples/*/*.elf
