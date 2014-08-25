@@ -25,6 +25,11 @@ typedef struct {
 	u8 height;
 } DSGM_Size;
 
+typedef struct {
+	int x;
+	int y;
+} DSGM_Scale;
+
 // Originally from libnds' sprite.h; adapted to avoid naming conflicts
 typedef union {
 	struct {
@@ -89,6 +94,7 @@ extern int DSGM_nextFreeSprite[2];
 extern int DSGM_nextFreeRotset[2];
 
 extern int DSGM_rotations[2][32];
+extern DSGM_Scale DSGM_scales[2][32];
 
 extern const DSGM_Size DSGM_Sizes[3][4];
 
@@ -113,4 +119,4 @@ void DSGM_SetSpriteFrame(u8 screen, int spriteNumber, DSGM_Sprite *sprite, u8 fr
 void DSGM_SetSpriteHFlip(u8 screen, int spriteNumber, bool flip);
 void DSGM_SetSpriteVFlip(u8 screen, int spriteNumber, bool flip);
 void DSGM_SetSpritePriority(u8 screen, int spriteNumber, ObjPriority priority);
-void DSGM_SetRotsetRotation(u8 screen, int rotset, int angle);
+void DSGM_SetRotset(u8 screen, int rotset, int angle, int scaleX, int scaleY);

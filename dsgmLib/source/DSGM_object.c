@@ -83,6 +83,7 @@ inline int (DSGM_GetObjectInstanceRotset)(DSGM_ObjectInstance *me) {
 void (DSGM_InitObjectInstanceRotScale)(DSGM_ObjectInstance *me) {
 	int rotset = DSGM_NextFreeRotset(me->screen);
 	me->angle = &DSGM_rotations[me->screen][rotset];
+	me->scale = &DSGM_scales[me->screen][rotset];
 	me->rotationIndex = rotset;
 	me->isSizeDouble = true;
 	me->isRotateScale = true;
@@ -90,6 +91,7 @@ void (DSGM_InitObjectInstanceRotScale)(DSGM_ObjectInstance *me) {
 
 void (DSGM_InitSharedObjectInstanceRotScale)(DSGM_ObjectInstance *me, int rotset) {
 	me->angle = &DSGM_rotations[me->screen][rotset];
+	me->scale = &DSGM_scales[me->screen][rotset];
 	me->rotationIndex = rotset;
 	me->isSizeDouble = true;
 	me->isRotateScale = true;

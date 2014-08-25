@@ -161,7 +161,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 		}
 		
 		for(rotset = 0; rotset < 32; rotset++) {
-			DSGM_SetRotsetRotation(screen, rotset, DSGM_rotations[screen][rotset]);
+			DSGM_SetRotset(screen, rotset, DSGM_rotations[screen][rotset], DSGM_scales[screen][rotset].x, DSGM_scales[screen][rotset].y);
 		}
 	}
 	

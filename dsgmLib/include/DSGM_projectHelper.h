@@ -54,15 +54,19 @@ void DSGM_ScrollBackground(u8 screen, int layer, int x, int y) {
 	DSGM_Rooms[DSGM_currentRoom].backgroundInstances[screen][layer].y = y;
 }
 
-void DSGM_SwitchRoom(int room, bool reset) {
-	//DSGM_LeaveRoom(&DSGM_Rooms[DSGM_currentRoom]);
-	
+void DSGM_ResetAll(void) {
 	DSGM_ClearText(DSGM_TOP);
 	DSGM_ClearText(DSGM_BOTTOM);
 	DSGM_ResetSprites(DSGM_Sprites, DSGM_SPRITE_COUNT);
 	DSGM_ClearPalettes(DSGM_Palettes, DSGM_PALETTE_COUNT);
 	DSGM_ResetSound();
 	DSGM_FreeAll();
+}
+
+void DSGM_SwitchRoom(int room, bool reset) {
+	//DSGM_LeaveRoom(&DSGM_Rooms[DSGM_currentRoom]);
+	
+	DSGM_ResetAll();
 	
 	DSGM_currentRoom = room;
 	

@@ -35,6 +35,7 @@ typedef struct {
 	u8 frame;
 	int animationTimer;
 	int *angle;
+	DSGM_Scale *scale;
 	bool hide;
 	
 	DSGM_OAMStructLabel oam;

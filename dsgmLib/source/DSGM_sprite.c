@@ -16,7 +16,8 @@
 int DSGM_nextFreeSprite[2] = { 0, 0 };
 int DSGM_nextFreeRotset[2] = { 0, 0 };
 
-int DSGM_rotations[2][32];
+int DSGM_rotations[2][32] = { { 0 }, { 0 } };
+DSGM_Scale DSGM_scales[2][32] = { { [0 ... 31] = { 1 << 8, 1 << 8 } }, { [0 ... 31] = { 1 << 8, 1 << 8 } } };
 
 const DSGM_Size DSGM_Sizes[3][4] = {{{8, 8}, {16, 16}, {32, 32}, {64, 64}}, {{16, 8}, {32, 8}, {32, 16}, {64, 32}}, {{8, 16}, {8, 32}, {16, 32}, {32, 64}}};
 
@@ -74,6 +75,10 @@ void DSGM_ResetSprites(DSGM_Sprite *sprites, int spriteCount) {
 	for(i = 0; i < 32; i++) {
 		DSGM_rotations[DSGM_TOP][i] = 0;
 		DSGM_rotations[DSGM_BOTTOM][i] = 0;
+		DSGM_scales[DSGM_TOP][i].x = 1 << 8;
+		DSGM_scales[DSGM_TOP][i].y = 1 << 8;
+		DSGM_scales[DSGM_BOTTOM][i].x = 1 << 8;
+		DSGM_scales[DSGM_BOTTOM][i].y = 1 << 8;
 	}
 	
 	DSGM_nextFreeSprite[DSGM_TOP] = 0;
@@ -163,6 +168,6 @@ void DSGM_SetSpritePriority(u8 screen, int spriteNumber, ObjPriority priority) {
 	if(screen == DSGM_BOTTOM) oamSub.oamMemory[spriteNumber].priority = priority;
 }
 
-void DSGM_SetRotsetRotation(u8 screen, int rotset, int angle) {
-	oamRotateScale(screen == DSGM_TOP ? &oamMain : &oamSub, rotset, angle, intToFixed(1, 8), intToFixed(1, 8));
+void DSGM_SetRotset(u8 screen, int rotset, int angle, int scaleX, int scaleY) {
+	oamRotateScale(screen == DSGM_TOP ? &oamMain : &oamSub, rotset, angle, scaleX, scaleY);
 }
