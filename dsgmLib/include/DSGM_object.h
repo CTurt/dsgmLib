@@ -60,8 +60,11 @@ DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Objec
 #define DSGM_AddCollisionEvent(object, collider, function) DSGM_AddCollisionEvent(object, collider, (DSGM_CollisionEventFunction)function)
 void (DSGM_AddCollisionEvent)(DSGM_Object *object, DSGM_Object *collider, DSGM_CollisionEventFunction function);
 
-#define DSGM_StylusOverObjectInstance(me) DSGM_StylusOverObjectInstanceFull(room, (DSGM_ObjectInstance *)me)
+#define DSGM_StylusOverObjectInstance(me) DSGM_StylusOverObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], (DSGM_ObjectInstance *)me)
 inline bool DSGM_StylusOverObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *me);
+
+#define DSGM_ObjectInstanceOnScreen(me) DSGM_ObjectInstanceOnScreenFull(&DSGM_Rooms[DSGM_currentRoom], me)
+inline bool DSGM_ObjectInstanceOnScreenFull(DSGM_Room *room, DSGM_ObjectInstance *me);
 
 #define DSGM_ObjectInstanceCollision(me, collider) DSGM_ObjectInstanceCollision((DSGM_ObjectInstance *)me, (DSGM_ObjectInstance *)collider)
 inline bool (DSGM_ObjectInstanceCollision)(DSGM_ObjectInstance *me, DSGM_ObjectInstance *collider);
