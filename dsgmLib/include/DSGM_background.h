@@ -55,4 +55,4 @@ int DSGM_GetBGWidth(u8 screen, int layer);
 int DSGM_GetBGHeight(u8 screen, int layer);
 
 inline u16 DSGM_GetTile(DSGM_BackgroundInstance *background, int x, int y);
-inline void DSGM_SetTile(DSGM_BackgroundInstance *background, int x, int y, u16 tile)
+inline void DSGM_SetTile(DSGM_BackgroundInstance *background, int x, int y, u16 tile);
