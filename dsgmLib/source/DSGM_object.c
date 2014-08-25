@@ -63,7 +63,8 @@ inline bool DSGM_StylusOverObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstan
 
 inline bool DSGM_ObjectInstanceOnScreenFull(DSGM_Room *room, DSGM_ObjectInstance *me) {
 	return ((!me->x - room->view[me->screen].x >= 255) && (!me->y - room->view[me->screen].y >= 191)) &&\
-	((!me->x - room->view[me->screen].x <= -DSGM_GetSpriteWidth(me->object->sprite)) && (!me->y - room->view[me->screen].y <= -DSGM_GetSpriteHeight(me->object->sprite)));
+	((!me->x - room->view[me->screen].x <= -DSGM_GetSpriteWidth(me->object->sprite)) && (!me->y - room->view[me->screen].y <= -DSGM_GetSpriteHeight(me->object->sprite))) &&\
+	!me->hide;
 }
 
 inline bool (DSGM_ObjectInstanceCollision)(DSGM_ObjectInstance *me, DSGM_ObjectInstance *collider) {
