@@ -140,8 +140,8 @@ int DSGM_GetBGHeight(u8 screen, int layer) {
 	return 512;
 }
 
-//inline u16 DSGM_GetTile(u8 screen, int layer, int x, int y) {
 inline u16 DSGM_GetTile(DSGM_BackgroundInstance *background, int x, int y) {
+	// todo: optimise with div and modulus rather than loop
 	while(y > 31) {
 		y -= 32;
 		x += 64;
@@ -157,4 +157,16 @@ inline u16 DSGM_GetTile(DSGM_BackgroundInstance *background, int x, int y) {
 	//int t = y * DSGM_GetBGWidth(screen, layer) / 16 + x;
 	//return bgGetMapPtr(background->vramId)[y * DSGM_GetBGWidth(screen, layer) / 16 + x];
 	return bgGetMapPtr(background->vramId)[y * DSGM_GetBGWidth(background->screen, background->layer) / 16 + x];
+}
+
+inline void DSGM_SetTile(DSGM_BackgroundInstance *background, int x, int y, u16 tile) {
+	while(y > 31) {
+		y -= 32;
+		x += 64;
+	}
+	while(x > 31) {
+		x -= 32;
+		y += 32;
+	}
+	bgGetMapPtr(background->vramId)[y * DSGM_GetBGWidth(background->screen, background->layer) / 16 + x] = tile;
 }
