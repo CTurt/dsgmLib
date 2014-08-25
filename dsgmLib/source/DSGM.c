@@ -13,6 +13,19 @@ void DSGM_Debug(char *text, ...) {
 	#endif
 }
 
+void DSGM_Log(bool wait, char *text, ...) {
+	char buff[1024];
+	va_list args;
+	va_start(args, text);
+	vsprintf(buff, text, args);
+	va_end(args);
+	nocashMessage(buff);
+	if(wait) {
+		while(!DSGM_newpress.Start) DSGM_UpdateInput();
+		while(DSGM_newpress.Start) DSGM_UpdateInput();
+	}
+}
+
 void DSGM_InitGFX(void) {
 	videoSetMode(MODE_0_2D);
 	videoSetModeSub(MODE_0_2D);

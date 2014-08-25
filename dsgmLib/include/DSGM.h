@@ -44,6 +44,7 @@ typedef DSGM_SpriteEntry DSGM_OAMStructLabel[0];
 #endif
 
 void DSGM_Debug(char *text, ...);
+void DSGM_Log(bool wait, char *text, ...);
 
 void DSGM_InitGFX(void);
 void DSGM_InitRand(void);
