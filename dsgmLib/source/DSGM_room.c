@@ -61,13 +61,17 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 						y = 191;
 					}
 					
-					// Run create event before creating sprite so the create event can change the position, frame, flipping, etc...
-					if(objectInstance->object->create) objectInstance->object->create(objectInstance);
-					
-					DSGM_CreateSprite(screen, spriteNumber, x, y, objectInstance->priority, objectInstance->frame, objectInstance->hFlip, objectInstance->vFlip, sprite);
+					// Initially create sprite offscreen
+					DSGM_CreateSprite(screen, spriteNumber, 255, 191, objectInstance->priority, objectInstance->frame, objectInstance->hFlip, objectInstance->vFlip, sprite);
 					
 					// Extract DSGM_SpriteEntry properties into objectInstance
 					memcpy(&objectInstance->oam, &(objectInstance->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[objectInstance->spriteNumber], sizeof(DSGM_SpriteEntry));
+					
+					// Run create event before showing sprite so the create event can change the position, frame, flipping, etc...
+					if(objectInstance->object->create) objectInstance->object->create(objectInstance);
+					
+					// Recreate sprite
+					DSGM_CreateSprite(screen, spriteNumber, x, y, objectInstance->priority, objectInstance->frame, objectInstance->hFlip, objectInstance->vFlip, sprite);
 				}
 			}
 		}
@@ -103,10 +107,6 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 			if(room->backgroundInstances[screen][layer].background != DSGM_NO_BACKGROUND) {
 				DSGM_ScrollBackgroundFull(&room->view[screen], &room->backgroundInstances[screen][layer]);
 			}
-		}
-		
-		for(rotset = 0; rotset < 32; rotset++) {
-			DSGM_SetRotsetRotation(screen, rotset, DSGM_rotations[screen][rotset]);
 		}
 		
 		//DSGM_Debug("Group count %d\n", room->objectGroupCount[screen]);
@@ -158,6 +158,10 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 					}
 				}
 			}
+		}
+		
+		for(rotset = 0; rotset < 32; rotset++) {
+			DSGM_SetRotsetRotation(screen, rotset, DSGM_rotations[screen][rotset]);
 		}
 	}
 	

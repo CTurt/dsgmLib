@@ -80,19 +80,19 @@ inline int (DSGM_GetObjectInstanceRotset)(DSGM_ObjectInstance *me) {
 	return ((unsigned int)me->angle - (unsigned int)DSGM_rotations[me->screen]) / sizeof(me->angle);
 }
 
-void (DSGM_InitObjectInstanceRotation)(DSGM_ObjectInstance *me) {
+void (DSGM_InitObjectInstanceRotScale)(DSGM_ObjectInstance *me) {
 	int rotset = DSGM_NextFreeRotset(me->screen);
 	me->angle = &DSGM_rotations[me->screen][rotset];
-	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].rotationIndex = rotset;
-	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].isSizeDouble = true;
-	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].isRotateScale = true;
+	me->rotationIndex = rotset;
+	me->isSizeDouble = true;
+	me->isRotateScale = true;
 }
 
-void (DSGM_InitSharedObjectInstanceRotation)(DSGM_ObjectInstance *me, int rotset) {
+void (DSGM_InitSharedObjectInstanceRotScale)(DSGM_ObjectInstance *me, int rotset) {
 	me->angle = &DSGM_rotations[me->screen][rotset];
-	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].rotationIndex = rotset;
-	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].isSizeDouble = true;
-	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].isRotateScale = true;
+	me->rotationIndex = rotset;
+	me->isSizeDouble = true;
+	me->isRotateScale = true;
 }
 
 void (DSGM_AnimateObjectInstance)(DSGM_ObjectInstance *me, int startFrame, int endFrame, int frequency) {
