@@ -49,7 +49,7 @@ DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Objec
 	return NULL;
 }
 
-void DSGM_AddCollisionEvent(DSGM_Object *object, DSGM_Object *collider, DSGM_CollisionEventFunction function) {
+void (DSGM_AddCollisionEvent)(DSGM_Object *object, DSGM_Object *collider, DSGM_CollisionEventFunction function) {
 	DSGM_Debug("Adding collision event\n");
 	object->collisionEvents = realloc(object->collisionEvents, (object->collisionEventCount + 1) * sizeof(DSGM_CollisionEvent));
 	object->collisionEvents[object->collisionEventCount].collider = collider;
@@ -61,7 +61,7 @@ inline bool DSGM_StylusOverObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstan
 	return DSGM_stylus.px >= me->x - room->view[me->screen].x && DSGM_stylus.px <= me->x - room->view[me->screen].x + DSGM_GetSpriteWidth(me->object->sprite) && DSGM_stylus.py >= me->y - room->view[me->screen].y && DSGM_stylus.py <= me->y - room->view[me->screen].y + DSGM_GetSpriteHeight(me->object->sprite);
 }
 
-inline bool DSGM_ObjectInstanceCollision(DSGM_ObjectInstance *me, DSGM_ObjectInstance *collider) {
+inline bool (DSGM_ObjectInstanceCollision)(DSGM_ObjectInstance *me, DSGM_ObjectInstance *collider) {
 	int w1 = DSGM_GetSpriteWidth(me->object->sprite);
 	int w2 = DSGM_GetSpriteWidth(collider->object->sprite);
 	int h1 = DSGM_GetSpriteHeight(me->object->sprite);
@@ -70,11 +70,11 @@ inline bool DSGM_ObjectInstanceCollision(DSGM_ObjectInstance *me, DSGM_ObjectIns
 	return ((collider->x > me->x - w2) && (collider->x < me->x + w1)) && ((collider->y > me->y - h2) && (collider->y < me->y + h1));
 }
 
-inline int DSGM_GetObjectInstanceRotset(DSGM_ObjectInstance *me) {
+inline int (DSGM_GetObjectInstanceRotset)(DSGM_ObjectInstance *me) {
 	return ((unsigned int)me->angle - (unsigned int)DSGM_rotations[me->screen]) / sizeof(me->angle);
 }
 
-void DSGM_InitObjectInstanceRotation(DSGM_ObjectInstance *me) {
+void (DSGM_InitObjectInstanceRotation)(DSGM_ObjectInstance *me) {
 	int rotset = DSGM_NextFreeRotset(me->screen);
 	me->angle = &DSGM_rotations[me->screen][rotset];
 	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].rotationIndex = rotset;
@@ -82,14 +82,14 @@ void DSGM_InitObjectInstanceRotation(DSGM_ObjectInstance *me) {
 	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].isRotateScale = true;
 }
 
-void DSGM_InitSharedObjectInstanceRotation(DSGM_ObjectInstance *me, int rotset) {
+void (DSGM_InitSharedObjectInstanceRotation)(DSGM_ObjectInstance *me, int rotset) {
 	me->angle = &DSGM_rotations[me->screen][rotset];
 	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].rotationIndex = rotset;
 	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].isSizeDouble = true;
 	(me->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[me->spriteNumber].isRotateScale = true;
 }
 
-void DSGM_AnimateObjectInstance(DSGM_ObjectInstance *me, int startFrame, int endFrame, int frequency) {
+void (DSGM_AnimateObjectInstance)(DSGM_ObjectInstance *me, int startFrame, int endFrame, int frequency) {
 	me->animationTimer++;
 	if(me->animationTimer == frequency) {
 		if(me->frame > endFrame || me->frame < startFrame) me->frame = startFrame;
@@ -99,7 +99,7 @@ void DSGM_AnimateObjectInstance(DSGM_ObjectInstance *me, int startFrame, int end
 	}
 }
 
-void DSGM_ReturnAnimateObjectInstance(DSGM_ObjectInstance *me, int returnFrame, int startFrame, int endFrame, int frequency) {
+void (DSGM_ReturnAnimateObjectInstance)(DSGM_ObjectInstance *me, int returnFrame, int startFrame, int endFrame, int frequency) {
 	me->animationTimer++;
 	if((me->animationTimer % (frequency / 2)) == 0) me->frame = returnFrame;
 	if((me->animationTimer % frequency) == 0) {

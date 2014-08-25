@@ -26,11 +26,12 @@ DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
 	{
 		&DSGM_Sprites[taptapman],
 		DSGM_NO_EVENT,
-		player_loop,
+		(DSGM_Event)player_loop,
 		DSGM_NO_EVENT,
 		DSGM_NO_EVENT,
+		NULL, 0,
 		
-		NULL, 0
+		sizeof(((playerObjectInstance *)0)->variables)
 	},
 	// ball
 	{
@@ -39,8 +40,9 @@ DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
 		DSGM_NO_EVENT,
 		DSGM_NO_EVENT,
 		DSGM_NO_EVENT,
+		NULL, 0,
 		
-		NULL, 0
+		sizeof(((ballObjectInstance *)0)->variables)
 	},
 };
 
@@ -199,7 +201,7 @@ void DSGM_SetupRooms(int room) {
 	if(room != DSGM_ALL_ROOMS) return;
 }
 
-void player_loop(DSGM_ObjectInstance *me) {
+void player_loop(playerObjectInstance *me) {
 	DSGM_ClearText(DSGM_BOTTOM);
 	
 	if(direction == 0) {
@@ -212,7 +214,7 @@ void player_loop(DSGM_ObjectInstance *me) {
 	if(me->x == 223 || me->x == 0) direction = !direction;
 }
 
-void player_collide_ball(DSGM_ObjectInstance *me, DSGM_ObjectInstance *collider) {
+void player_collide_ball(playerObjectInstance *me, DSGM_ObjectInstance *collider) {
 	DSGM_DrawText(DSGM_BOTTOM, 1, 1, "Collision!");
 	collider->y += 1;
 }

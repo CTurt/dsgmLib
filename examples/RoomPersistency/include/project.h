@@ -36,14 +36,16 @@ typedef enum {
 	player,
 } DSGM_ObjectNames;
 
+typedef struct {
+	DSGM_ObjectInstanceBase;
+	struct {
+	} *variables;
+}  playerObjectInstance;
+
 typedef enum {
 	Room_1,
 	Room_2,
 } DSGM_RoomNames;
-
-typedef struct {
-	int test;
-} playerVariables;
 
 extern DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT];
 extern DSGM_Background DSGM_Backgrounds[DSGM_BACKGROUND_COUNT];
@@ -56,6 +58,6 @@ extern int DSGM_currentRoom;
 
 void DSGM_SetupRooms(int room);
 
-void player_create(DSGM_ObjectInstance *me);
-void player_loop(DSGM_ObjectInstance *me);
-void player_touch(DSGM_ObjectInstance *me);
+void player_create(playerObjectInstance *me);
+void player_loop(playerObjectInstance *me);
+void player_touch(playerObjectInstance *me);

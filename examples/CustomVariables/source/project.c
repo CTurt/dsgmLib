@@ -3,7 +3,6 @@
 #include "DSGM_projectHelper.h"
 
 // User variables / declarations
-int timer = 0;
 
 // Resources
 DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT] = {
@@ -176,20 +175,14 @@ void DSGM_SetupRooms(int room) {
 	
 	DSGM_SetupObjectGroups(&DSGM_Rooms[Room_1], DSGM_BOTTOM, 1);
 	
-	DSGM_SetupObjectInstances(&DSGM_Rooms[Room_1].objectGroups[DSGM_BOTTOM][0], &DSGM_Objects[ball], DSGM_BOTTOM, 2,
-		64, 64,
-		84, 64
+	DSGM_SetupObjectInstances(&DSGM_Rooms[Room_1].objectGroups[DSGM_BOTTOM][0], &DSGM_Objects[ball], DSGM_BOTTOM, 1,
+		64, 64
 	);
 	
 	if(room != DSGM_ALL_ROOMS) return;
 }
 
 void ball_loop(ballObjectInstance *me) {
-	// Only change first instance of ball
-	if((DSGM_ObjectInstance *)me == &DSGM_GetGroup(me)->objectInstances[0]) {
-		timer++;
-		timer %= 120;
-		// priority can be 0 - 3
-		me->priority = timer / 60;
-	}
+	me->variables->counter++;
+	DSGM_DrawText(DSGM_BOTTOM, 0, 0, "%d", me->variables->counter);
 }

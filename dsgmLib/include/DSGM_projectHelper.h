@@ -14,21 +14,25 @@ void DSGM_Init(void) {
 	DSGM_SetupRooms(DSGM_ALL_ROOMS);
 }
 
-inline DSGM_ObjectGroup *DSGM_GetGroup(DSGM_ObjectInstance *objectInstance) {
+#define DSGM_GetGroup(objectInstance) DSGM_GetObjectGroupFull(&DSGM_Rooms[DSGM_currentRoom], objectInstance->screen, objectInstance->object)
+/*inline DSGM_ObjectGroup *DSGM_GetGroup(DSGM_ObjectInstance *objectInstance) {
 	return DSGM_GetObjectGroupFull(&DSGM_Rooms[DSGM_currentRoom], objectInstance->screen, objectInstance->object);
-}
+}*/
 
-inline DSGM_ObjectGroup *DSGM_GetObjectGroup(u8 screen, DSGM_Object *object) {
+#define DSGM_GetObjectGroup(screen, object) DSGM_GetObjectGroupFull(&DSGM_Rooms[DSGM_currentRoom], screen, object)
+/*inline DSGM_ObjectGroup *DSGM_GetObjectGroup(u8 screen, DSGM_Object *object) {
 	return DSGM_GetObjectGroupFull(&DSGM_Rooms[DSGM_currentRoom], screen, object);
-}
+}*/
 
-inline DSGM_SoundInstance *DSGM_PlaySound(int sound) {
+#define DSGM_PlaySound(sound) DSGM_PlaySoundFull(&DSGM_Sounds[sound])
+/*inline DSGM_SoundInstance *DSGM_PlaySound(int sound) {
 	return DSGM_PlaySoundFull(&DSGM_Sounds[sound]);
-}
+}*/
 
-inline DSGM_SoundInstance *DSGM_PlaySoundAdvanced(int sound, u8 volume, u8 panning) {
+#define DSGM_PlaySoundAdvanced(sound, volume, panning) DSGM_PlaySoundAdvancedFull(&DSGM_Sounds[sound], volume, panning)
+/*inline DSGM_SoundInstance *DSGM_PlaySoundAdvanced(int sound, u8 volume, u8 panning) {
 	return DSGM_PlaySoundAdvancedFull(&DSGM_Sounds[sound], volume, panning);
-}
+}*/
 
 inline bool DSGM_BackgroundIsNitro(int background) {
 	return DSGM_BackgroundIsNitroFull(&DSGM_Backgrounds[background]);
@@ -61,7 +65,6 @@ void DSGM_SwitchRoom(int room, bool reset) {
 	DSGM_FreeAll();
 	
 	DSGM_currentRoom = room;
-	//DSGM_switchingRooms = 1;
 	
 	if(reset) {
 		DSGM_SetupRooms(room);

@@ -6,7 +6,7 @@
 #define DSGM_BACKGROUND_COUNT 0
 #define DSGM_PALETTE_COUNT 1
 #define DSGM_SPRITE_COUNT 2
-#define DSGM_OBJECT_COUNT 2
+#define DSGM_OBJECT_COUNT 1
 #define DSGM_ROOM_COUNT 1
 
 // Include backgrounds, palettes and sprites to be loaded from RAM
@@ -29,19 +29,13 @@ typedef enum {
 } DSGM_SpriteNames;
 
 typedef enum {
-	player,
 	ball,
 } DSGM_ObjectNames;
 
 typedef struct {
 	DSGM_ObjectInstanceBase;
 	struct {
-	} *variables;
-} playerObjectInstance;
-
-typedef struct {
-	DSGM_ObjectInstanceBase;
-	struct {
+		int counter;
 	} *variables;
 } ballObjectInstance;
 
@@ -60,5 +54,4 @@ extern int DSGM_currentRoom;
 
 void DSGM_SetupRooms(int room);
 
-void player_loop(playerObjectInstance *me);
-void player_collide_ball(playerObjectInstance *me, DSGM_ObjectInstance *collider);
+void ball_loop(ballObjectInstance *me);

@@ -29,9 +29,14 @@ typedef enum {
 } DSGM_SpriteNames;
 
 typedef enum {
-	player,
 	ball,
 } DSGM_ObjectNames;
+
+typedef struct {
+	DSGM_ObjectInstanceBase;
+	struct {
+	} *variables;
+} ballObjectInstance;
 
 typedef enum {
 	Room_1,
@@ -48,6 +53,6 @@ extern int DSGM_currentRoom;
 
 void DSGM_SetupRooms(int room);
 
-void ball_create(DSGM_ObjectInstance *me);
-void ball_loop(DSGM_ObjectInstance *me);
-void ball_touch(DSGM_ObjectInstance *me);
+void ball_create(ballObjectInstance *me);
+void ball_loop(ballObjectInstance *me);
+void ball_touch(ballObjectInstance *me);
