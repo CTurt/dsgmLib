@@ -15,12 +15,17 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 	
 	DSGM_Debug("Loading room...\n");
 	
+	DSGM_InitCustomGFX(room->backgroundInstances[DSGM_TOP][3].background == DSGM_DRAWABLE_BACKGROUND, room->backgroundInstances[DSGM_BOTTOM][3].background == DSGM_DRAWABLE_BACKGROUND);
+	
 	for(screen = 0; screen < 2; screen++) {
 		// Load backgrounds
 		for(layer = 0; layer < 4; layer++) {
 			if(room->backgroundInstances[screen][layer].background != DSGM_NO_BACKGROUND) {
 				DSGM_Debug("Screen %d, layer %d, background %p\n", screen, layer, room->backgroundInstances[screen][layer].background);
 				if(room->backgroundInstances[screen][layer].background == DSGM_TEXT_BACKGROUND) DSGM_InitText(&room->backgroundInstances[screen][layer]);
+				else if(room->backgroundInstances[screen][layer].background == DSGM_DRAWABLE_BACKGROUND) {
+					if(layer == 3) DSGM_InitDrawableBackground(&room->backgroundInstances[screen][layer]);
+				}
 				else DSGM_LoadBackgroundFull(&room->backgroundInstances[screen][layer]);
 				DSGM_ScrollBackgroundFull(&room->view[screen], &room->backgroundInstances[screen][layer]);
 				bgUpdate();
