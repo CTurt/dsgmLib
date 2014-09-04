@@ -3,7 +3,7 @@
 PrintConsole DSGM_text[2];
 
 void DSGM_InitText(DSGM_BackgroundInstance *backgroundInstance) {
-	consoleInit(&DSGM_text[backgroundInstance->screen], backgroundInstance->layer, BgType_Text4bpp, BgSize_T_256x256, backgroundInstance->layer + 28, 0, backgroundInstance->screen, 1);
+	consoleInit(&DSGM_text[backgroundInstance->screen], backgroundInstance->layer, BgType_Text4bpp, BgSize_T_256x256, backgroundInstance->mapBase, backgroundInstance->tileBase, backgroundInstance->screen, 1);
 	consoleSelect(&DSGM_text[backgroundInstance->screen]);
 	consoleClear();
 	backgroundInstance->vramId = DSGM_text[backgroundInstance->screen].bgId;
