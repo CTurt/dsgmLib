@@ -44,10 +44,12 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			{
 				// Layer 0
 				{
-					DSGM_TEXT_BACKGROUND,		// Background
+					DSGM_NO_BACKGROUND,			// Background
 					DSGM_BOTTOM,				// Screen
 					0,							// Layer
 					false,						// Attached to view system
+					0,							// Map base
+					0,							// Tile base
 					0, 0, 0
 				},
 				
@@ -57,6 +59,8 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 					DSGM_BOTTOM,				// Screen
 					1,							// Layer
 					true,						// Attached to view system
+					0,							// Map base
+					0,							// Tile base
 					0, 0, 0
 				},
 				
@@ -66,6 +70,8 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 					DSGM_BOTTOM,				// Screen
 					2,							// Layer
 					true,						// Attached to view system
+					0,							// Map base
+					0,							// Tile base
 					0, 0, 0
 				},
 				
@@ -75,6 +81,8 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 					DSGM_BOTTOM,				// Screen
 					3,							// Layer
 					true,						// Attached to view system
+					0,							// Map base
+					0,							// Tile base
 					0, 0, 0
 				},
 			},
@@ -83,10 +91,12 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			{
 				// Layer 0
 				{
-					DSGM_TEXT_BACKGROUND,		// Background
+					DSGM_NO_BACKGROUND,			// Background
 					DSGM_TOP,					// Screen
 					0,							// Layer
 					false,						// Attached to view system
+					0,							// Map base
+					0,							// Tile base
 					0, 0, 0
 				},
 				
@@ -96,6 +106,8 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 					DSGM_TOP,					// Screen
 					1,							// Layer
 					true,						// Attached to view system
+					0,							// Map base
+					0,							// Tile base
 					0, 0, 0
 				},
 				
@@ -105,6 +117,8 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 					DSGM_TOP,					// Screen
 					2,							// Layer
 					true,						// Attached to view system
+					0,							// Map base
+					0,							// Tile base
 					0, 0, 0
 				},
 				
@@ -114,6 +128,8 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 					DSGM_TOP,					// Screen
 					3,							// Layer
 					true,						// Attached to view system
+					0,							// Map base
+					0,							// Tile base
 					0, 0, 0
 				},
 			}
