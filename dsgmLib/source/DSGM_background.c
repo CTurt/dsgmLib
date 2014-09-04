@@ -85,7 +85,7 @@ void DSGM_LoadBackgroundNitroFull(DSGM_BackgroundInstance *backgroundInstance) {
 
 void DSGM_LoadBackgroundRAMFull(DSGM_BackgroundInstance *backgroundInstance) {
 	dmaCopy(backgroundInstance->background->tiles, bgGetGfxPtr(backgroundInstance->vramId), *backgroundInstance->background->tilesLength);
-	backgroundInstance->background->tileCount = (*backgroundInstance->background->tilesLength) / 64;
+	backgroundInstance->background->tilesCount = (*backgroundInstance->background->tilesLength) / 64;
 	dmaCopy(backgroundInstance->background->map, bgGetMapPtr(backgroundInstance->vramId), *backgroundInstance->background->mapLength);
 	DSGM_UnlockBackgroundPalette(backgroundInstance->screen);
 	switch(backgroundInstance->screen) {
