@@ -17,7 +17,7 @@ size_t DSGM_GetFileLength(char *filename) {
 	return s;
 }
 
-void DSGM_ReadFileManual(void *destination, int start, size_t length, char *filename) {
+size_t DSGM_ReadFileManual(void *destination, int start, size_t length, char *filename) {
 	FILE *f = NULL;
 	
 	f = fopen(filename, "rb");
@@ -27,14 +27,13 @@ void DSGM_ReadFileManual(void *destination, int start, size_t length, char *file
 	
 	fseek(f, start, SEEK_SET);
 	
-	if(length != DSGM_AUTO_LENGTH) {
-		fread(destination, length, 1, f);
-	}
-	else {
-		fread(destination, DSGM_GetFileLength(filename), 1, f);
-	}
+	if(length == DSGM_AUTO_LENGTH) length = DSGM_GetFileLength(filename);
+	
+	fread(destination, length, 1, f);
 	
 	fclose(f);
+	
+	return length;
 }
 
 char *DSGM_ReadFile(char *filename) {
