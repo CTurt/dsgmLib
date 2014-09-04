@@ -28,14 +28,27 @@ inline bool DSGM_BackgroundIsNitroFull(DSGM_Background *background) {
 	return !background->tiles;
 }
 
-void DSGM_LoadBackgroundFull(DSGM_BackgroundInstance *backgroundInstance) {
+void DSGM_InitDrawableBackground(DSGM_BackgroundInstance *backgroundInstance) {
+	DSGM_Debug("Drawable background screen %d, layer %d", backgroundInstance->screen, backgroundInstance->layer);
 	switch(backgroundInstance->screen) {
 		case DSGM_TOP:
-			backgroundInstance->vramId = bgInit(backgroundInstance->layer, backgroundInstance->background->type, backgroundInstance->background->size, backgroundInstance->layer + 28, backgroundInstance->layer * 2);
+			backgroundInstance->vramId = bgInit(backgroundInstance->layer, BgType_Bmp8, BgSize_B8_256x256, backgroundInstance->mapBase, backgroundInstance->tileBase);
 			break;
 			
 		case DSGM_BOTTOM:
-			backgroundInstance->vramId = bgInitSub(backgroundInstance->layer, backgroundInstance->background->type, backgroundInstance->background->size, backgroundInstance->layer + 28, backgroundInstance->layer * 2);
+			backgroundInstance->vramId = bgInitSub(backgroundInstance->layer, BgType_Bmp8, BgSize_B8_256x256, backgroundInstance->mapBase, backgroundInstance->tileBase);
+			break;
+	}
+}
+
+void DSGM_LoadBackgroundFull(DSGM_BackgroundInstance *backgroundInstance) {
+	switch(backgroundInstance->screen) {
+		case DSGM_TOP:
+			backgroundInstance->vramId = bgInit(backgroundInstance->layer, backgroundInstance->background->type, backgroundInstance->background->size, backgroundInstance->mapBase, backgroundInstance->tileBase);
+			break;
+			
+		case DSGM_BOTTOM:
+			backgroundInstance->vramId = bgInitSub(backgroundInstance->layer, backgroundInstance->background->type, backgroundInstance->background->size, backgroundInstance->mapBase, backgroundInstance->tileBase);
 			break;
 	}
 	
@@ -54,8 +67,8 @@ void DSGM_LoadBackgroundFull(DSGM_BackgroundInstance *backgroundInstance) {
 	bgShow(backgroundInstance->vramId);
 }
 
-void DSGM_LoadBackgroundNitroFull(DSGM_BackgroundInstance *backgroundInstance/*, char *nitroTilesFilename, char *nitroMapFilename, char *nitroPaletteFilename*/) {
-	DSGM_ReadFileManual(bgGetGfxPtr(backgroundInstance->vramId), 0, DSGM_AUTO_LENGTH, backgroundInstance->background->nitroTilesFilename);
+void DSGM_LoadBackgroundNitroFull(DSGM_BackgroundInstance *backgroundInstance) {
+	backgroundInstance->background->tilesCount = DSGM_ReadFileManual(bgGetGfxPtr(backgroundInstance->vramId), 0, DSGM_AUTO_LENGTH, backgroundInstance->background->nitroTilesFilename) / 64;
 	DSGM_ReadFileManual(bgGetMapPtr(backgroundInstance->vramId), 0, DSGM_AUTO_LENGTH, backgroundInstance->background->nitroMapFilename);
 	DSGM_UnlockBackgroundPalette(backgroundInstance->screen);
 	switch(backgroundInstance->screen) {
@@ -72,6 +85,7 @@ void DSGM_LoadBackgroundNitroFull(DSGM_BackgroundInstance *backgroundInstance/*,
 
 void DSGM_LoadBackgroundRAMFull(DSGM_BackgroundInstance *backgroundInstance) {
 	dmaCopy(backgroundInstance->background->tiles, bgGetGfxPtr(backgroundInstance->vramId), *backgroundInstance->background->tilesLength);
+	backgroundInstance->background->tileCount = (*backgroundInstance->background->tilesLength) / 64;
 	dmaCopy(backgroundInstance->background->map, bgGetMapPtr(backgroundInstance->vramId), *backgroundInstance->background->mapLength);
 	DSGM_UnlockBackgroundPalette(backgroundInstance->screen);
 	switch(backgroundInstance->screen) {
