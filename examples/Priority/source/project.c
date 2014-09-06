@@ -31,7 +31,7 @@ DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
 		DSGM_NO_EVENT,
 		NULL, 0,
 		
-		sizeof(((ballObjectInstance *)0)->variables)
+		sizeof(*((ballObjectInstance *)0)->variables)
 	},
 };
 

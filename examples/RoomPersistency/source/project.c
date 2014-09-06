@@ -79,7 +79,7 @@ DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
 		(DSGM_Event)player_touch,
 		NULL, 0,
 		
-		sizeof(((playerObjectInstance *)0)->variables)
+		sizeof(*((playerObjectInstance *)0)->variables)
 	},
 };
 

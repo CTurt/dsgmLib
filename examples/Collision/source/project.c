@@ -31,7 +31,7 @@ DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
 		DSGM_NO_EVENT,
 		NULL, 0,
 		
-		sizeof(((playerObjectInstance *)0)->variables)
+		sizeof(*((playerObjectInstance *)0)->variables)
 	},
 	// ball
 	{
@@ -42,7 +42,7 @@ DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
 		DSGM_NO_EVENT,
 		NULL, 0,
 		
-		sizeof(((ballObjectInstance *)0)->variables)
+		sizeof(*((ballObjectInstance *)0)->variables)
 	},
 };
 

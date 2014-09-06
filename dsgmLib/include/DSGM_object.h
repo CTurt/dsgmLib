@@ -56,7 +56,16 @@ typedef struct {
 
 void DSGM_SetupObjectGroups(DSGM_Room *room, u8 screen, int objectGroupCount);
 void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 screen, int objectInstanceCount, ...);
+void DSGM_ActivateObjectInstance(DSGM_Room *room, DSGM_ObjectInstance *objectInstance);
 DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Object *object);
+
+#define DSGM_CreateObjectInstance(screen, x, y, object)\
+do {\
+	int ID = DSGM_GetObjectInstanceID(me);\
+	DSGM_CreateObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y, object);\
+	me = (void *)&DSGM_GetGroup(me)->objectInstances[ID];\
+} while(0)
+DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, int x, int y, DSGM_Object *object);
 
 #define DSGM_AddCollisionEvent(object, collider, function) DSGM_AddCollisionEvent(object, collider, (DSGM_CollisionEventFunction)function)
 void (DSGM_AddCollisionEvent)(DSGM_Object *object, DSGM_Object *collider, DSGM_CollisionEventFunction function);
@@ -72,6 +81,9 @@ inline bool (DSGM_ObjectInstanceCollision)(DSGM_ObjectInstance *me, DSGM_ObjectI
 
 #define DSGM_GetObjectInstanceRotset(me) DSGM_GetObjectInstanceRotset((DSGM_ObjectInstance *)me)
 inline int (DSGM_GetObjectInstanceRotset)(DSGM_ObjectInstance *me);
+
+#define DSGM_GetObjectInstanceID(me) DSGM_GetObjectInstanceIDFull(&DSGM_Rooms[DSGM_currentRoom], (DSGM_ObjectInstance *)me)
+inline int DSGM_GetObjectInstanceIDFull(DSGM_Room *room, DSGM_ObjectInstance *me);
 
 #define DSGM_InitObjectInstanceRotScale(me) DSGM_InitObjectInstanceRotScale((DSGM_ObjectInstance *)me)
 void (DSGM_InitObjectInstanceRotScale)(DSGM_ObjectInstance *me);

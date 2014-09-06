@@ -38,46 +38,7 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 		for(group = 0; group < room->objectGroupCount[screen]; group++) {
 			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
 				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
-				DSGM_Sprite *sprite = objectInstance->object->sprite;
-				DSGM_Palette *palette = sprite->palette;
-				int spriteNumber = -1;
-				
-				if(sprite != DSGM_NO_SPRITE) {
-					spriteNumber = DSGM_NextFreeSpriteNumber(screen);
-					objectInstance->spriteNumber = spriteNumber;
-					objectInstance->screen = screen;
-					
-					if(!DSGM_PaletteLoaded(screen, palette)) {
-						DSGM_LoadPaletteFull(screen, palette);
-					}
-					
-					if(!DSGM_SpriteLoaded(screen, sprite)) {
-						DSGM_LoadSpriteFull(screen, sprite);
-					}
-					
-					int x = objectInstance->x - room->view[screen].x;
-					int y = objectInstance->y - room->view[screen].y;
-					if(x < 256 && x > -128 && y < 192 && y > -128 && !objectInstance->hide) {
-						x = objectInstance->angle ? x - DSGM_GetSpriteWidth(objectInstance->object->sprite) / 2 : x;
-						y = objectInstance->angle ? y - DSGM_GetSpriteHeight(objectInstance->object->sprite) / 2 : y;
-					}
-					else {
-						x = 255;
-						y = 191;
-					}
-					
-					// Initially create sprite offscreen
-					DSGM_CreateSprite(screen, spriteNumber, 255, 191, objectInstance->priority, objectInstance->frame, objectInstance->hFlip, objectInstance->vFlip, sprite);
-					
-					// Extract DSGM_SpriteEntry properties into objectInstance
-					memcpy(&objectInstance->oam, &(objectInstance->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[objectInstance->spriteNumber], sizeof(DSGM_SpriteEntry));
-					
-					// Run create event before showing sprite so the create event can change the position, frame, flipping, etc...
-					if(objectInstance->object->create) objectInstance->object->create(objectInstance);
-					
-					// Recreate sprite
-					DSGM_CreateSprite(screen, spriteNumber, x, y, objectInstance->priority, objectInstance->frame, objectInstance->hFlip, objectInstance->vFlip, sprite);
-				}
+				DSGM_ActivateObjectInstance(room, objectInstance);
 			}
 		}
 	}
@@ -117,7 +78,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 		//DSGM_Debug("Group count %d\n", room->objectGroupCount[screen]);
 		for(group = 0; group < room->objectGroupCount[screen]; group++) {
 			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
-				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
+				#define objectInstance (&room->objectGroups[screen][group].objectInstances[object])
 				
 				// Calculate position
 				int x = objectInstance->x - room->view[screen].x;
@@ -162,6 +123,8 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 						}
 					}
 				}
+				
+				#undef objectInstance
 			}
 		}
 		

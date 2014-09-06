@@ -22,21 +22,68 @@ void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 
 	else group->objectInstances = NULL;
 	va_start(properties, objectInstanceCount);
 	for(i = 0; i < objectInstanceCount; i++) {
-		// Needs to be updated for new DSGM_ObjectInstance struct
+		memset(&group->objectInstances[i], 0, sizeof(DSGM_ObjectInstance));
 		group->objectInstances[i].object = object;
 		group->objectInstances[i].screen = screen;
 		group->objectInstances[i].x = va_arg(properties, int);
 		group->objectInstances[i].y = va_arg(properties, int);
-		group->objectInstances[i].spriteNumber = 0;
-		group->objectInstances[i].frame = 0;
-		group->objectInstances[i].animationTimer = 0;
-		group->objectInstances[i].hFlip = false;
-		group->objectInstances[i].vFlip = false;
-		group->objectInstances[i].angle = NULL;
-		group->objectInstances[i].hide = false;
 		group->objectInstances[i].variables = malloc(object->customVariablesSize);
+		memset(group->objectInstances[group->objectInstanceCount].variables, 0, sizeof(object->customVariablesSize));
 	}
 	va_end(properties);
+}
+
+void DSGM_ActivateObjectInstance(DSGM_Room *room, DSGM_ObjectInstance *objectInstance) {
+	{
+		u8 screen;
+		for(screen = 0; screen < 2; screen++) {
+			int rotset;
+			for(rotset = 0; rotset < 32; rotset++) {
+				DSGM_SetRotset(screen, rotset, DSGM_rotations[screen][rotset], DSGM_scales[screen][rotset].x, DSGM_scales[screen][rotset].y);
+			}
+		}
+	}
+	
+	DSGM_Sprite *sprite = objectInstance->object->sprite;
+	DSGM_Palette *palette = sprite->palette;
+	u8 screen = objectInstance->screen;
+	int spriteNumber = -1;
+	
+	if(sprite != DSGM_NO_SPRITE) {
+		int x, y;
+		
+		spriteNumber = DSGM_NextFreeSpriteNumber(screen);
+		objectInstance->spriteNumber = spriteNumber;
+		objectInstance->screen = screen;
+		
+		if(!DSGM_PaletteLoaded(screen, palette)) {
+			DSGM_LoadPaletteFull(screen, palette);
+		}
+		
+		if(!DSGM_SpriteLoaded(screen, sprite)) {
+			DSGM_LoadSpriteFull(screen, sprite);
+		}
+		
+		// Initially create sprite offscreen
+		DSGM_CreateSprite(screen, spriteNumber, 255, 191, objectInstance->priority, objectInstance->frame, objectInstance->hFlip, objectInstance->vFlip, sprite);
+		
+		// Extract DSGM_SpriteEntry properties into objectInstance
+		memcpy(&objectInstance->oam, &(objectInstance->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[objectInstance->spriteNumber], sizeof(DSGM_SpriteEntry));
+		
+		// Run create event before showing sprite so the create event can change the position, frame, flipping, etc...
+		if(objectInstance->object->create) objectInstance->object->create(objectInstance);
+		
+		// Don't need to take into account double size here
+		x = objectInstance->x - room->view[screen].x;
+		y = objectInstance->y - room->view[screen].y;
+		if(!(x < 256 && x > -128 && y < 192 && y > -128 && !objectInstance->hide)) {
+			x = 255;
+			y = 191;
+		}
+		
+		// Recreate sprite
+		DSGM_CreateSprite(screen, spriteNumber, x, y, objectInstance->priority, objectInstance->frame, objectInstance->hFlip, objectInstance->vFlip, sprite);
+	}
 }
 
 DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Object *object) {
@@ -48,6 +95,43 @@ DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Objec
 	}
 	return NULL;
 }
+
+DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, int x, int y, DSGM_Object *object) {
+	DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, screen, object);
+	
+	if(group) {
+		DSGM_Debug("Reallocating object instances at %p\n", group->objectInstances);
+		group->objectInstances = realloc(group->objectInstances, (group->objectInstanceCount + 1) * sizeof(DSGM_ObjectInstance));
+		DSGM_Debug("Gave address %p for size %d\n", group->objectInstances, (group->objectInstanceCount + 1) * sizeof(DSGM_ObjectInstance));
+		
+		memset(&group->objectInstances[group->objectInstanceCount], 0, sizeof(DSGM_ObjectInstance));
+		group->objectInstances[group->objectInstanceCount].object = object;
+		group->objectInstances[group->objectInstanceCount].screen = screen;
+		group->objectInstances[group->objectInstanceCount].x = x;
+		group->objectInstances[group->objectInstanceCount].y = y;
+		group->objectInstances[group->objectInstanceCount].variables = malloc(object->customVariablesSize);
+		DSGM_Debug("Allocated custom variables %p for size %d\n", group->objectInstances[group->objectInstanceCount].variables, object->customVariablesSize);
+		memset(group->objectInstances[group->objectInstanceCount].variables, 0, sizeof(object->customVariablesSize));
+		
+		DSGM_ActivateObjectInstance(room, &group->objectInstances[group->objectInstanceCount]);
+		return &group->objectInstances[group->objectInstanceCount++];
+	}
+	else {
+		// WARNING: untested!
+		
+		DSGM_Debug("Reallocating object groups at %p\n", room->objectGroups[screen]);
+		group = realloc(room->objectGroups[screen], (room->objectGroupCount[screen] + 1) * sizeof(DSGM_ObjectGroup));
+		DSGM_Debug("Gave address %p\n", room->objectGroups[screen]);
+		
+		group = &room->objectGroups[screen][room->objectGroupCount[screen]];
+		DSGM_SetupObjectInstances(group, object, screen, 1, x, y);
+		
+		DSGM_ActivateObjectInstance(room, &group->objectInstances[0]);
+		return &group->objectInstances[0];
+	}
+}
+
+// To do: DSGM_DeleteObjectInstance
 
 void (DSGM_AddCollisionEvent)(DSGM_Object *object, DSGM_Object *collider, DSGM_CollisionEventFunction function) {
 	DSGM_Debug("Adding collision event\n");
@@ -78,6 +162,11 @@ inline bool (DSGM_ObjectInstanceCollision)(DSGM_ObjectInstance *me, DSGM_ObjectI
 
 inline int (DSGM_GetObjectInstanceRotset)(DSGM_ObjectInstance *me) {
 	return ((unsigned int)me->angle - (unsigned int)DSGM_rotations[me->screen]) / sizeof(me->angle);
+}
+
+inline int DSGM_GetObjectInstanceIDFull(DSGM_Room *room, DSGM_ObjectInstance *me) {
+	DSGM_ObjectInstance *group = DSGM_GetObjectGroupFull(room, me->screen, me->object)->objectInstances;
+	return ((void *)me - (void *)group) / sizeof(DSGM_ObjectInstance);
 }
 
 void (DSGM_InitObjectInstanceRotScale)(DSGM_ObjectInstance *me) {
