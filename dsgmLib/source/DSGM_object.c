@@ -117,9 +117,9 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, i
 		return &group->objectInstances[group->objectInstanceCount++];
 	}
 	else {
-		// WARNING: untested!
+		// To do, fix this
 		
-		DSGM_Debug("Reallocating object groups at %p\n", room->objectGroups[screen]);
+		/*DSGM_Debug("Reallocating object groups at %p\n", room->objectGroups[screen]);
 		group = realloc(room->objectGroups[screen], (room->objectGroupCount[screen] + 1) * sizeof(DSGM_ObjectGroup));
 		DSGM_Debug("Gave address %p\n", room->objectGroups[screen]);
 		
@@ -127,7 +127,9 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, i
 		DSGM_SetupObjectInstances(group, object, screen, 1, x, y);
 		
 		DSGM_ActivateObjectInstance(room, &group->objectInstances[0]);
-		return &group->objectInstances[0];
+		return &group->objectInstances[0];*/
+		
+		return NULL;
 	}
 }
 
