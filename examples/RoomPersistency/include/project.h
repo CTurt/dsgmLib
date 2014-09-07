@@ -39,6 +39,7 @@ typedef enum {
 typedef struct {
 	DSGM_ObjectInstanceBase;
 	struct {
+		int direction;
 	} *variables;
 }  playerObjectInstance;
 

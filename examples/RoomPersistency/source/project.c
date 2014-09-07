@@ -8,8 +8,6 @@
 #define UP 2
 #define DOWN 3
 
-int direction = DOWN;
-
 bool walkableTile(u16 tile) {
 	switch(tile) {
 		case 0x05:
@@ -411,10 +409,6 @@ void player_create(playerObjectInstance *me) {
 		DSGM_DrawText(DSGM_TOP, 1, 5, "Room_2");
 	}
 	DSGM_PlaySound(FlatOutLies);
-	
-	direction = DOWN;
-	me->frame = 0;
-	me->hFlip = false;
 }
 
 void player_loop(playerObjectInstance *me) {
@@ -423,50 +417,50 @@ void player_loop(playerObjectInstance *me) {
 	me->y = DSGM_Rooms[DSGM_currentRoom].view[DSGM_BOTTOM].y + 79;
 	
 	// Change direction
-	if(DSGM_held.Left && DSGM_NOT_HOLDING_3(Right, Up, Down) && direction != LEFT) {
+	if(DSGM_held.Left && DSGM_NOT_HOLDING_3(Right, Up, Down) && me->variables->direction != LEFT) {
 		me->animationTimer = 11;
-		direction = LEFT;
+		me->variables->direction = LEFT;
 		me->hFlip = true;
 	}
-	if(DSGM_held.Right && DSGM_NOT_HOLDING_3(Left, Up, Down) && direction != RIGHT) {
+	if(DSGM_held.Right && DSGM_NOT_HOLDING_3(Left, Up, Down) && me->variables->direction != RIGHT) {
 		me->animationTimer = 11;
-		direction = RIGHT;
+		me->variables->direction = RIGHT;
 		me->hFlip = false;
 	}
-	if(DSGM_held.Up && DSGM_NOT_HOLDING_3(Left, Right, Down) && direction != UP) {
+	if(DSGM_held.Up && DSGM_NOT_HOLDING_3(Left, Right, Down) && me->variables->direction != UP) {
 		me->animationTimer = 11;
-		direction = UP;
+		me->variables->direction = UP;
 		me->hFlip = false;
 	}
-	if(DSGM_held.Down && DSGM_NOT_HOLDING_3(Left, Right, Up) && direction != DOWN) {
+	if(DSGM_held.Down && DSGM_NOT_HOLDING_3(Left, Right, Up) && me->variables->direction != DOWN) {
 		me->animationTimer = 11;
-		direction = DOWN;
+		me->variables->direction = DOWN;
 		me->hFlip = false;
 	}
 	
 	// Move
-	if(direction == LEFT && DSGM_held.Left) {
+	if(me->variables->direction == LEFT && DSGM_held.Left) {
 		if(\
 			walkableTile(DSGM_GetTile(&DSGM_Rooms[DSGM_currentRoom].backgroundInstances[DSGM_BOTTOM][1], (me->x + 8) / 8, (me->y + 16) / 8)) &&\
 			walkableTile(DSGM_GetTile(&DSGM_Rooms[DSGM_currentRoom].backgroundInstances[DSGM_BOTTOM][1], (me->x + 8) / 8, (me->y + 31) / 8))\
 		) DSGM_Rooms[DSGM_currentRoom].view[DSGM_BOTTOM].x--;
 		DSGM_ReturnAnimateObjectInstance(me, 3, 4, 5, 12);
 	}
-	if(direction == RIGHT && DSGM_held.Right) {
+	if(me->variables->direction == RIGHT && DSGM_held.Right) {
 		if(\
 			walkableTile(DSGM_GetTile(&DSGM_Rooms[DSGM_currentRoom].backgroundInstances[DSGM_BOTTOM][1], (me->x + 24) / 8, (me->y + 16) / 8)) &&\
 			walkableTile(DSGM_GetTile(&DSGM_Rooms[DSGM_currentRoom].backgroundInstances[DSGM_BOTTOM][1], (me->x + 24) / 8, (me->y + 31) / 8))\
 		) DSGM_Rooms[DSGM_currentRoom].view[DSGM_BOTTOM].x++;
 		DSGM_ReturnAnimateObjectInstance(me, 3, 4, 5, 12);
 	}
-	if(direction == UP && DSGM_held.Up) {
+	if(me->variables->direction == UP && DSGM_held.Up) {
 		if(\
 			walkableTile(DSGM_GetTile(&DSGM_Rooms[DSGM_currentRoom].backgroundInstances[DSGM_BOTTOM][1], (me->x + 9) / 8, (me->y + 15) / 8)) &&\
 			walkableTile(DSGM_GetTile(&DSGM_Rooms[DSGM_currentRoom].backgroundInstances[DSGM_BOTTOM][1], (me->x + 23) / 8, (me->y + 15) / 8))\
 		) DSGM_Rooms[DSGM_currentRoom].view[DSGM_BOTTOM].y--;
 		DSGM_ReturnAnimateObjectInstance(me, 6, 7, 8, 12);
 	}
-	if(direction == DOWN && DSGM_held.Down) {
+	if(me->variables->direction == DOWN && DSGM_held.Down) {
 		if(\
 			walkableTile(DSGM_GetTile(&DSGM_Rooms[DSGM_currentRoom].backgroundInstances[DSGM_BOTTOM][1], (me->x + 9) / 8, (me->y + 32) / 8)) &&\
 			walkableTile(DSGM_GetTile(&DSGM_Rooms[DSGM_currentRoom].backgroundInstances[DSGM_BOTTOM][1], (me->x + 23) / 8, (me->y + 32) / 8))\
@@ -476,9 +470,9 @@ void player_loop(playerObjectInstance *me) {
 	
 	// Stand still
 	if(DSGM_NOT_HOLDING_DPAD()) {
-		if(direction == LEFT || direction == RIGHT) me->frame = 3;
-		if(direction == UP) me->frame = 6;
-		if(direction == DOWN) me->frame = 0;
+		if(me->variables->direction == LEFT || me->variables->direction == RIGHT) me->frame = 3;
+		if(me->variables->direction == UP) me->frame = 6;
+		if(me->variables->direction == DOWN) me->frame = 0;
 	}
 }
 
