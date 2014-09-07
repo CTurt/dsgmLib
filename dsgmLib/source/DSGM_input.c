@@ -29,7 +29,7 @@ void DSGM_UpdateInput(void) {
 	MAP_KEY(L,		KEY_L);
 	MAP_KEY(X,		KEY_X);
 	MAP_KEY(Y,		KEY_Y);
-	MAP_KEY(Touch,	KEY_TOUCH);
+	MAP_KEY(Stylus,	KEY_TOUCH);
 	MAP_KEY(Lid,	KEY_LID);
 	
 	#undef MAP_KEY

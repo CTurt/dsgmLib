@@ -110,7 +110,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 				if(objectInstance->object->loop) objectInstance->object->loop(objectInstance);
 				
 				if(screen == DSGM_BOTTOM && objectInstance->object->touch) {
-					if(DSGM_newpress.Touch && DSGM_StylusOverObjectInstanceFull(room, objectInstance)) objectInstance->object->touch(objectInstance);
+					if(DSGM_newpress.Stylus && DSGM_StylusOverObjectInstanceFull(room, objectInstance)) objectInstance->object->touch(objectInstance);
 				}
 				
 				int collisionEvent;

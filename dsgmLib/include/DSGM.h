@@ -38,6 +38,7 @@ typedef DSGM_SpriteEntry DSGM_OAMStructLabel[0];
 #include "DSGM_object.h"
 #include "DSGM_sound.h"
 #include "DSGM_room.h"
+#include "DSGM_drawable.h"
 
 #ifndef BUILDINGLIB
 	#include "project.h"

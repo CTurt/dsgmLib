@@ -28,19 +28,6 @@ inline bool DSGM_BackgroundIsNitroFull(DSGM_Background *background) {
 	return !background->tiles;
 }
 
-void DSGM_InitDrawableBackground(DSGM_BackgroundInstance *backgroundInstance) {
-	DSGM_Debug("Drawable background screen %d, layer %d", backgroundInstance->screen, backgroundInstance->layer);
-	switch(backgroundInstance->screen) {
-		case DSGM_TOP:
-			backgroundInstance->vramId = bgInit(backgroundInstance->layer, BgType_Bmp8, BgSize_B8_256x256, backgroundInstance->mapBase, backgroundInstance->tileBase);
-			break;
-			
-		case DSGM_BOTTOM:
-			backgroundInstance->vramId = bgInitSub(backgroundInstance->layer, BgType_Bmp8, BgSize_B8_256x256, backgroundInstance->mapBase, backgroundInstance->tileBase);
-			break;
-	}
-}
-
 void DSGM_LoadBackgroundFull(DSGM_BackgroundInstance *backgroundInstance) {
 	switch(backgroundInstance->screen) {
 		case DSGM_TOP:

@@ -16,7 +16,7 @@ typedef struct {
 	bool L;
 	bool X;
 	bool Y;
-	bool Touch;
+	bool Stylus;
 	bool Lid;
 } DSGM_Input;
 
