@@ -84,6 +84,9 @@ void DSGM_ActivateObjectInstance(DSGM_Room *room, DSGM_ObjectInstance *objectIns
 		// Recreate sprite
 		DSGM_CreateSprite(screen, spriteNumber, x, y, objectInstance->priority, objectInstance->frame, objectInstance->hFlip, objectInstance->vFlip, sprite);
 	}
+	else {
+		if(objectInstance->object->create) objectInstance->object->create(objectInstance);
+	}
 }
 
 DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Object *object) {
