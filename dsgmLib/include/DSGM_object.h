@@ -48,6 +48,7 @@ typedef struct DSGM_objectInstance {
 } DSGM_ObjectInstance;
 
 typedef struct {
+	DSGM_Object *object;
 	DSGM_ObjectInstance *objectInstances;
 	int objectInstanceCount;
 } DSGM_ObjectGroup;

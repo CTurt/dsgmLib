@@ -153,10 +153,14 @@ void DSGM_LeaveRoom(DSGM_Room *room) {
 				DSGM_Debug("Freeing object instance custom variables\n");
 				free(room->objectGroups[screen][group].objectInstances[object].variables);
 			}
-			DSGM_Debug("Freeing object events at %p\n", room->objectGroups[screen][group].objectInstances[0].object->collisionEvents);
-			free(room->objectGroups[screen][group].objectInstances[0].object->collisionEvents);
-			room->objectGroups[screen][group].objectInstances[0].object->collisionEvents = NULL;
-			room->objectGroups[screen][group].objectInstances[0].object->collisionEventCount = 0;
+			//DSGM_Debug("Freeing object events at %p\n", room->objectGroups[screen][group].objectInstances[0].object->collisionEvents);
+			//free(room->objectGroups[screen][group].objectInstances[0].object->collisionEvents);
+			//room->objectGroups[screen][group].objectInstances[0].object->collisionEvents = NULL;
+			//room->objectGroups[screen][group].objectInstances[0].object->collisionEventCount = 0;
+			DSGM_Debug("Freeing object events at %p\n", room->objectGroups[screen][group].object->collisionEvents);
+			free(room->objectGroups[screen][group].object->collisionEvents);
+			room->objectGroups[screen][group].object->collisionEvents = NULL;
+			room->objectGroups[screen][group].object->collisionEventCount = 0;
 			DSGM_Debug("Freeing object instances at address %p on %s screen\n", room->objectGroups[screen][group].objectInstances, screen == DSGM_TOP ? "top" : "bottom");
 			free(room->objectGroups[screen][group].objectInstances);
 		}

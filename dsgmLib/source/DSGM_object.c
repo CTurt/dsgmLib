@@ -13,6 +13,7 @@ void DSGM_SetupObjectGroups(DSGM_Room *room, u8 screen, int objectGroupCount) {
 void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 screen, int objectInstanceCount, ...) {
 	va_list properties;
 	int i;
+	group->object = object;
 	group->objectInstanceCount = objectInstanceCount;
 	if(objectInstanceCount > 0) {
 		DSGM_Debug("Allocating %d object instance(s) on %s screen\n", objectInstanceCount, screen == DSGM_TOP ? "top" : "bottom");
@@ -92,10 +93,10 @@ void DSGM_ActivateObjectInstance(DSGM_Room *room, DSGM_ObjectInstance *objectIns
 DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Object *object) {
 	int i;
 	for(i = 0; i < room->objectGroupCount[screen]; i++) {
-		if(room->objectGroups[screen][i].objectInstanceCount > 0) {
-			// Todo: don't rely on there to be an object instance 0
-			if(room->objectGroups[screen][i].objectInstances[0].object == object) return &room->objectGroups[screen][i];
-		}
+		if(room->objectGroups[screen][i].object == object) return &room->objectGroups[screen][i];
+		//if(room->objectGroups[screen][i].objectInstanceCount > 0) {
+		//	if(room->objectGroups[screen][i].objectInstances[0].object == object) return &room->objectGroups[screen][i];
+		//}
 	}
 	return NULL;
 }
