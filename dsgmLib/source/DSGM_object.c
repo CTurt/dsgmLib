@@ -37,15 +37,43 @@ void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 
 void DSGM_RedistributeSpriteNumbers(DSGM_Room *room, u8 screen) {
 	int group;
 	int object;
+	int rotset;
 	
 	DSGM_nextFreeSprite[screen] = 0;
 	
 	for(group = 0; group < room->objectGroupCount[screen]; group++) {
 		for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
 			if(room->objectGroups[screen][group].objectInstances[object].object->sprite != DSGM_NO_SPRITE) {
-				room->objectGroups[screen][group].objectInstances[object].spriteNumber = DSGM_NextFreeSpriteNumber(screen);
+				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
+				
+				objectInstance->spriteNumber = DSGM_NextFreeSpriteNumber(screen);
+				
+				// Calculate position
+				int x = objectInstance->x - room->view[screen].x;
+				int y = objectInstance->y - room->view[screen].y;
+				if(x < 256 && x > -128 && y < 192 && y > -64 && !objectInstance->hide) {
+					x = objectInstance->angle ? x - DSGM_GetSpriteWidth(objectInstance->object->sprite) / 2 : x;
+					y = objectInstance->angle ? y - DSGM_GetSpriteHeight(objectInstance->object->sprite) / 2 : y;
+				}
+				else {
+					x = 255;
+					y = 191;
+				}
+				
+				objectInstance->absoluteX = x;
+				objectInstance->absoluteY = y;
+				
+				// Calculate GFX index
+				objectInstance->gfxIndex = oamGfxPtrToOffset(objectInstance->screen == DSGM_TOP ? &oamMain : &oamSub, (objectInstance->screen == DSGM_TOP ? objectInstance->object->sprite->topTiles : objectInstance->object->sprite->bottomTiles)[objectInstance->frame]);
+				
+				// Copy into OAM
+				memcpy(&(objectInstance->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[objectInstance->spriteNumber], &objectInstance->oam, sizeof(DSGM_SpriteEntry));
 			}
 		}
+	}
+	
+	for(rotset = 0; rotset < 32; rotset++) {
+		DSGM_SetRotset(screen, rotset, DSGM_rotations[screen][rotset], DSGM_scales[screen][rotset].x, DSGM_scales[screen][rotset].y);
 	}
 }
 
