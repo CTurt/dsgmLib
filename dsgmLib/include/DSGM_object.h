@@ -63,16 +63,20 @@ typedef struct {
 
 void DSGM_SetupObjectGroups(DSGM_Room *room, u8 screen, int objectGroupCount);
 void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 screen, int objectInstanceCount, ...);
+void DSGM_RedistributeSpriteNumbers(DSGM_Room *room, u8 screen);
 void DSGM_ActivateObjectInstance(DSGM_Room *room, DSGM_ObjectInstance *objectInstance);
 DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Object *object);
 
 #define DSGM_CreateObjectInstance(screen, x, y, object)\
 do {\
 	DSGM_ObjectInstanceRelation relation = DSGM_GetObjectInstanceRelation(me);\
-	DSGM_CreateObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y, &DSGM_Objects[object]);\
+	DSGM_CreateObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y, object);\
 	me = DSGM_GetMeFromObjectInstanceRelationFull(&DSGM_Rooms[DSGM_currentRoom], &relation);\
 } while(0)
 DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, int x, int y, DSGM_Object *object);
+
+#define DSGM_DeleteObjectInstance(objectInstance) DSGM_DeleteObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], (DSGM_ObjectInstance *)objectInstance)
+void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *objectInstance);
 
 #define DSGM_GetObjectInstanceRelation(me) DSGM_GetObjectInstanceRelationFull(&DSGM_Rooms[DSGM_currentRoom], (DSGM_ObjectInstance *)me)
 DSGM_ObjectInstanceRelation DSGM_GetObjectInstanceRelationFull(DSGM_Room *room, DSGM_ObjectInstance *me);

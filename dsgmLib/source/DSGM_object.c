@@ -34,6 +34,21 @@ void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 
 	va_end(properties);
 }
 
+void DSGM_RedistributeSpriteNumbers(DSGM_Room *room, u8 screen) {
+	int group;
+	int object;
+	
+	DSGM_nextFreeSprite[screen] = 0;
+	
+	for(group = 0; group < room->objectGroupCount[screen]; group++) {
+		for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
+			if(room->objectGroups[screen][group].objectInstances[object].object->sprite != DSGM_NO_SPRITE) {
+				room->objectGroups[screen][group].objectInstances[object].spriteNumber = DSGM_NextFreeSpriteNumber(screen);
+			}
+		}
+	}
+}
+
 void DSGM_ActivateObjectInstance(DSGM_Room *room, DSGM_ObjectInstance *objectInstance) {
 	{
 		u8 screen;
@@ -154,7 +169,40 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, i
 	}
 }
 
-// To do: DSGM_DeleteObjectInstance
+void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *objectInstance) {
+	DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, objectInstance->screen, objectInstance->object);
+	
+	if(!group) {
+		DSGM_Debug("PEBCAK! Supplied a bad object instance %p, object %p, no object group could be found\n", objectInstance, objectInstance->object);
+		return;
+	}
+	
+	bool spriteNumbersChange = 0;
+	u8 screen = objectInstance->screen;
+	
+	if(objectInstance->object->sprite != DSGM_NO_SPRITE) {
+		spriteNumbersChange = 1;
+	}
+	
+	int ID = DSGM_GetObjectInstanceIDFull(room, objectInstance);
+	
+	DSGM_Debug("Deleting object instance with ID %d\n", ID);
+	
+	if(ID < group->objectInstanceCount - 1) {
+		DSGM_Debug("Shifting %d object instances for deletion\n", (group->objectInstanceCount - ID - 1));
+		memcpy(&group->objectInstances[ID], &group->objectInstances[ID + 1], (group->objectInstanceCount - ID - 1) * sizeof(DSGM_ObjectInstance));
+	}
+	
+	group->objectInstances = realloc(group->objectInstances, --group->objectInstanceCount * sizeof(DSGM_ObjectInstance));
+	
+	if(spriteNumbersChange) {
+		int i;
+		for(i = 0; i < 128; i++) {	
+			oamSet(screen == DSGM_TOP ? &oamMain : &oamSub, i, 0, 0, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, NULL, -1, false, true, false, false, false);
+		}
+		DSGM_RedistributeSpriteNumbers(room, screen);
+	}
+}
 
 DSGM_ObjectInstanceRelation DSGM_GetObjectInstanceRelationFull(DSGM_Room *room, DSGM_ObjectInstance *me) {
 	DSGM_ObjectInstanceRelation relation;
