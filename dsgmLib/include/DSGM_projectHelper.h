@@ -24,6 +24,13 @@ void DSGM_Init(void) {
 	return DSGM_GetObjectGroupFull(&DSGM_Rooms[DSGM_currentRoom], screen, object);
 }*/
 
+/*#define DSGM_CreateObjectInstance(screen, x, y, object)\
+do {\
+	DSGM_ObjectInstanceRelation relation = DSGM_GetObjectInstanceRelation(me);\
+	DSGM_CreateObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], &me, screen, x, y, object);\
+	me = DSGM_GetMeFromObjectInstanceRelationFull(&DSGM_Rooms[DSGM_currentRoom], &relation);\
+} while(0)*/
+
 #define DSGM_PlaySound(sound) DSGM_PlaySoundFull(&DSGM_Sounds[sound])
 /*inline DSGM_SoundInstance *DSGM_PlaySound(int sound) {
 	return DSGM_PlaySoundFull(&DSGM_Sounds[sound]);

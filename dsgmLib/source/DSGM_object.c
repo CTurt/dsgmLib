@@ -116,7 +116,9 @@ DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Objec
 	return NULL;
 }
 
-DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, int x, int y, DSGM_Object *object) {
+DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance **meP, u8 screen, int x, int y, DSGM_Object *object) {
+	DSGM_ObjectInstanceRelation relation = DSGM_GetObjectInstanceRelationFull(room, *meP);
+	
 	DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, screen, object);
 	
 	DSGM_Debug("Creating object instance %p\n", object);
@@ -138,6 +140,9 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, i
 		memset(group->objectInstances[group->objectInstanceCount].variables, 0, sizeof(object->customVariablesSize));
 		
 		DSGM_ActivateObjectInstance(room, &group->objectInstances[group->objectInstanceCount]);
+		
+		*meP = DSGM_GetMeFromObjectInstanceRelationFull(room, &relation);
+		
 		return &group->objectInstances[group->objectInstanceCount++];
 	}
 	else {
@@ -164,6 +169,8 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, i
 		}*/
 		
 		DSGM_ActivateObjectInstance(room, &group->objectInstances[0]);
+		
+		*meP = DSGM_GetMeFromObjectInstanceRelationFull(room, &relation);
 		
 		return &group->objectInstances[0];
 	}
