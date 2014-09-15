@@ -102,11 +102,11 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			{
 				// Layer 0
 				{
-					DSGM_NO_BACKGROUND,			// Background
+					DSGM_TEXT_BACKGROUND,		// Background
 					DSGM_TOP,					// Screen
 					0,							// Layer
 					false,						// Attached to view system
-					0,							// Map base
+					7,							// Map base
 					0,							// Tile base
 					0, 0, 0
 				},
@@ -211,6 +211,8 @@ void DSGM_SetupRooms(int room) {
 }
 
 void player_create(playerObjectInstance *me) {
+	DSGM_DrawText(DSGM_TOP, 1, 1, "D-Pad to move, A to shoot");
+	
 	me->variables->xb = me->x << 11;
 	me->variables->yb = me->y << 11;
 	DSGM_InitObjectInstanceRotScale(me);
