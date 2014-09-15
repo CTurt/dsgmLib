@@ -195,6 +195,8 @@ void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *objectI
 	
 	DSGM_Debug("Deleting object instance with ID %d\n", ID);
 	
+	if(objectInstance->object->destroy) objectInstance->object->destroy(objectInstance);
+	
 	if(ID < group->objectInstanceCount - 1) {
 		DSGM_Debug("Shifting %d object instances for deletion\n", (group->objectInstanceCount - ID - 1));
 		memcpy(&group->objectInstances[ID], &group->objectInstances[ID + 1], (group->objectInstanceCount - ID - 1) * sizeof(DSGM_ObjectInstance));
