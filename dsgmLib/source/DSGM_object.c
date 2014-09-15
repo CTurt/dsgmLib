@@ -28,7 +28,7 @@ void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 
 		group->objectInstances[i].x = va_arg(properties, int);
 		group->objectInstances[i].y = va_arg(properties, int);
 		group->objectInstances[i].variables = malloc(object->customVariablesSize);
-		memset(group->objectInstances[group->objectInstanceCount].variables, 0, sizeof(object->customVariablesSize));
+		memset(group->objectInstances[i].variables, 0, sizeof(object->customVariablesSize));
 	}
 	va_end(properties);
 }
@@ -93,6 +93,7 @@ DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Objec
 	int i;
 	for(i = 0; i < room->objectGroupCount[screen]; i++) {
 		if(room->objectGroups[screen][i].objectInstanceCount > 0) {
+			// Todo: don't rely on there to be an object instance 0
 			if(room->objectGroups[screen][i].objectInstances[0].object == object) return &room->objectGroups[screen][i];
 		}
 	}
@@ -102,7 +103,11 @@ DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Objec
 DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, int x, int y, DSGM_Object *object) {
 	DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, screen, object);
 	
+	DSGM_Debug("Creating object instance %p\n", object);
+	
 	if(group) {
+		DSGM_Debug("Object group found at %p\n", group);
+		
 		DSGM_Debug("Reallocating object instances at %p\n", group->objectInstances);
 		group->objectInstances = realloc(group->objectInstances, (group->objectInstanceCount + 1) * sizeof(DSGM_ObjectInstance));
 		DSGM_Debug("Gave address %p for size %d\n", group->objectInstances, (group->objectInstanceCount + 1) * sizeof(DSGM_ObjectInstance));
@@ -120,23 +125,52 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, i
 		return &group->objectInstances[group->objectInstanceCount++];
 	}
 	else {
-		// To do, fix this
+		DSGM_Debug("No object group for object, creating object group\n");
 		
-		/*DSGM_Debug("Reallocating object groups at %p\n", room->objectGroups[screen]);
-		group = realloc(room->objectGroups[screen], (room->objectGroupCount[screen] + 1) * sizeof(DSGM_ObjectGroup));
+		DSGM_Debug("Reallocating object groups at %p\n", room->objectGroups[screen]);
+		room->objectGroups[screen] = realloc(room->objectGroups[screen], (room->objectGroupCount[screen] + 1) * sizeof(DSGM_ObjectGroup));
 		DSGM_Debug("Gave address %p\n", room->objectGroups[screen]);
 		
-		group = &room->objectGroups[screen][room->objectGroupCount[screen]];
+		group = &room->objectGroups[screen][room->objectGroupCount[screen]++];
+		
 		DSGM_SetupObjectInstances(group, object, screen, 1, x, y);
+		/*{
+			group->objectInstanceCount = 1;
+			group->objectInstances = malloc(sizeof(DSGM_ObjectInstance));
+			
+			memset(&group->objectInstances[0], 0, sizeof(DSGM_ObjectInstance));
+			group->objectInstances[0].object = object;
+			group->objectInstances[0].screen = screen;
+			group->objectInstances[0].x = x;
+			group->objectInstances[0].y = y;
+			group->objectInstances[0].variables = malloc(object->customVariablesSize);
+			memset(group->objectInstances[0].variables, 0, sizeof(object->customVariablesSize));
+		}*/
 		
 		DSGM_ActivateObjectInstance(room, &group->objectInstances[0]);
-		return &group->objectInstances[0];*/
 		
-		return NULL;
+		return &group->objectInstances[0];
 	}
 }
 
 // To do: DSGM_DeleteObjectInstance
+
+DSGM_ObjectInstanceRelation DSGM_GetObjectInstanceRelationFull(DSGM_Room *room, DSGM_ObjectInstance *me) {
+	DSGM_ObjectInstanceRelation relation;
+	DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, me->screen, me->object);
+	relation.screen = me->screen;
+	relation.ID = ((void *)me - (void *)(group->objectInstances)) / sizeof(DSGM_ObjectInstance);
+	relation.groupN = ((void *)group - (void *)room->objectGroups[me->screen]) / sizeof(DSGM_ObjectGroup);
+	
+	DSGM_Debug("Getting relation: group %d, ID %d\n", relation.groupN, relation.ID);
+	
+	return relation;
+}
+
+inline void *DSGM_GetMeFromObjectInstanceRelationFull(DSGM_Room *room, DSGM_ObjectInstanceRelation *relation) {
+	DSGM_Debug("Getting me value with group %d, ID %d\n", relation->groupN, relation->ID);
+	return (void *)&room->objectGroups[relation->screen][relation->groupN].objectInstances[relation->ID];
+}
 
 void (DSGM_AddCollisionEvent)(DSGM_Object *object, DSGM_Object *collider, DSGM_CollisionEventFunction function) {
 	DSGM_Debug("Adding collision event\n");

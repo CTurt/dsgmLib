@@ -52,6 +52,12 @@ typedef struct {
 	int objectInstanceCount;
 } DSGM_ObjectGroup;
 
+typedef struct {
+	u8 screen;
+	int ID;
+	int groupN;
+} DSGM_ObjectInstanceRelation;
+
 #include "DSGM_room.h"
 
 void DSGM_SetupObjectGroups(DSGM_Room *room, u8 screen, int objectGroupCount);
@@ -61,11 +67,17 @@ DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Objec
 
 #define DSGM_CreateObjectInstance(screen, x, y, object)\
 do {\
-	int ID = DSGM_GetObjectInstanceID(me);\
-	DSGM_CreateObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y, object);\
-	me = (void *)&DSGM_GetGroup(me)->objectInstances[ID];\
+	DSGM_ObjectInstanceRelation relation = DSGM_GetObjectInstanceRelation(me);\
+	DSGM_CreateObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y, &DSGM_Objects[object]);\
+	me = DSGM_GetMeFromObjectInstanceRelationFull(&DSGM_Rooms[DSGM_currentRoom], &relation);\
 } while(0)
 DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, u8 screen, int x, int y, DSGM_Object *object);
+
+#define DSGM_GetObjectInstanceRelation(me) DSGM_GetObjectInstanceRelationFull(&DSGM_Rooms[DSGM_currentRoom], (DSGM_ObjectInstance *)me)
+DSGM_ObjectInstanceRelation DSGM_GetObjectInstanceRelationFull(DSGM_Room *room, DSGM_ObjectInstance *me);
+
+#define DSGM_GetMeFromObjectInstanceRelation(relation) DSGM_GetMeFromObjectInstanceRelationFull(&DSGM_Rooms[DSGM_currentRoom], me)
+void *DSGM_GetMeFromObjectInstanceRelationFull(DSGM_Room *room, DSGM_ObjectInstanceRelation *relation);
 
 #define DSGM_AddCollisionEvent(object, collider, function) DSGM_AddCollisionEvent(object, collider, (DSGM_CollisionEventFunction)function)
 void (DSGM_AddCollisionEvent)(DSGM_Object *object, DSGM_Object *collider, DSGM_CollisionEventFunction function);
