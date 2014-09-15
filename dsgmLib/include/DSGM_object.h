@@ -103,6 +103,9 @@ void (DSGM_InitObjectInstanceRotScale)(DSGM_ObjectInstance *me);
 #define DSGM_InitSharedObjectInstanceRotScale(me, rotset) DSGM_InitSharedObjectInstanceRotScale((DSGM_ObjectInstance *)me, rotset)
 void (DSGM_InitSharedObjectInstanceRotScale)(DSGM_ObjectInstance *me, int rotset);
 
+#define DSGM_DeinitObjectInstanceRotScale(me) DSGM_DeinitObjectInstanceRotScale((DSGM_ObjectInstance *)me)
+void (DSGM_DeinitObjectInstanceRotScale)(DSGM_ObjectInstance *me);
+
 #define DSGM_AnimateObjectInstance(me, startFrame, endFrame, frequency) DSGM_AnimateObjectInstance((DSGM_ObjectInstance *)me, startFrame, endFrame, frequency)
 void (DSGM_AnimateObjectInstance)(DSGM_ObjectInstance *me, int startFrame, int endFrame, int frequency);
 

@@ -91,7 +91,7 @@ typedef union {
 } DSGM_SpriteEntry;
 
 extern int DSGM_nextFreeSprite[2];
-extern int DSGM_nextFreeRotset[2];
+extern int DSGM_rotsetTracker[2][32];
 
 extern int DSGM_rotations[2][32];
 extern DSGM_Scale DSGM_scales[2][32];

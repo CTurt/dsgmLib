@@ -220,10 +220,10 @@ void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *objectI
 	}
 	
 	int ID = DSGM_GetObjectInstanceIDFull(room, objectInstance);
-	
 	DSGM_Debug("Deleting object instance with ID %d\n", ID);
 	
 	if(objectInstance->object->destroy) objectInstance->object->destroy(objectInstance);
+	DSGM_DeinitObjectInstanceRotScale(objectInstance);
 	
 	if(ID < group->objectInstanceCount - 1) {
 		DSGM_Debug("Shifting %d object instances for deletion\n", (group->objectInstanceCount - ID - 1));
@@ -296,6 +296,7 @@ inline int DSGM_GetObjectInstanceIDFull(DSGM_Room *room, DSGM_ObjectInstance *me
 
 void (DSGM_InitObjectInstanceRotScale)(DSGM_ObjectInstance *me) {
 	int rotset = DSGM_NextFreeRotset(me->screen);
+	DSGM_rotsetTracker[me->screen][rotset]++;
 	me->angle = &DSGM_rotations[me->screen][rotset];
 	me->scale = &DSGM_scales[me->screen][rotset];
 	me->rotationIndex = rotset;
@@ -304,11 +305,20 @@ void (DSGM_InitObjectInstanceRotScale)(DSGM_ObjectInstance *me) {
 }
 
 void (DSGM_InitSharedObjectInstanceRotScale)(DSGM_ObjectInstance *me, int rotset) {
+	DSGM_rotsetTracker[me->screen][rotset]++;
 	me->angle = &DSGM_rotations[me->screen][rotset];
 	me->scale = &DSGM_scales[me->screen][rotset];
 	me->rotationIndex = rotset;
 	me->isSizeDouble = true;
 	me->isRotateScale = true;
+}
+
+void (DSGM_DeinitObjectInstanceRotScale)(DSGM_ObjectInstance *me) {
+	if(me->angle) {
+		int rotset = ((void *)me->angle - (void *)&DSGM_rotations[me->screen][0]) / sizeof(DSGM_rotations[0][0]);
+		DSGM_rotsetTracker[me->screen][rotset]--;
+		DSGM_Debug("Freeing up one usage of rotset %d\n", rotset);
+	}
 }
 
 void (DSGM_AnimateObjectInstance)(DSGM_ObjectInstance *me, int startFrame, int endFrame, int frequency) {

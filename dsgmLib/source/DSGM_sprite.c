@@ -14,7 +14,7 @@
 */
 
 int DSGM_nextFreeSprite[2] = { 0, 0 };
-int DSGM_nextFreeRotset[2] = { 0, 0 };
+int DSGM_rotsetTracker[2][32];
 
 int DSGM_rotations[2][32] = { { 0 }, { 0 } };
 DSGM_Scale DSGM_scales[2][32] = { { [0 ... 31] = { 1 << 8, 1 << 8 } }, { [0 ... 31] = { 1 << 8, 1 << 8 } } };
@@ -26,7 +26,13 @@ inline int DSGM_NextFreeSpriteNumber(u8 screen) {
 }
 
 inline int DSGM_NextFreeRotset(u8 screen) {
-	return DSGM_nextFreeRotset[screen]++;
+	int i;
+	for(i = 0; i < 32; i++) {
+		if(DSGM_rotsetTracker[screen][i] == 0) {
+			return i;
+		}
+	}
+	return 0;
 }
 
 inline int DSGM_GetSpriteWidth(DSGM_Sprite *sprite) {
@@ -83,8 +89,9 @@ void DSGM_ResetSprites(DSGM_Sprite *sprites, int spriteCount) {
 	
 	DSGM_nextFreeSprite[DSGM_TOP] = 0;
 	DSGM_nextFreeSprite[DSGM_BOTTOM] = 0;
-	DSGM_nextFreeRotset[DSGM_TOP] = 0;
-	DSGM_nextFreeRotset[DSGM_BOTTOM] = 0;
+	memset(&DSGM_rotsetTracker, 0, sizeof(DSGM_rotsetTracker));
+	//DSGM_nextFreeRotset[DSGM_TOP] = 0;
+	//DSGM_nextFreeRotset[DSGM_BOTTOM] = 0;
 	
 	for(i = 0; i < 128; i++) {	
 		//oamSet(&oamMain, i, 0, 0, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, NULL, -1, false, true, false, false, false);
