@@ -83,7 +83,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 				// Calculate position
 				int x = objectInstance->x - room->view[screen].x;
 				int y = objectInstance->y - room->view[screen].y;
-				if(x < 256 && x > -128 && y < 192 && y > -128 && !objectInstance->hide) {
+				if(x < 256 && x > -128 && y < 192 && y > -64 && !objectInstance->hide) {
 					x = objectInstance->angle ? x - DSGM_GetSpriteWidth(objectInstance->object->sprite) / 2 : x;
 					y = objectInstance->angle ? y - DSGM_GetSpriteHeight(objectInstance->object->sprite) / 2 : y;
 				}

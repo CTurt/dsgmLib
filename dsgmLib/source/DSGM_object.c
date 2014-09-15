@@ -92,7 +92,7 @@ void DSGM_ActivateObjectInstance(DSGM_Room *room, DSGM_ObjectInstance *objectIns
 		// Don't need to take into account double size here
 		x = objectInstance->x - room->view[screen].x;
 		y = objectInstance->y - room->view[screen].y;
-		if(!(x < 256 && x > -128 && y < 192 && y > -128 && !objectInstance->hide)) {
+		if(!(x < 256 && x > -128 && y < 192 && y > -64 && !objectInstance->hide)) {
 			x = 255;
 			y = 191;
 		}
