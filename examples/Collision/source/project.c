@@ -230,7 +230,7 @@ void player_loop(playerObjectInstance *me) {
 	if(me->x == 223 || me->x == 0) direction = !direction;
 }
 
-void player_collide_ball(playerObjectInstance *me, DSGM_ObjectInstance *collider) {
+void player_collide_ball(playerObjectInstance *me, ballObjectInstance *collider) {
 	DSGM_DrawText(DSGM_BOTTOM, 1, 1, "Collision!");
 	collider->y += 1;
 }
