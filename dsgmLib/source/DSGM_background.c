@@ -24,6 +24,18 @@ void DSGM_LockBackgroundPalette(u8 screen) {
 	}
 }
 
+void DSGM_SetBackgroundColour(u8 screen, int colour) {
+	switch(screen) {
+		case DSGM_TOP:
+			BG_PALETTE[0] = colour;
+			break;
+			
+		case DSGM_BOTTOM:
+			BG_PALETTE_SUB[0] = colour;
+			break;
+	}
+}
+
 inline bool DSGM_BackgroundIsNitroFull(DSGM_Background *background) {
 	return !background->tiles;
 }
