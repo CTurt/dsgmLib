@@ -68,7 +68,7 @@ Getting Started
     CustomVariables
     Priority
     RotsetEffects
-	Unpossible
+    Unpossible
 
 Let's compile the `Collision` example.
 
