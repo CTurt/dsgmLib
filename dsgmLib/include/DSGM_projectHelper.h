@@ -66,6 +66,8 @@ void DSGM_ResetAll(void) {
 void DSGM_SwitchRoom(int room, bool reset) {
 	//DSGM_LeaveRoom(&DSGM_Rooms[DSGM_currentRoom]);
 	
+	DSGM_invalidateRoom = 1;
+	
 	DSGM_ResetAll();
 	
 	DSGM_currentRoom = room;

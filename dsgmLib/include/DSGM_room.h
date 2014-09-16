@@ -1,5 +1,12 @@
 #pragma once
 
+#define DSGM_ValidateRoom() do {\
+	if(DSGM_invalidateRoom) {\
+		DSGM_invalidateRoom = 0;\
+		return;\
+	}\
+} while(0)
+
 typedef struct {
 	DSGM_BackgroundInstance backgroundInstances[2][4];
 	
@@ -9,6 +16,8 @@ typedef struct {
 	DSGM_ObjectGroup *objectGroups[2];
 	int objectGroupCount[2];
 } DSGM_Room;
+
+extern bool DSGM_invalidateRoom;
 
 void DSGM_SetupViews(DSGM_Room *room);
 

@@ -1,5 +1,7 @@
 #include "DSGM.h"
 
+bool DSGM_invalidateRoom = 0;
+
 void DSGM_SetupViews(DSGM_Room *room) {
 	room->view[DSGM_TOP].x = room->initialView[DSGM_TOP].x;
 	room->view[DSGM_BOTTOM].x = room->initialView[DSGM_BOTTOM].x;
@@ -39,6 +41,7 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
 				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
 				DSGM_ActivateObjectInstance(room, objectInstance);
+				DSGM_ValidateRoom();
 			}
 		}
 	}
@@ -108,9 +111,13 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 				//swifastcopy();
 				
 				if(objectInstance->object->loop) objectInstance->object->loop(objectInstance);
+				DSGM_ValidateRoom();
 				
 				if(screen == DSGM_BOTTOM && objectInstance->object->touch) {
-					if(DSGM_newpress.Stylus && DSGM_StylusOverObjectInstanceFull(room, objectInstance)) objectInstance->object->touch(objectInstance);
+					if(DSGM_newpress.Stylus && DSGM_StylusOverObjectInstanceFull(room, objectInstance)) {
+						objectInstance->object->touch(objectInstance);
+						DSGM_ValidateRoom();
+					}
 				}
 				
 				int collisionEvent;
@@ -120,6 +127,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 					for(collider = 0; collider < colliderGroup->objectInstanceCount; collider++) {
 						if(DSGM_ObjectInstanceCollision(objectInstance, &colliderGroup->objectInstances[collider])) {
 							objectInstance->object->collisionEvents[collisionEvent].function(objectInstance, &colliderGroup->objectInstances[collider]);
+							DSGM_ValidateRoom();
 						}
 					}
 				}
