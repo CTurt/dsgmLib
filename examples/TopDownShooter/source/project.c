@@ -38,7 +38,7 @@ DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
 		&DSGM_Sprites[bulletSprite],
 		(DSGM_Event)bullet_create,
 		(DSGM_Event)bullet_loop,
-		(DSGM_Event)bullet_destroy,
+		DSGM_NO_EVENT,
 		DSGM_NO_EVENT,
 		NULL, 0,
 		
@@ -212,10 +212,8 @@ void DSGM_SetupRooms(int room) {
 
 void player_create(playerObjectInstance *me) {
 	DSGM_DrawText(DSGM_TOP, 1, 1, "D-Pad to move, A to shoot");
-	
-	me->variables->xb = me->x << 11;
-	me->variables->yb = me->y << 11;
 	DSGM_InitObjectInstanceRotScale(me);
+	me->bitshift = 11;
 }
 
 void player_loop(playerObjectInstance *me) {
@@ -226,12 +224,10 @@ void player_loop(playerObjectInstance *me) {
 		(*me->angle) -= degreesToAngle(4);
 	}
 	if(DSGM_held.Up) {
-		me->variables->xb += cosLerp(*me->angle);
-		me->variables->yb -= sinLerp(*me->angle);
+		DSGM_MoveObjectInstanceAtRotatedAngle(me);
 	}
 	if(DSGM_held.Down) {
-		me->variables->xb -= cosLerp(*me->angle);
-		me->variables->yb += sinLerp(*me->angle);
+		DSGM_MoveObjectInstanceAtAngle(me, (*me->angle) + degreesToAngle(180));
 	}
 	
 	if(DSGM_newpress.A) {
@@ -240,28 +236,17 @@ void player_loop(playerObjectInstance *me) {
 		
 		DSGM_UpdateInput();
 	}
-	
-	me->x = me->variables->xb >> 11;
-	me->y = me->variables->yb >> 11;
 }
 
 void bullet_create(bulletObjectInstance *me) {
-	me->variables->xb = me->x << 10;
-	me->variables->yb = me->y << 10;
 	DSGM_InitObjectInstanceRotScale(me);
+	me->bitshift = 9;
 }
 
 void bullet_loop(bulletObjectInstance *me) {
-	me->variables->xb += cosLerp(*me->angle);
-	me->variables->yb -= sinLerp(*me->angle);
-	me->x = me->variables->xb >> 10;
-	me->y = me->variables->yb >> 10;
+	DSGM_MoveObjectInstanceAtRotatedAngle(me);
 	
 	if(!DSGM_ObjectInstanceOnScreen(me)) {
 		DSGM_DeleteObjectInstance(me);
 	}
-}
-
-void bullet_destroy(bulletObjectInstance *me) {
-	//DSGM_Log(false, "Destroying bullet\n");
 }

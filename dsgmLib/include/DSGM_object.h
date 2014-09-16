@@ -2,6 +2,8 @@
 
 #define DSGM_NO_EVENT NULL
 
+#define DSGM_DEFAULT_BITSHIFT 8
+
 struct DSGM_objectInstance;
 
 typedef void (*DSGM_Event)(struct DSGM_objectInstance *me);
@@ -32,6 +34,9 @@ typedef struct {
 	int spriteNumber;
 	int x;
 	int y;
+	int bx;
+	int by;
+	u8 bitshift;
 	u8 frame;
 	int animationTimer;
 	int *angle;
@@ -105,6 +110,12 @@ void (DSGM_InitSharedObjectInstanceRotScale)(DSGM_ObjectInstance *me, int rotset
 
 #define DSGM_DeinitObjectInstanceRotScale(me) DSGM_DeinitObjectInstanceRotScale((DSGM_ObjectInstance *)me)
 void (DSGM_DeinitObjectInstanceRotScale)(DSGM_ObjectInstance *me);
+
+#define DSGM_MoveObjectInstanceAtAngle(me, angle) DSGM_MoveObjectInstanceAtAngle((DSGM_ObjectInstance *)me, angle)
+void (DSGM_MoveObjectInstanceAtAngle)(DSGM_ObjectInstance *me, int angle);
+
+#define DSGM_MoveObjectInstanceAtRotatedAngle(me) DSGM_MoveObjectInstanceAtRotatedAngle((DSGM_ObjectInstance *)me)
+void (DSGM_MoveObjectInstanceAtRotatedAngle)(DSGM_ObjectInstance *me);
 
 #define DSGM_AnimateObjectInstance(me, startFrame, endFrame, frequency) DSGM_AnimateObjectInstance((DSGM_ObjectInstance *)me, startFrame, endFrame, frequency)
 void (DSGM_AnimateObjectInstance)(DSGM_ObjectInstance *me, int startFrame, int endFrame, int frequency);

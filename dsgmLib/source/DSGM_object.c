@@ -28,6 +28,7 @@ void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 
 		group->objectInstances[i].screen = screen;
 		group->objectInstances[i].x = va_arg(properties, int);
 		group->objectInstances[i].y = va_arg(properties, int);
+		group->objectInstances[i].bitshift = DSGM_DEFAULT_BITSHIFT;
 		group->objectInstances[i].variables = malloc(object->customVariablesSize);
 		memset(group->objectInstances[i].variables, 0, sizeof(object->customVariablesSize));
 	}
@@ -163,6 +164,7 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, DSGM_ObjectI
 		group->objectInstances[group->objectInstanceCount].screen = screen;
 		group->objectInstances[group->objectInstanceCount].x = x;
 		group->objectInstances[group->objectInstanceCount].y = y;
+		group->objectInstances[group->objectInstanceCount].bitshift = DSGM_DEFAULT_BITSHIFT;
 		group->objectInstances[group->objectInstanceCount].variables = malloc(object->customVariablesSize);
 		DSGM_Debug("Allocated custom variables %p for size %d\n", group->objectInstances[group->objectInstanceCount].variables, object->customVariablesSize);
 		memset(group->objectInstances[group->objectInstanceCount].variables, 0, sizeof(object->customVariablesSize));
@@ -192,6 +194,7 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, DSGM_ObjectI
 			group->objectInstances[0].screen = screen;
 			group->objectInstances[0].x = x;
 			group->objectInstances[0].y = y;
+			group->objectInstances[0].bitshift = DSGM_DEFAULT_BITSHIFT;
 			group->objectInstances[0].variables = malloc(object->customVariablesSize);
 			memset(group->objectInstances[0].variables, 0, sizeof(object->customVariablesSize));
 		}*/
@@ -319,6 +322,32 @@ void (DSGM_DeinitObjectInstanceRotScale)(DSGM_ObjectInstance *me) {
 		DSGM_rotsetTracker[me->screen][rotset]--;
 		DSGM_Debug("Freeing up one usage of rotset %d\n", rotset);
 	}
+}
+
+void (DSGM_MoveObjectInstanceAtAngle)(DSGM_ObjectInstance *me, int angle) {
+	if(me->bx >> me->bitshift != me->x || me->by >> me->bitshift != me->y) {
+		me->bx = me->x << me->bitshift;
+		me->by = me->y << me->bitshift;
+	}
+	
+	me->bx += cosLerp(angle);
+	me->by -= sinLerp(angle);
+	
+	me->x = me->bx >> me->bitshift;
+	me->y = me->by >> me->bitshift;
+}
+
+void (DSGM_MoveObjectInstanceAtRotatedAngle)(DSGM_ObjectInstance *me) {
+	if(me->bx >> me->bitshift != me->x || me->by >> me->bitshift != me->y) {
+		me->bx = me->x << me->bitshift;
+		me->by = me->y << me->bitshift;
+	}
+	
+	me->bx += cosLerp(*me->angle);
+	me->by -= sinLerp(*me->angle);
+	
+	me->x = me->bx >> me->bitshift;
+	me->y = me->by >> me->bitshift;
 }
 
 void (DSGM_AnimateObjectInstance)(DSGM_ObjectInstance *me, int startFrame, int endFrame, int frequency) {

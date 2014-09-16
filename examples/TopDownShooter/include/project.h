@@ -36,14 +36,12 @@ typedef enum {
 typedef struct {
 	DSGM_ObjectInstanceBase;
 	struct {
-		int xb, yb;
 	} *variables;
 } playerObjectInstance;
 
 typedef struct {
 	DSGM_ObjectInstanceBase;
 	struct {
-		int xb, yb;
 	} *variables;
 } bulletObjectInstance;
 
@@ -67,4 +65,3 @@ void player_loop(playerObjectInstance *me);
 
 void bullet_create(bulletObjectInstance *me);
 void bullet_loop(bulletObjectInstance *me);
-void bullet_destroy(bulletObjectInstance *me);
