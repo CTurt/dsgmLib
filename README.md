@@ -10,7 +10,7 @@ Nintendo DS games are generally written in C, but C isn't a language which direc
 
 DS Game Maker generates dsgmLib code like this:
 
-    void ballObj_touch(DSGM_ObjectInstance *me) {
+    void ballObj_touch(ballObjectInstance *me) {
         me->x += 32;
         me->y += 32;
     }
@@ -68,6 +68,7 @@ Getting Started
     CustomVariables
     Priority
     RotsetEffects
+	Unpossible
 
 Let's compile the `Collision` example.
 
