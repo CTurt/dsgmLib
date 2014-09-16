@@ -218,9 +218,9 @@ void DSGM_SetupRooms(int room) {
 }
 
 void player_create(playerObjectInstance *me) {
-	DSGM_SetBackgroundColour(DSGM_TOP, DSGM_Colour(31, 31, 31));
-	DSGM_SetBackgroundColour(DSGM_BOTTOM, DSGM_Colour(31, 31, 31));
-	
+
+	DSGM_SetBackgroundColor(DSGM_TOP, DSGM_WHITE);
+
 	DSGM_InitObjectInstanceRotScale(me);
 	me->by = me->y << me->bitshift;
 }
