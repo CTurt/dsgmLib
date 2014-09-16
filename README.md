@@ -4,6 +4,33 @@ dsgmLib is an object-orientated C library for Nintendo DS game development. Alth
 
 In particular dsgmLib is a successor to [PAlib](http://sourceforge.net/projects/pands/) and an alternative to [NightFox’s Lib](http://www.nightfoxandco.com/index.php/main-en/coding/nfl-en/).
 
+### What it does
+
+Nintendo DS games are generally written in C, but C isn't a language which directly supports object-orientated programming. dsgmLib provides an object-orientated layer for game development, allowing you to write clean, modular code whilst avoiding [God objects](http://en.wikipedia.org/wiki/God_object).
+
+DS Game Maker generates dsgmLib code like this:
+
+    void ballObj_touch(DSGM_ObjectInstance *me) {
+        me->x += 32;
+        me->y += 32;
+    }
+
+It's clear that when any instance of ballObj is touched, it is moved down and right by 32 pixels.
+
+Importantly we didn't get the sprite number of our object instance and set the position - this would be ugly, and it's how older versions of DS Game Maker worked:
+
+    DSGM_SetSpriteX(me->screen, me->spriteNumber, DSGM_GetSpriteX(me->screen, me->spriteNumber) + 32);
+
+Dealing with sprite numbers directly is clunky; the end user shouldn't have to do this. A key feature (or principle) of dsgmLib is providing an abstraction from the OAM (Object Attribute Memory). You don't have to care about sprite numbers or rotation sets - only object instances (which could have any sprite numbers). We've designed this abstraction to make common tasks such as moving a sprite (object instance) as easy as possible.
+
+dsgmLib is feature rich. It has an object grouping system, loads backgrounds and sprites, scrolls backgrounds, and plays sound effects and music.
+
+### As a PAlib Replacement
+
+PAlib is ridiculously old - it was last updated in 2008 - and bloated (it includes things which DS Game Maker has never used such as Mode 7 3D). PAlib also requires an old or modified version of the devkitARM toolchain. As a result, PAlib is very difficult to maintain and a replacement is long over due.
+
+Read more: [PAlib on the devkitPro wiki](http://devkitpro.org/wiki/PAlib)
+
 devkitARM Installation
 -------------
 
