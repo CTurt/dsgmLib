@@ -17,6 +17,8 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 	
 	DSGM_Debug("Loading room...\n");
 	
+	DSGM_invalidateRoom = 0;
+	
 	DSGM_InitCustomGFX(room->backgroundInstances[DSGM_TOP][3].background == DSGM_DRAWABLE_BACKGROUND, room->backgroundInstances[DSGM_BOTTOM][3].background == DSGM_DRAWABLE_BACKGROUND);
 	
 	for(screen = 0; screen < 2; screen++) {
