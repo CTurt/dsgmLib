@@ -206,19 +206,19 @@ void drawObject_loop(drawObjectObjectInstance *me) {
 	// Three different methods of drawing, increasing in goodness
 	
 	// Method 1:
-	//DSGM_DrawPixelToBackground(DSGM_BOTTOM, DSGM_stylus.px, DSGM_stylus.py, DSGM_Colour(31, 0, 0));
+	//DSGM_DrawPixelToBackground(DSGM_BOTTOM, DSGM_stylus.x, DSGM_stylus.y, DSGM_Colour(31, 0, 0));
 	
 	// Method 2:
-	//DSGM_DrawRectangleToBackground(DSGM_BOTTOM, DSGM_stylus.px - 3, DSGM_stylus.py - 3, 6, 6, DSGM_Colour(31, 0, 0));
+	//DSGM_DrawRectangleToBackground(DSGM_BOTTOM, DSGM_stylus.x - 3, DSGM_stylus.y - 3, 6, 6, DSGM_Colour(31, 0, 0));
 	
 	// Method 3:
 	if(DSGM_newpress.Stylus) {
-		oldX = DSGM_stylus.px;
-		oldY = DSGM_stylus.py;
+		oldX = DSGM_stylus.x;
+		oldY = DSGM_stylus.y;
 	}
 	if(DSGM_held.Stylus) {
-		DSGM_DrawLineToBackground(DSGM_BOTTOM, oldX, oldY, DSGM_stylus.px, DSGM_stylus.py, 6, DSGM_Colour(31, 0, 0));
-		oldX = DSGM_stylus.px;
-		oldY = DSGM_stylus.py;
+		DSGM_DrawLineToBackground(DSGM_BOTTOM, oldX, oldY, DSGM_stylus.x, DSGM_stylus.y, 6, DSGM_Colour(31, 0, 0));
+		oldX = DSGM_stylus.x;
+		oldY = DSGM_stylus.y;
 	}
 }

@@ -1,7 +1,7 @@
 #include "DSGM.h"
 
 DSGM_Input DSGM_newpress, DSGM_held, DSGM_release;
-touchPosition DSGM_stylus;
+DSGM_TouchPosition DSGM_stylus;
 
 void DSGM_UpdateInput(void) {
 	scanKeys();
@@ -10,7 +10,7 @@ void DSGM_UpdateInput(void) {
 	int held = keysHeld();
 	int release = keysUp();
 	
-	touchRead(&DSGM_stylus);
+	touchRead((touchPosition *)&DSGM_stylus);
 	
 	#define MAP_KEY(DSGMKey, libndsKey)\
 	DSGM_newpress.DSGMKey = (newpress & libndsKey);\

@@ -270,7 +270,7 @@ void (DSGM_AddCollisionEvent)(DSGM_Object *object, DSGM_Object *collider, DSGM_C
 }
 
 inline bool DSGM_StylusOverObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *me) {
-	return DSGM_stylus.px >= me->x - room->view[me->screen].x && DSGM_stylus.px <= me->x - room->view[me->screen].x + DSGM_GetSpriteWidth(me->object->sprite) && DSGM_stylus.py >= me->y - room->view[me->screen].y && DSGM_stylus.py <= me->y - room->view[me->screen].y + DSGM_GetSpriteHeight(me->object->sprite);
+	return DSGM_stylus.x >= me->x - room->view[me->screen].x && DSGM_stylus.x <= me->x - room->view[me->screen].x + DSGM_GetSpriteWidth(me->object->sprite) && DSGM_stylus.y >= me->y - room->view[me->screen].y && DSGM_stylus.y <= me->y - room->view[me->screen].y + DSGM_GetSpriteHeight(me->object->sprite);
 }
 
 inline bool DSGM_ObjectInstanceOnScreenFull(DSGM_Room *room, DSGM_ObjectInstance *me) {	
