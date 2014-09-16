@@ -24,14 +24,14 @@ void DSGM_LockBackgroundPalette(u8 screen) {
 	}
 }
 
-void DSGM_SetBackgroundColour(u8 screen, int colour) {
+void DSGM_SetBackgroundColor(u8 screen, int color) {
 	switch(screen) {
 		case DSGM_TOP:
-			BG_PALETTE[0] = colour;
+			BG_PALETTE[0] = color;
 			break;
 			
 		case DSGM_BOTTOM:
-			BG_PALETTE_SUB[0] = colour;
+			BG_PALETTE_SUB[0] = color;
 			break;
 	}
 }

@@ -47,8 +47,7 @@ typedef struct {
 void DSGM_LockBackgroundPalette(u8 screen);
 void DSGM_UnlockBackgroundPalette(u8 screen);
 
-#define DSGM_SetBackgroundColor(screen, colour) DSGM_SetBackgroundColour(screen, colour)
-void DSGM_SetBackgroundColour(u8 screen, int colour);
+void DSGM_SetBackgroundColor(u8 screen, int color);
 
 inline bool DSGM_BackgroundIsNitroFull(DSGM_Background *background);
 
