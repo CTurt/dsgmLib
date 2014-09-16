@@ -1,6 +1,9 @@
 #pragma once
 
 #define DSGM_Color(r, g, b) ARGB16(1, r, g, b)
+#define DSGM_Red DSGM_Color(31, 0, 0)
+#define DSGM_Green DSGM_Color(0, 31, 0)
+#define DSGM_Blue DSGM_Color(0, 0, 31)
 
 void DSGM_InitDrawableBackground(DSGM_BackgroundInstance *backgroundInstance);
 
