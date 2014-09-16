@@ -1,3 +1,4 @@
 dsgmLib/build/
 examples/*/build/
 examples/*/*.elf
+.DS_Store
