@@ -10,7 +10,7 @@ Nintendo DS games are generally written in C, but C isn't a language which direc
 
 DS Game Maker generates dsgmLib code like this:
 
-    void ballObj_touch(ballObjectInstance *me) {
+    void ballObj_touch(ballObjObjectInstance *me) {
         me->x += 32;
         me->y += 32;
     }
@@ -81,7 +81,7 @@ You'll see `Collision.nds` is generated which you can run with an emulator like 
 
 Recompiling the Library
 ---------
-If you make changes to the library's source code (dsgmLib directory), you'll need to recompile it by running `make` in that this directory. Now recompile any projects that link against the library.
+If you make changes to the library's source code (dsgmLib directory), you'll need to recompile it by running `make` in the directory. Now recompile any projects that link against the library.
 
 Getting Help
 ------------
