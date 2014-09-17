@@ -228,7 +228,7 @@ void player_create(playerObjectInstance *me) {
 	// try changing it to DSGM_RED and see what happens
 	DSGM_SetScreenColor(DSGM_BOTTOM, backgroundColor);
 	
-	// This is how to change the color of an actual background
+	// This is how to change the color of an actual background (layer 2)
 	DSGM_UnlockBackgroundPalette(DSGM_BOTTOM);
 	DSGM_GetBackgroundPalette(DSGM_BOTTOM, 2)[1] = backgroundColor;
 	DSGM_GetBackgroundPalette(DSGM_BOTTOM, 2)[2] = lineColor;
@@ -247,13 +247,13 @@ void player_create(playerObjectInstance *me) {
 void player_loop(playerObjectInstance *me) {
 	me->variables->vy += 72;
 	me->by += me->variables->vy;
-	(*me->angle) -= 540;
+	(*me->angle) -= 480;
 	
 	if(me->by >= 129 << me->bitshift) {
 		me->by = 129 << me->bitshift;
 		me->variables->vy = 0;
 		(*me->angle) = 0;
-		if(DSGM_held.Stylus || DSGM_held.A) me->variables->vy = -1260;
+		if(DSGM_held.Stylus || DSGM_held.A) me->variables->vy = -1296;
 	}
 	
 	me->y = me->by >> me->bitshift;
