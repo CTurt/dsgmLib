@@ -53,6 +53,4 @@ void DSGM_InitCustomGFX(bool topScreenDrawable, bool bottomScreenDrawable);
 void DSGM_InitRand(void);
 void DSGM_InitNitro(void);
 
-inline int DSGM_Random(int min, int max);
-
 void DSGM_Update(void);

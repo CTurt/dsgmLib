@@ -82,10 +82,6 @@ void DSGM_InitNitro(void) {
 	chdir("nitro:/");
 }
 
-inline int DSGM_Random(int min, int max) {
-	return (rand() % max) + min;
-}
-
 void DSGM_Update(void) {
 	DSGM_UpdateInput();
 	
