@@ -61,4 +61,4 @@ extern int DSGM_currentRoom;
 void DSGM_SetupRooms(int room);
 
 void player_loop(playerObjectInstance *me);
-void player_collide_ball(playerObjectInstance *me, DSGM_ObjectInstance *collider);
+void player_collide_ball(playerObjectInstance *me, ballObjectInstance *collider);

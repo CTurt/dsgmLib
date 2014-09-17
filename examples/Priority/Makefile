@@ -8,8 +8,9 @@ endif
 
 include $(DEVKITARM)/ds_rules
 
-DSGMLibInclude		:=	../../DSGMLib/include
-DSGMLibLib		:=	../../../DSGMLib/DSGMLib.a
+ifeq ($(strip $(DSGMLIB)),)
+$(error "Please set in your environment. export DSGMLIB=<path to dsgmLib>")
+endif
 
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
@@ -22,7 +23,7 @@ TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
-INCLUDES	:=	include $(DSGMLibInclude)
+INCLUDES	:=	include $(DSGMLIB)/include
 NITRODATA	:=	nitrofiles
 MAXMOD_SOUNDBANK := music
 
@@ -45,14 +46,14 @@ LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project (order is important)
 #---------------------------------------------------------------------------------
-LIBS	:= 	$(DSGMLibLib) -lfilesystem -lfat -lnds9 -lmm9
+LIBS	:= 	$(DSGMLIB)/dsgmLib.a -lfilesystem -lfat -lnds9 -lmm9
  
  
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:=	$(LIBNDS)
+LIBDIRS	:=	$(LIBNDS) $(DSGMLIB)
  
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
