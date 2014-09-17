@@ -218,8 +218,12 @@ void DSGM_SetupRooms(int room) {
 }
 
 void player_create(playerObjectInstance *me) {
-
 	DSGM_SetBackgroundColor(DSGM_TOP, DSGM_WHITE);
+	
+	// We won't see this color because there is a background on top of it
+	// however, it will briefly flicker to this color when changing rooms
+	// try changing it to DSGM_RED and see what happens
+	DSGM_SetBackgroundColor(DSGM_BOTTOM, DSGM_WHITE);
 
 	DSGM_InitObjectInstanceRotScale(me);
 	me->by = me->y << me->bitshift;
