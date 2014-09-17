@@ -88,3 +88,30 @@ inline void DSGM_DrawFilledCircleToBackgroundFull(DSGM_Room *room, u8 screen, in
 		DSGM_DrawLineToBackgroundFull(room, screen, (xb + c) >> 12, (yb - s) >> 12, (xb - c) >> 12, (yb + s) >> 12, 2, color);
 	}
 }
+
+inline void DSGM_DrawTileToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, unsigned char *font, char tile, int size, u16 color) {
+	int pixel;
+	
+	for(pixel = 0; pixel < 32; pixel++) {
+		unsigned short word = font[(tile << 5) + pixel];
+		
+		int px = ((tile & 3) << 3) + ((pixel << 1) & 7);
+		int py = ((tile >> 2) << 3) + (pixel >> 2);
+		
+		if((word & 0xF0) >> 4 != 0) DSGM_DrawFilledRectangleToBackgroundFull(room, screen, x + ((px + 1) % 8) * size, y + (py % 8) * size, size, size, color);
+		if((word & 0x0F) != 0) DSGM_DrawFilledRectangleToBackgroundFull(room, screen, x + (px % 8) * size, y + (py % 8) * size, size, size, color);
+	}
+}
+
+inline void DSGM_DrawTextToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, unsigned char *font, int size, u16 color, const char *format, ...) {
+	char text[1024];
+	va_list args;
+	va_start(args, format);
+	vsnprintf(text, 1023, format, args);
+	va_end(args);
+	
+	int i, len = strlen(text);
+	for(i = 0; i < len; i++) {
+		DSGM_DrawTileToBackgroundFull(room, screen, x + i * size * 8, y, font, text[i], size, color);
+	}
+}

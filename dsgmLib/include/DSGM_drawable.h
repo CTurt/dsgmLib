@@ -37,3 +37,9 @@ inline void DSGM_DrawCircleToBackgroundFull(DSGM_Room *room, u8 screen, int x, i
 
 #define DSGM_DrawFilledCircleToBackground(screen, x, y, radius, color) DSGM_DrawFilledCircleToBackgroundFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y, radius, color)
 inline void DSGM_DrawFilledCircleToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, int radius, u16 color);
+
+#define DSGM_DrawTileToBackground(screen, x, y, font, tile, size, color) DSGM_DrawTileToBackgroundFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y, font, tile, size, color)
+inline void DSGM_DrawTileToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, unsigned char *font, char tile, int size, u16 color);
+
+#define DSGM_DrawTextToBackground(screen, x, y, font, size, color, format, ...) DSGM_DrawTextToBackgroundFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y, font, size, color, format, ##__VA_ARGS__)
+inline void DSGM_DrawTextToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, unsigned char *font, int size, u16 color, const char *format, ...);

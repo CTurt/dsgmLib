@@ -199,38 +199,45 @@ void DSGM_SetupRooms(int room) {
 	if(room != DSGM_ALL_ROOMS) return;
 }
 
+// Several different things for you to try!
+
 void drawObject_create(drawObjectObjectInstance *me) {
+	DSGM_DrawTextToBackground(DSGM_BOTTOM, 40, 80, DSGM_DEFAULT_FONT, 2, DSGM_RED, "Draw on me!");
+	
+	// Test 1:
+	//int i;
+	//for(i = 0; i < 5; i++) {
+	//	DSGM_DrawTileToBackground(DSGM_BOTTOM, DSGM_Random(20, 180), DSGM_Random(30, 140), DSGM_DEFAULT_FONT, DSGM_Random('A', 'Z'), DSGM_Random(1, 6), DSGM_RED);
+	//}
 }
 
 void drawObject_loop(drawObjectObjectInstance *me) {
-	// Several different things for you to try!
-	
 	if(DSGM_held.Stylus) {
-		// Test 1
+		// Test 2:
 		//DSGM_DrawPixelToBackground(DSGM_BOTTOM, DSGM_stylus.x, DSGM_stylus.y, DSGM_Color(31, 0, 0));
 		
-		// Test 2:
+		// Test 3:
 		//DSGM_DrawRectangleToBackground(DSGM_BOTTOM, DSGM_stylus.x - 3, DSGM_stylus.y - 3, 6, 6, 2, DSGM_Color(31, 0, 0));
 		
-		// Test 3:
+		// Test 4:
 		//DSGM_DrawFilledRectangleToBackground(DSGM_BOTTOM, DSGM_stylus.x - 3, DSGM_stylus.y - 3, 6, 6, DSGM_Color(31, 0, 0));
 		
-		// Test 4:
+		// Test 5:
 		//DSGM_DrawCircleToBackground(DSGM_BOTTOM, DSGM_stylus.x, DSGM_stylus.y, 16, 2, DSGM_Color(31, 0, 0));
 		
-		// Test 5:
+		// Test 6:
 		//DSGM_DrawFilledCircleToBackground(DSGM_BOTTOM, DSGM_stylus.x, DSGM_stylus.y, 16, DSGM_Color(31, 0, 0));
 		
-		// Test 6:
+		// Test 7:
 		//DSGM_ClearDrawableBackground(DSGM_BOTTOM);
 		//DSGM_DrawCircleToBackground(DSGM_BOTTOM, DSGM_stylus.x, DSGM_stylus.y, 16, 2, DSGM_Color(31, 0, 0));
 		
-		// Test 7:
+		// Test 8:
 		//DSGM_ClearDrawableBackground(DSGM_BOTTOM);
 		//DSGM_DrawLineAtAngleToBackground(DSGM_BOTTOM, 127, 95, DSGM_GetAngle(127, 95, DSGM_stylus.x, DSGM_stylus.y), 16, 2, DSGM_Color(31, 0, 0));
 	}
 	
-	// Test 8:
+	// Test 9:
 	if(DSGM_newpress.Stylus) {
 		oldX = DSGM_stylus.x;
 		oldY = DSGM_stylus.y;
