@@ -19,7 +19,7 @@ It's clear that when any instance of `ball` is touched, it is moved down and rig
 
 Importantly we didn't get the sprite number of our object instance and set the position - this would be ugly, and it's how older versions of DS Game Maker worked:
 
-    DSGM_SetSpriteX(me->screen, me->spriteNumber, DSGM_GetSpriteX(me->screen, me->spriteNumber) + 32);
+    DSGM_SetSpriteXY(me->screen, me->spriteNumber, DSGM_GetSpriteX(me->screen, me->spriteNumber) + 32, DSGM_GetSpriteY(me->screen, me->spriteNumber) + 32);
 
 Dealing with sprite numbers directly is clunky; the end user shouldn't have to do this. A key feature (or principle) of dsgmLib is providing an abstraction from the OAM (Object Attribute Memory). You don't have to care about sprite numbers or rotation sets - only object instances (which could have any sprite numbers). We've designed this abstraction to make common tasks such as moving a sprite (object instance) as easy as possible.
 
