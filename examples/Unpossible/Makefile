@@ -114,7 +114,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).nds
+	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).nds nitrofiles/soundbank.bin
 
 #---------------------------------------------------------------------------------
 else
@@ -127,9 +127,16 @@ $(OUTPUT).elf	:	$(OFILES) soundbank.h
 
 soundbank.h: ../$(NITRODATA)/soundbank.bin
 
+define AUDIO_CONVERT
+    @if [[ -n "$(AUDIOFILES)" ]]; then \
+		echo Converting audio; \
+        mmutil $^ -d -o../$(NITRODATA)/soundbank.bin -hsoundbank.h; \
+    fi
+endef
+
 ../$(NITRODATA)/soundbank.bin: $(AUDIOFILES)
 #---------------------------------------------------------------------------------
-	mmutil $^ -d -o../$(NITRODATA)/soundbank.bin -hsoundbank.h
+	$(AUDIO_CONVERT)
 
 #---------------------------------------------------------------------------------
 %.bin.o	:	%.bin
