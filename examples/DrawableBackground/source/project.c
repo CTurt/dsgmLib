@@ -203,15 +203,34 @@ void drawObject_create(drawObjectObjectInstance *me) {
 }
 
 void drawObject_loop(drawObjectObjectInstance *me) {
-	// Three different methods of drawing, increasing in goodness
+	// Several different things for you to try!
 	
-	// Method 1:
-	//DSGM_DrawPixelToBackground(DSGM_BOTTOM, DSGM_stylus.x, DSGM_stylus.y, DSGM_Color(31, 0, 0));
+	if(DSGM_held.Stylus) {
+		// Test 1
+		//DSGM_DrawPixelToBackground(DSGM_BOTTOM, DSGM_stylus.x, DSGM_stylus.y, DSGM_Color(31, 0, 0));
+		
+		// Test 2:
+		//DSGM_DrawRectangleToBackground(DSGM_BOTTOM, DSGM_stylus.x - 3, DSGM_stylus.y - 3, 6, 6, 2, DSGM_Color(31, 0, 0));
+		
+		// Test 3:
+		//DSGM_DrawFilledRectangleToBackground(DSGM_BOTTOM, DSGM_stylus.x - 3, DSGM_stylus.y - 3, 6, 6, DSGM_Color(31, 0, 0));
+		
+		// Test 4:
+		//DSGM_DrawCircleToBackground(DSGM_BOTTOM, DSGM_stylus.x, DSGM_stylus.y, 16, 2, DSGM_Color(31, 0, 0));
+		
+		// Test 5:
+		//DSGM_DrawFilledCircleToBackground(DSGM_BOTTOM, DSGM_stylus.x, DSGM_stylus.y, 16, DSGM_Color(31, 0, 0));
+		
+		// Test 6:
+		//DSGM_ClearDrawableBackground(DSGM_BOTTOM);
+		//DSGM_DrawCircleToBackground(DSGM_BOTTOM, DSGM_stylus.x, DSGM_stylus.y, 16, 2, DSGM_Color(31, 0, 0));
+		
+		// Test 7:
+		//DSGM_ClearDrawableBackground(DSGM_BOTTOM);
+		//DSGM_DrawLineAtAngleToBackground(DSGM_BOTTOM, 127, 95, DSGM_GetAngle(127, 95, DSGM_stylus.x, DSGM_stylus.y), 16, 2, DSGM_Color(31, 0, 0));
+	}
 	
-	// Method 2:
-	//DSGM_DrawRectangleToBackground(DSGM_BOTTOM, DSGM_stylus.x - 3, DSGM_stylus.y - 3, 6, 6, DSGM_Color(31, 0, 0));
-	
-	// Method 3:
+	// Test 8:
 	if(DSGM_newpress.Stylus) {
 		oldX = DSGM_stylus.x;
 		oldY = DSGM_stylus.y;
