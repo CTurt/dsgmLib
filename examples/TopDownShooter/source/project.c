@@ -211,18 +211,23 @@ void DSGM_SetupRooms(int room) {
 }
 
 void player_create(playerObjectInstance *me) {
-	DSGM_DrawText(DSGM_TOP, 1, 1, "D-Pad to move, A to shoot");
+	DSGM_DrawText(DSGM_TOP, 1, 1, "D-Pad or Stylus to move");
+	DSGM_DrawText(DSGM_TOP, 1, 2, "A to shoot");
 	DSGM_InitObjectInstanceRotScale(me);
 	me->bitshift = 11;
 }
 
 void player_loop(playerObjectInstance *me) {
+	if(DSGM_held.Stylus) {
+		(*me->angle) = DSGM_GetAngle(me->x + 16, me->y + 16, DSGM_stylus.x, DSGM_stylus.y);
+	}
 	if(DSGM_held.Left) {
 		(*me->angle) += degreesToAngle(4);
 	}
 	if(DSGM_held.Right) {
 		(*me->angle) -= degreesToAngle(4);
 	}
+	
 	if(DSGM_held.Up) {
 		DSGM_MoveObjectInstanceAtRotatedAngle(me);
 	}
