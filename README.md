@@ -51,7 +51,7 @@ Great! We're done.
 
 Getting Started
 ---------------
-[Download dsgmLib](https://github.com/DSGameMaker/dsgmLib/archive/master.zip), and extract the archive to your devkitPro folder, for example C:\devkitPro\dsgmLib\.
+[Download dsgmLib](https://github.com/DSGameMaker/dsgmLib/archive/master.zip), and extract the archive to a new directory in your devkitPro folder, for example C:\devkitPro\dsgmLib\.
 
 Then, create an environment variable called `DSGMLIB` with the value of the path to dsgmLib.a, for example C:\devkitPro\dsgmLib\dsgmLib.
 
