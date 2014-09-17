@@ -10,12 +10,12 @@ Nintendo DS games are generally written in C, but C isn't a language which direc
 
 DS Game Maker generates dsgmLib code like this:
 
-    void ballObj_touch(ballObjObjectInstance *me) {
+    void ball_touch(ballObjectInstance *me) {
         me->x += 32;
         me->y += 32;
     }
 
-It's clear that when any instance of ballObj is touched, it is moved down and right by 32 pixels.
+It's clear that when any instance of `ball` is touched, it is moved down and right by 32 pixels.
 
 Importantly we didn't get the sprite number of our object instance and set the position - this would be ugly, and it's how older versions of DS Game Maker worked:
 
