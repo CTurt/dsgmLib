@@ -55,7 +55,7 @@ void DSGM_BoxText(u8 screen, u8 x, u8 y, u8 width, u8 height, u8 delay, const ch
 		DSGM_text[screen][DSGM_textLayer[screen]].cursorX = dx;
 		DSGM_text[screen][DSGM_textLayer[screen]].cursorY = dy;
         printf("%c", text[i]);
-		if(text[i] == '\n' || (text[i] == ' ' && DSGM_GetWordLength(text + i + 1) >= width - (dx - x))) {
+		if(text[i] == '\n' || (text[i] == ' ' && DSGM_GetWordLength(text + i + 1) >= width - (dx - x) && (dx - x) > 0)) {
 			jy++;
 			jx += dx;
 		}
