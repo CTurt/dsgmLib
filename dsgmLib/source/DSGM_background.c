@@ -1,6 +1,6 @@
 #include "DSGM.h"
 
-void DSGM_UnlockBackgroundPalette(u8 screen) {
+inline void DSGM_UnlockBackgroundPalette(u8 screen) {
 	switch(screen) {
 		case DSGM_TOP:
 			vramSetBankE(VRAM_E_LCD);
@@ -12,7 +12,7 @@ void DSGM_UnlockBackgroundPalette(u8 screen) {
 	}
 }
 
-void DSGM_LockBackgroundPalette(u8 screen) {
+inline void DSGM_LockBackgroundPalette(u8 screen) {
 	switch(screen) {
 		case DSGM_TOP:
 			vramSetBankE(VRAM_E_BG_EXT_PALETTE);
@@ -24,7 +24,11 @@ void DSGM_LockBackgroundPalette(u8 screen) {
 	}
 }
 
-void DSGM_SetBackgroundColor(u8 screen, int color) {
+inline unsigned short *DSGM_GetBackgroundPalette(u8 screen, int layer) {
+	return (screen == DSGM_TOP ? VRAM_E_EXT_PALETTE : VRAM_H_EXT_PALETTE)[layer][0];
+}
+
+inline void DSGM_SetScreenColor(u8 screen, u16 color) {
 	switch(screen) {
 		case DSGM_TOP:
 			BG_PALETTE[0] = color;

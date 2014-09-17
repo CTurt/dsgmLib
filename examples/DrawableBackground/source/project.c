@@ -217,7 +217,7 @@ void drawObject_loop(drawObjectObjectInstance *me) {
 		oldY = DSGM_stylus.y;
 	}
 	if(DSGM_held.Stylus) {
-		DSGM_DrawLineToBackground(DSGM_BOTTOM, oldX, oldY, DSGM_stylus.x, DSGM_stylus.y, 6, DSGM_Green);
+		DSGM_DrawLineToBackground(DSGM_BOTTOM, oldX, oldY, DSGM_stylus.x, DSGM_stylus.y, 6, DSGM_GREEN);
 		oldX = DSGM_stylus.x;
 		oldY = DSGM_stylus.y;
 	}

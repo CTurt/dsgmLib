@@ -44,10 +44,10 @@ typedef struct {
 	int vramId;
 } DSGM_BackgroundInstance;
 
-void DSGM_LockBackgroundPalette(u8 screen);
-void DSGM_UnlockBackgroundPalette(u8 screen);
-
-void DSGM_SetBackgroundColor(u8 screen, int color);
+inline void DSGM_LockBackgroundPalette(u8 screen);
+inline void DSGM_UnlockBackgroundPalette(u8 screen);
+inline unsigned short *DSGM_GetBackgroundPalette(u8 screen, int layer);
+inline void DSGM_SetScreenColor(u8 screen, u16 color);
 
 inline bool DSGM_BackgroundIsNitroFull(DSGM_Background *background);
 

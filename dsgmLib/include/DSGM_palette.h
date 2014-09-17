@@ -33,8 +33,9 @@ typedef struct {
 
 extern int DSGM_nextPalette[2];
 
-void DSGM_UnlockSpritePalette(u8 screen);
-void DSGM_LockSpritePalette(u8 screen);
+inline void DSGM_UnlockSpritePalette(u8 screen);
+inline void DSGM_LockSpritePalette(u8 screen);
+inline u16 *DSGM_GetPaletteData(u8 screen, DSGM_Palette *palette);
 
 inline int DSGM_NextFreePalette(u8 screen);
 

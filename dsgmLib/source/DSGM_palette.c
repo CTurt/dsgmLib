@@ -2,7 +2,7 @@
 
 int DSGM_nextPalette[2] = { 0, 0 };
 
-void DSGM_UnlockSpritePalette(u8 screen) {
+inline void DSGM_UnlockSpritePalette(u8 screen) {
 	switch(screen) {
 		case DSGM_TOP:
 			vramSetBankF(VRAM_F_LCD);
@@ -14,7 +14,7 @@ void DSGM_UnlockSpritePalette(u8 screen) {
 	}
 }
 
-void DSGM_LockSpritePalette(u8 screen) {
+inline void DSGM_LockSpritePalette(u8 screen) {
 	switch(screen) {
 		case DSGM_TOP:
 			vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
@@ -24,6 +24,11 @@ void DSGM_LockSpritePalette(u8 screen) {
 			vramSetBankI(VRAM_I_SUB_SPRITE_EXT_PALETTE);
 			break;
 	}
+}
+
+inline u16 *DSGM_GetPaletteData(u8 screen, DSGM_Palette *palette) {
+	return (screen == DSGM_TOP ? VRAM_F_EXT_SPR_PALETTE : VRAM_I_EXT_SPR_PALETTE)[palette->paletteNumber[screen]];
+	
 }
 
 inline int DSGM_NextFreePalette(u8 screen) {

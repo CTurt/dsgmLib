@@ -218,13 +218,28 @@ void DSGM_SetupRooms(int room) {
 }
 
 void player_create(playerObjectInstance *me) {
-	DSGM_SetBackgroundColor(DSGM_TOP, DSGM_WHITE);
+	u16 backgroundColor = DSGM_Random(0, DSGM_Color(31, 31, 31));
+	u16 lineColor = DSGM_Random(0, DSGM_Color(31, 31, 31));
+	
+	DSGM_SetScreenColor(DSGM_TOP, backgroundColor);
 	
 	// We won't see this color because there is a background on top of it
 	// however, it will briefly flicker to this color when changing rooms
 	// try changing it to DSGM_RED and see what happens
-	DSGM_SetBackgroundColor(DSGM_BOTTOM, DSGM_WHITE);
-
+	DSGM_SetScreenColor(DSGM_BOTTOM, backgroundColor);
+	
+	// This is how to change the color of an actual background
+	DSGM_UnlockBackgroundPalette(DSGM_BOTTOM);
+	DSGM_GetBackgroundPalette(DSGM_BOTTOM, 2)[1] = backgroundColor;
+	DSGM_GetBackgroundPalette(DSGM_BOTTOM, 2)[2] = lineColor;
+	DSGM_LockBackgroundPalette(DSGM_BOTTOM);
+	
+	// Change the player sprite colors
+	DSGM_UnlockSpritePalette(DSGM_BOTTOM);
+	DSGM_GetPaletteData(DSGM_BOTTOM, me->object->sprite->palette)[2] = backgroundColor;
+	DSGM_GetPaletteData(DSGM_BOTTOM, me->object->sprite->palette)[1] = lineColor;
+	DSGM_LockSpritePalette(DSGM_BOTTOM);
+	
 	DSGM_InitObjectInstanceRotScale(me);
 	me->by = me->y << me->bitshift;
 }
