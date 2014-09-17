@@ -60,3 +60,14 @@ void DSGM_Delay(unsigned int time) {
 		swiWaitForVBlank();
 	}
 }
+
+unsigned int DSGM_GetWordLength(char *text) {
+	int i;
+	int len = strlen(text);
+	
+	for(i = 0; i < len; i++) {
+		if(text[i] == ' ' || text[i] == '\n') break;
+	}
+	
+	return i;
+}
