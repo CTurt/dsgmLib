@@ -50,8 +50,8 @@ void DSGM_LoadBackground(u8 screen, int layer, int background, bool attachedToVi
 }
 
 void DSGM_ScrollBackground(u8 screen, int layer, int x, int y) {
-	DSGM_Rooms[DSGM_currentRoom].backgroundInstances[screen][layer].x = x;
-	DSGM_Rooms[DSGM_currentRoom].backgroundInstances[screen][layer].y = y;
+	DSGM_backgroundInstances[screen][layer].x = x;
+	DSGM_backgroundInstances[screen][layer].y = y;
 }
 
 void DSGM_ResetAll(void) {
