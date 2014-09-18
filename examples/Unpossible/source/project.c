@@ -218,8 +218,8 @@ void DSGM_SetupRooms(int room) {
 }
 
 void player_create(playerObjectInstance *me) {
-	u16 backgroundColor = DSGM_Random(0, DSGM_Color(31, 31, 31));
-	u16 lineColor = DSGM_Random(0, DSGM_Color(31, 31, 31));
+	u16 backgroundColor = DSGM_RandomColor();
+	u16 lineColor = DSGM_RandomColor();
 	
 	DSGM_SetScreenColor(DSGM_TOP, backgroundColor);
 	

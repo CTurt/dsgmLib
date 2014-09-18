@@ -1,6 +1,7 @@
 #pragma once
 
 #define DSGM_Color(r, g, b) ARGB16(1, r, g, b)
+#define DSGM_RandomColor() DSGM_Random(0, DSGM_Color(31, 31, 31))
 
 #define DSGM_BLACK DSGM_Color(0, 0, 0)
 #define DSGM_GRAY DSGM_Color(15, 15, 15)
