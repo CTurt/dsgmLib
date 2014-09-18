@@ -57,14 +57,14 @@ void DSGM_InitDrawableBackground(DSGM_Layer *layer);
 
 void DSGM_LoadBackgroundFull(DSGM_Layer *layer);
 
-void DSGM_LoadBackgroundNitroFull(DSGM_Layer *background);
-void DSGM_LoadBackgroundRAMFull(DSGM_Layer *background);
+void DSGM_LoadBackgroundNitroFull(DSGM_Layer *layer);
+void DSGM_LoadBackgroundRAMFull(DSGM_Layer *layer);
 
-void DSGM_ScrollBackgroundFull(DSGM_View *view, DSGM_Layer *background);
+void DSGM_ScrollBackgroundFull(DSGM_View *view, DSGM_Layer *layer);
 
 inline BgSize DSGM_GetBGSize(u8 screen, int layerNumber);
 int DSGM_GetBGWidth(u8 screen, int layerNumber);
 int DSGM_GetBGHeight(u8 screen, int layerNumber);
 
-inline u16 DSGM_GetTile(DSGM_Layer *background, int x, int y);
-inline void DSGM_SetTile(DSGM_Layer *background, int x, int y, u16 tile);
+inline u16 DSGM_GetTile(DSGM_Layer *layer, int x, int y);
+inline void DSGM_SetTile(DSGM_Layer *layer, int x, int y, u16 tile);

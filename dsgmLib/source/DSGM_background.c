@@ -103,15 +103,11 @@ void DSGM_LoadBackgroundRAMFull(DSGM_Layer *layer) {
 	DSGM_LockBackgroundPalette(layer->screen);
 }
 
-void DSGM_ScrollBackgroundFull(DSGM_View *view, DSGM_Layer *background) {
-	//DSGM_Debug("Scrolling to Y: %d\n", background->y - background->attachedToView ? view->y : 0);
-	//DSGM_Debug("DScrolling to Y: %d\n", view[DSGM_BOTTOM].y);
-	//DSGM_Debug("Scrolling bg s %d, l %d\n", background->screen, background->layerNumber);
-	if(background != NULL/* && background != DSGM_TEXT_BACKGROUND*/) {
-		if(background->background != NULL) {
-			if(background->vramId != 0) {
-				bgSetScroll(background->vramId, background->x - background->attachedToView ? view->x : 0, background->y - background->attachedToView ? view->y : 0);
-				//DSGM_Debug("S s %d, l %d", background->screen, background->layerNumber);
+void DSGM_ScrollBackgroundFull(DSGM_View *view, DSGM_Layer *layer) {
+	if(layer != NULL/* && background != DSGM_TEXT_BACKGROUND*/) {
+		if(layer->background != NULL) {
+			if(layer->vramId != 0) {
+				bgSetScroll(layer->vramId, layer->x - layer->attachedToView ? view->x : 0, layer->y - layer->attachedToView ? view->y : 0);
 			}
 		}
 	}
@@ -157,7 +153,7 @@ int DSGM_GetBGHeight(u8 screen, int layerNumber) {
 	return 512;
 }
 
-inline u16 DSGM_GetTile(DSGM_Layer *background, int x, int y) {
+inline u16 DSGM_GetTile(DSGM_Layer *layer, int x, int y) {
 	// todo: optimise with div and modulus rather than loop
 	while(y > 31) {
 		y -= 32;
@@ -173,10 +169,10 @@ inline u16 DSGM_GetTile(DSGM_Layer *background, int x, int y) {
 	//x %= 32;
 	//int t = y * DSGM_GetBGWidth(screen, layerNumber) / 16 + x;
 	//return bgGetMapPtr(background->vramId)[y * DSGM_GetBGWidth(screen, layerNumber) / 16 + x];
-	return bgGetMapPtr(background->vramId)[y * DSGM_GetBGWidth(background->screen, background->layerNumber) / 16 + x];
+	return bgGetMapPtr(layer->vramId)[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x];
 }
 
-inline void DSGM_SetTile(DSGM_Layer *background, int x, int y, u16 tile) {
+inline void DSGM_SetTile(DSGM_Layer *layer, int x, int y, u16 tile) {
 	while(y > 31) {
 		y -= 32;
 		x += 64;
@@ -185,5 +181,5 @@ inline void DSGM_SetTile(DSGM_Layer *background, int x, int y, u16 tile) {
 		x -= 32;
 		y += 32;
 	}
-	bgGetMapPtr(background->vramId)[y * DSGM_GetBGWidth(background->screen, background->layerNumber) / 16 + x] = tile;
+	bgGetMapPtr(layer->vramId)[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x] = tile;
 }
