@@ -1,25 +1,25 @@
 #include "DSGM.h"
 
-void DSGM_InitDrawableBackground(DSGM_BackgroundInstance *backgroundInstance) {
-	DSGM_Debug("Drawable background screen %d, layer %d", backgroundInstance->screen, backgroundInstance->layer);
-	switch(backgroundInstance->screen) {
+void DSGM_InitDrawableBackground(DSGM_Layer *layer) {
+	DSGM_Debug("Drawable background screen %d, layerNumber %d", layer->screen, layer->layerNumber);
+	switch(layer->screen) {
 		case DSGM_TOP:
-			backgroundInstance->vramId = bgInit(backgroundInstance->layer, BgType_Bmp16, BgSize_B16_256x256, backgroundInstance->mapBase, backgroundInstance->tileBase);
+			layer->vramId = bgInit(layer->layerNumber, BgType_Bmp16, BgSize_B16_256x256, layer->mapBase, layer->tileBase);
 			break;
 			
 		case DSGM_BOTTOM:
-			backgroundInstance->vramId = bgInitSub(backgroundInstance->layer, BgType_Bmp16, BgSize_B16_256x256, backgroundInstance->mapBase, backgroundInstance->tileBase);
+			layer->vramId = bgInitSub(layer->layerNumber, BgType_Bmp16, BgSize_B16_256x256, layer->mapBase, layer->tileBase);
 			break;
 	}
 }
 
 inline void DSGM_ClearDrawableBackgroundFull(DSGM_Room *room, u8 screen) {
 	// Some dma, swi function might be faster
-	memset(bgGetGfxPtr(room->backgroundInstances[screen][3].vramId), 0, 256 * 192 * sizeof(u16));
+	memset(bgGetGfxPtr(room->layers[screen][3].vramId), 0, 256 * 192 * sizeof(u16));
 }
 
 inline void DSGM_DrawPixelToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, u16 color) {
-	bgGetGfxPtr(room->backgroundInstances[screen][3].vramId)[x + (y << 8)] = color;
+	bgGetGfxPtr(room->layers[screen][3].vramId)[x + (y << 8)] = color;
 }
 
 inline void DSGM_DrawRectangleToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, int width, int height, int thickness, u16 color) {
@@ -30,7 +30,7 @@ inline void DSGM_DrawRectangleToBackgroundFull(DSGM_Room *room, u8 screen, int x
 }
 
 inline void DSGM_DrawFilledRectangleToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, int width, int height, u16 color) {
-	u16 *gfx = bgGetGfxPtr(room->backgroundInstances[screen][3].vramId);
+	u16 *gfx = bgGetGfxPtr(room->layers[screen][3].vramId);
 	
 	int xi, yi;
 	for(xi = x; xi < x + width; xi++) {

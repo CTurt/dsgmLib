@@ -441,29 +441,29 @@ void player_loop(playerObjectInstance *me) {
 	// Move
 	if(me->variables->direction == LEFT && DSGM_held.Left) {
 		if(\
-			walkableTile(DSGM_GetTile(&DSGM_backgroundInstances[DSGM_BOTTOM][1], (me->x + 8) / 8, (me->y + 16) / 8)) &&\
-			walkableTile(DSGM_GetTile(&DSGM_backgroundInstances[DSGM_BOTTOM][1], (me->x + 8) / 8, (me->y + 31) / 8))\
+			walkableTile(DSGM_GetTile(&DSGM_layers[DSGM_BOTTOM][1], (me->x + 8) / 8, (me->y + 16) / 8)) &&\
+			walkableTile(DSGM_GetTile(&DSGM_layers[DSGM_BOTTOM][1], (me->x + 8) / 8, (me->y + 31) / 8))\
 		) DSGM_Rooms[DSGM_currentRoom].view[DSGM_BOTTOM].x--;
 		DSGM_ReturnAnimateObjectInstance(me, 3, 4, 5, 12);
 	}
 	if(me->variables->direction == RIGHT && DSGM_held.Right) {
 		if(\
-			walkableTile(DSGM_GetTile(&DSGM_backgroundInstances[DSGM_BOTTOM][1], (me->x + 24) / 8, (me->y + 16) / 8)) &&\
-			walkableTile(DSGM_GetTile(&DSGM_backgroundInstances[DSGM_BOTTOM][1], (me->x + 24) / 8, (me->y + 31) / 8))\
+			walkableTile(DSGM_GetTile(&DSGM_layers[DSGM_BOTTOM][1], (me->x + 24) / 8, (me->y + 16) / 8)) &&\
+			walkableTile(DSGM_GetTile(&DSGM_layers[DSGM_BOTTOM][1], (me->x + 24) / 8, (me->y + 31) / 8))\
 		) DSGM_Rooms[DSGM_currentRoom].view[DSGM_BOTTOM].x++;
 		DSGM_ReturnAnimateObjectInstance(me, 3, 4, 5, 12);
 	}
 	if(me->variables->direction == UP && DSGM_held.Up) {
 		if(\
-			walkableTile(DSGM_GetTile(&DSGM_backgroundInstances[DSGM_BOTTOM][1], (me->x + 9) / 8, (me->y + 15) / 8)) &&\
-			walkableTile(DSGM_GetTile(&DSGM_backgroundInstances[DSGM_BOTTOM][1], (me->x + 23) / 8, (me->y + 15) / 8))\
+			walkableTile(DSGM_GetTile(&DSGM_layers[DSGM_BOTTOM][1], (me->x + 9) / 8, (me->y + 15) / 8)) &&\
+			walkableTile(DSGM_GetTile(&DSGM_layers[DSGM_BOTTOM][1], (me->x + 23) / 8, (me->y + 15) / 8))\
 		) DSGM_Rooms[DSGM_currentRoom].view[DSGM_BOTTOM].y--;
 		DSGM_ReturnAnimateObjectInstance(me, 6, 7, 8, 12);
 	}
 	if(me->variables->direction == DOWN && DSGM_held.Down) {
 		if(\
-			walkableTile(DSGM_GetTile(&DSGM_backgroundInstances[DSGM_BOTTOM][1], (me->x + 9) / 8, (me->y + 32) / 8)) &&\
-			walkableTile(DSGM_GetTile(&DSGM_backgroundInstances[DSGM_BOTTOM][1], (me->x + 23) / 8, (me->y + 32) / 8))\
+			walkableTile(DSGM_GetTile(&DSGM_layers[DSGM_BOTTOM][1], (me->x + 9) / 8, (me->y + 32) / 8)) &&\
+			walkableTile(DSGM_GetTile(&DSGM_layers[DSGM_BOTTOM][1], (me->x + 23) / 8, (me->y + 32) / 8))\
 		) DSGM_Rooms[DSGM_currentRoom].view[DSGM_BOTTOM].y++;
 		DSGM_ReturnAnimateObjectInstance(me, 0, 1, 2, 12);
 	}

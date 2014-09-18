@@ -11,7 +11,7 @@ void DSGM_SetupViews(DSGM_Room *room) {
 
 void DSGM_LoadRoom(DSGM_Room *room) {
 	u8 screen;
-	int layer;
+	int layerNumber;
 	int group;
 	int object;
 	
@@ -19,19 +19,19 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 	
 	DSGM_invalidateRoom = 0;
 	
-	DSGM_InitCustomGFX(room->backgroundInstances[DSGM_TOP][3].background == DSGM_DRAWABLE_BACKGROUND, room->backgroundInstances[DSGM_BOTTOM][3].background == DSGM_DRAWABLE_BACKGROUND);
+	DSGM_InitCustomGFX(room->layers[DSGM_TOP][3].background == DSGM_DRAWABLE_BACKGROUND, room->layers[DSGM_BOTTOM][3].background == DSGM_DRAWABLE_BACKGROUND);
 	
 	for(screen = 0; screen < 2; screen++) {
 		// Load backgrounds
-		for(layer = 0; layer < 4; layer++) {
-			if(room->backgroundInstances[screen][layer].background != DSGM_NO_BACKGROUND) {
-				DSGM_Debug("Screen %d, layer %d, background %p\n", screen, layer, room->backgroundInstances[screen][layer].background);
-				if(room->backgroundInstances[screen][layer].background == DSGM_TEXT_BACKGROUND) DSGM_InitText(&room->backgroundInstances[screen][layer]);
-				else if(room->backgroundInstances[screen][layer].background == DSGM_DRAWABLE_BACKGROUND) {
-					if(layer == 3) DSGM_InitDrawableBackground(&room->backgroundInstances[screen][layer]);
+		for(layerNumber = 0; layerNumber < 4; layerNumber++) {
+			if(room->layers[screen][layerNumber].background != DSGM_NO_BACKGROUND) {
+				DSGM_Debug("Screen %d, layerNumber %d, background %p\n", screen, layerNumber, room->layers[screen][layerNumber].background);
+				if(room->layers[screen][layerNumber].background == DSGM_TEXT_BACKGROUND) DSGM_InitText(&room->layers[screen][layerNumber]);
+				else if(room->layers[screen][layerNumber].background == DSGM_DRAWABLE_BACKGROUND) {
+					if(layerNumber == 3) DSGM_InitDrawableBackground(&room->layers[screen][layerNumber]);
 				}
-				else DSGM_LoadBackgroundFull(&room->backgroundInstances[screen][layer]);
-				DSGM_ScrollBackgroundFull(&room->view[screen], &room->backgroundInstances[screen][layer]);
+				else DSGM_LoadBackgroundFull(&room->layers[screen][layerNumber]);
+				DSGM_ScrollBackgroundFull(&room->view[screen], &room->layers[screen][layerNumber]);
 				bgUpdate();
 			}
 		}
@@ -55,7 +55,7 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 
 void DSGM_LoopRoom(DSGM_Room *room) {
 	u8 screen;
-	int layer;
+	int layerNumber;
 	int group;
 	int object;
 	int sound;
@@ -74,9 +74,9 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 	}
 	
 	for(screen = 0; screen < 2; screen++) {
-		for(layer = 0; layer < 4; layer++) {
-			if(room->backgroundInstances[screen][layer].background != DSGM_NO_BACKGROUND) {
-				DSGM_ScrollBackgroundFull(&room->view[screen], &room->backgroundInstances[screen][layer]);
+		for(layerNumber = 0; layerNumber < 4; layerNumber++) {
+			if(room->layers[screen][layerNumber].background != DSGM_NO_BACKGROUND) {
+				DSGM_ScrollBackgroundFull(&room->view[screen], &room->layers[screen][layerNumber]);
 			}
 		}
 		
@@ -182,7 +182,7 @@ void DSGM_LeaveRoom(DSGM_Room *room) {
 
 unsigned char DSGM_SaveRoom(DSGM_Room *room, char *filename) {
 	/*u8 screen;
-	int layer;
+	int layerNumber;
 	int group;
 	int object;
 	FILE *f = fopen(filename, "ab");
@@ -192,9 +192,9 @@ unsigned char DSGM_SaveRoom(DSGM_Room *room, char *filename) {
 	
 	for(screen = 0; screen < 2; screen++) {
 		// Save backgrounds
-		for(layer = 0; layer < 4; layer++) {
+		for(layerNumber = 0; layerNumber < 4; layerNumber++) {
 			// Store pointer to background
-			fwrite(&room->backgroundInstances[screen][layer].background, sizeof(DSGM_Background *), 1, f) {
+			fwrite(&room->layers[screen][layerNumber].background, sizeof(DSGM_Background *), 1, f) {
 		}
 	}
 	

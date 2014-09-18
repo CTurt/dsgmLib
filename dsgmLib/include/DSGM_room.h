@@ -8,7 +8,7 @@
 } while(0)
 
 typedef struct {
-	DSGM_BackgroundInstance backgroundInstances[2][4];
+	DSGM_Layer layers[2][4];
 	
 	DSGM_View initialView[2];
 	DSGM_View view[2];

@@ -13,7 +13,7 @@
 #define DSGM_MAGENTA DSGM_Color(31, 0, 31)
 #define DSGM_BRIGHT_BLUE DSGM_Color(0, 31, 31)
 
-void DSGM_InitDrawableBackground(DSGM_BackgroundInstance *backgroundInstance);
+void DSGM_InitDrawableBackground(DSGM_Layer *layer);
 
 #define DSGM_ClearDrawableBackground(screen) DSGM_ClearDrawableBackgroundFull(&DSGM_Rooms[DSGM_currentRoom], screen)
 inline void DSGM_ClearDrawableBackgroundFull(DSGM_Room *room, u8 screen);

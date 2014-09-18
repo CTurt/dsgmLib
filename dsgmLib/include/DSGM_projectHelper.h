@@ -38,20 +38,20 @@ inline bool DSGM_BackgroundIsNitro(int background) {
 	return DSGM_BackgroundIsNitroFull(&DSGM_Backgrounds[background]);
 }
 
-void DSGM_LoadBackground(u8 screen, int layer, int background, bool attachedToView) {
-	DSGM_BackgroundInstance backgroundInstance;
-	backgroundInstance.background = &DSGM_Backgrounds[background];
-	backgroundInstance.screen = screen;
-	backgroundInstance.layer = layer;
-	backgroundInstance.attachedToView = attachedToView;
-	backgroundInstance.x = 0;
-	backgroundInstance.y = 0;
-	DSGM_LoadBackgroundFull(&backgroundInstance);
+void DSGM_LoadBackground(u8 screen, int layerNumber, int background, bool attachedToView) {
+	DSGM_Layer layer;
+	layer.background = &DSGM_Backgrounds[background];
+	layer.screen = screen;
+	layer.layerNumber = layerNumber;
+	layer.attachedToView = attachedToView;
+	layer.x = 0;
+	layer.y = 0;
+	DSGM_LoadBackgroundFull(&layer);
 }
 
-void DSGM_ScrollBackground(u8 screen, int layer, int x, int y) {
-	DSGM_backgroundInstances[screen][layer].x = x;
-	DSGM_backgroundInstances[screen][layer].y = y;
+void DSGM_ScrollBackground(u8 screen, int layerNumber, int x, int y) {
+	DSGM_layers[screen][layerNumber].x = x;
+	DSGM_layers[screen][layerNumber].y = y;
 }
 
 void DSGM_ResetAll(void) {

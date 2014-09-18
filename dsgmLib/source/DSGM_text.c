@@ -3,17 +3,17 @@
 PrintConsole DSGM_text[2][4];
 int DSGM_textLayer[2];
 
-void DSGM_InitText(DSGM_BackgroundInstance *backgroundInstance) {
-	consoleInit(&DSGM_text[backgroundInstance->screen][backgroundInstance->layer], backgroundInstance->layer, BgType_Text4bpp, BgSize_T_256x256, backgroundInstance->mapBase, backgroundInstance->tileBase, backgroundInstance->screen, 1);
-	consoleSelect(&DSGM_text[backgroundInstance->screen][backgroundInstance->layer]);
+void DSGM_InitText(DSGM_Layer *layer) {
+	consoleInit(&DSGM_text[layer->screen][layer->layerNumber], layer->layerNumber, BgType_Text4bpp, BgSize_T_256x256, layer->mapBase, layer->tileBase, layer->screen, 1);
+	consoleSelect(&DSGM_text[layer->screen][layer->layerNumber]);
 	consoleClear();
-	backgroundInstance->vramId = DSGM_text[backgroundInstance->screen][backgroundInstance->layer].bgId;
-	DSGM_textLayer[backgroundInstance->screen] = backgroundInstance->layer;
-	DSGM_Debug("Init text screen %d, layer %d, vramId %d\n", backgroundInstance->screen, backgroundInstance->layer, DSGM_text[backgroundInstance->screen][backgroundInstance->layer].bgId);
+	layer->vramId = DSGM_text[layer->screen][layer->layerNumber].bgId;
+	DSGM_textLayer[layer->screen] = layer->layerNumber;
+	DSGM_Debug("Init text screen %d, layerNumber %d, vramId %d\n", layer->screen, layer->layerNumber, DSGM_text[layer->screen][layer->layerNumber].bgId);
 }
 
-inline void DSGM_SetTextLayer(u8 screen, u8 layer) {
-	DSGM_textLayer[screen] = layer;
+inline void DSGM_SetTextLayer(u8 screen, u8 layerNumber) {
+	DSGM_textLayer[screen] = layerNumber;
 }
 
 void DSGM_ClearText(u8 screen) {
