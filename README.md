@@ -51,16 +51,18 @@ Great! We're done.
 
 Getting Started
 ---------------
-[Download dsgmLib](https://github.com/DSGameMaker/dsgmLib/archive/master.zip), and extract the archive to a new directory in your devkitPro folder, for example C:\devkitPro\dsgmLib\.
+[Download dsgmLib](https://github.com/DSGameMaker/dsgmLib/archive/master.zip), and extract the archive to your devkitPro directory (for example `C:\devkitPro`), then rename the directory `dsgmLib-master` to `dsgmLib`.
 
-Then, create an environment variable called `DSGMLIB` with the value of the path to dsgmLib.a, for example C:\devkitPro\dsgmLib\dsgmLib.
+Then, create an environment variable called `DSGMLIB` with the value of the path to `dsgmLib.a`, for example `C:\devkitPro\dsgmLib\dsgmLib`.
 
-Then open a terminal in the directory. Run `ls` to (hopefully) print this list of files and directories:
+Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this list of files and directories:
 
     dsgmLib
     examples
     template
+    .gitignore
     LICENSE
+    Makefile
     README.md
 
 `cd` to `examples` and run `ls` to list the examples:
@@ -73,6 +75,7 @@ Then open a terminal in the directory. Run `ls` to (hopefully) print this list o
     Priority
     RotsetEffects
     Unpossible
+    Makefile
 
 Let's compile the `Collision` example.
 
@@ -82,6 +85,8 @@ Let's compile the `Collision` example.
     make
 
 You'll see `Collision.nds` is generated which you can run with an emulator like [NO$GBA](http://problemkaputt.de/gba.htm) (for Windows) or [DeSmuME](http://desmume.org/download/) (for Windows/OS X/Linux).
+
+Additionally, you can compile all of the examples at once by running `make` on the `examples` directory.
 
 Recompiling the Library
 ---------
