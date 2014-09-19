@@ -214,3 +214,7 @@ unsigned char DSGM_SaveRoom(DSGM_Room *room, char *filename) {
 	
 	return 1;
 }
+
+inline int DSGM_GetRoomNumberFull(DSGM_Room *rooms, DSGM_Room *room) {
+	return room - rooms;
+}

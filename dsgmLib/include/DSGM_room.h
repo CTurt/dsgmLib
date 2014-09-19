@@ -24,3 +24,6 @@ void DSGM_SetupViews(DSGM_Room *room);
 void DSGM_LoadRoom(DSGM_Room *room);
 void DSGM_LoopRoom(DSGM_Room *room);
 void DSGM_LeaveRoom(DSGM_Room *room);
+
+#define DSGM_GetRoomNumber(room) DSGM_GetRoomNumberFull(DSGM_Rooms, room) 
+inline int DSGM_GetRoomNumberFull(DSGM_Room *rooms, DSGM_Room *room);
