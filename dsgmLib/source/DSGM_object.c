@@ -289,12 +289,12 @@ inline bool (DSGM_ObjectInstanceCollision)(DSGM_ObjectInstance *me, DSGM_ObjectI
 }
 
 inline int (DSGM_GetObjectInstanceRotset)(DSGM_ObjectInstance *me) {
-	return ((unsigned int)me->angle - (unsigned int)DSGM_rotations[me->screen]) / sizeof(me->angle);
+	return me->angle - DSGM_rotations[me->screen];
 }
 
 inline int DSGM_GetObjectInstanceIDFull(DSGM_Room *room, DSGM_ObjectInstance *me) {
 	DSGM_ObjectInstance *group = DSGM_GetObjectGroupFull(room, me->screen, me->object)->objectInstances;
-	return ((void *)me - (void *)group) / sizeof(DSGM_ObjectInstance);
+	return me - group;
 }
 
 void (DSGM_InitObjectInstanceRotScale)(DSGM_ObjectInstance *me) {
