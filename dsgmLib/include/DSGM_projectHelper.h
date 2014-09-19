@@ -5,6 +5,8 @@
 #define DSGM_ALL_ROOMS -1
 
 #define DSGM_ResetRoom() DSGM_SwitchRoom(DSGM_currentRoom, true)
+#define DSGM_GotoPreviousRoom(persistent) DSGM_SwitchRoom(DSGM_currentRoom - 1, persistent)
+#define DSGM_GotoNextRoom(persistent) DSGM_SwitchRoom(DSGM_currentRoom + 1, persistent)
 
 void DSGM_Init(void) {
 	DSGM_InitGFX();
@@ -66,6 +68,9 @@ void DSGM_ResetAll(void) {
 }
 
 void DSGM_SwitchRoom(int room, bool reset) {
+	if(room >= DSGM_ROOM_COUNT) room = 0;
+	if(room < 0) room = DSGM_ROOM_COUNT - 1;
+	
 	DSGM_invalidateRoom = 1;
 	
 	DSGM_ResetAll();

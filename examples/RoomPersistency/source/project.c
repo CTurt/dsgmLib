@@ -483,10 +483,8 @@ void player_touch(playerObjectInstance *me) {
 	//mmLoad(DSGM_Sounds[FlatOutLies].ID);
 	//swiWaitForVBlank();
 	//mmStart(DSGM_Sounds[FlatOutLies].ID, MM_PLAY_LOOP);
-	if(DSGM_currentRoom == Room_1) {
-		DSGM_SwitchRoom(Room_2, false);
-	}
-	else if(DSGM_currentRoom == Room_2) {
-		DSGM_SwitchRoom(Room_1, false);
-	}
+	
+	DSGM_GotoNextRoom(false);
+	/*if(DSGM_currentRoom == Room_1) DSGM_SwitchRoom(Room_2, false);
+	else if(DSGM_currentRoom == Room_2) DSGM_SwitchRoom(Room_1, false);*/
 }
