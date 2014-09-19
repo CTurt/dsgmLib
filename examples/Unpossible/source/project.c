@@ -267,5 +267,5 @@ void spike_loop(spikeObjectInstance *me) {
 }
 
 void player_collide_spike(playerObjectInstance *me, spikeObjectInstance *collider) {
-	DSGM_SwitchRoom(DSGM_currentRoom, true);
+	DSGM_ResetRoom();
 }

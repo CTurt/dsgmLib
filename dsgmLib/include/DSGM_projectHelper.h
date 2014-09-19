@@ -4,6 +4,8 @@
 
 #define DSGM_ALL_ROOMS -1
 
+#define DSGM_ResetRoom() DSGM_SwitchRoom(DSGM_currentRoom, true)
+
 void DSGM_Init(void) {
 	DSGM_InitGFX();
 	DSGM_InitRand();
