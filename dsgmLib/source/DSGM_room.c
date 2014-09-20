@@ -30,7 +30,10 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 				else if(room->layers[screen][layerNumber].background == DSGM_DRAWABLE_BACKGROUND) {
 					if(layerNumber == 3) DSGM_InitDrawableBackground(&room->layers[screen][layerNumber]);
 				}
-				else DSGM_LoadBackgroundFull(&room->layers[screen][layerNumber]);
+				else {
+					DSGM_LoadBackgroundFull(&room->layers[screen][layerNumber]);
+					if(room->layers[screen][layerNumber].background->type == BgType_Text4bpp) DSGM_InitText(&room->layers[screen][layerNumber]);
+				}
 				DSGM_ScrollBackgroundFull(&room->view[screen], &room->layers[screen][layerNumber]);
 				bgUpdate();
 			}

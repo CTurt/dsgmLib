@@ -4,12 +4,34 @@ PrintConsole DSGM_text[2][4];
 int DSGM_textLayer[2];
 
 void DSGM_InitText(DSGM_Layer *layer) {
-	consoleInit(&DSGM_text[layer->screen][layer->layerNumber], layer->layerNumber, BgType_Text4bpp, BgSize_T_256x256, layer->mapBase, layer->tileBase, layer->screen, 1);
+	DSGM_Debug("Init text: screen %d, layerNumber %d, vramId %d\n", layer->screen, layer->layerNumber, DSGM_text[layer->screen][layer->layerNumber].bgId);
+	
+	ConsoleFont font;
+	
+	if(layer->background != DSGM_TEXT_BACKGROUND) {
+		font.gfx = bgGetGfxPtr(layer->vramId);
+		
+		DSGM_UnlockBackgroundPalette(layer->screen);
+		font.pal = (u16 *)&(layer->screen == DSGM_TOP ? VRAM_E_EXT_PALETTE : VRAM_H_EXT_PALETTE)[layer->layerNumber][0];
+		font.numColors = 2;
+		
+		font.numChars = 127;
+		font.bpp = 4;
+		font.asciiOffset = 0;
+		font.convertSingleColor = false;
+	}
+	
+	consoleInit(&DSGM_text[layer->screen][layer->layerNumber], layer->layerNumber, BgType_Text4bpp, BgSize_T_256x256, layer->mapBase, layer->tileBase, layer->screen, layer->background == DSGM_TEXT_BACKGROUND);
+	layer->vramId = DSGM_text[layer->screen][layer->layerNumber].bgId;
+	
+	if(layer->background != DSGM_TEXT_BACKGROUND) {
+		consoleSetFont(&DSGM_text[layer->screen][layer->layerNumber], &font);
+		DSGM_LockBackgroundPalette(layer->screen);
+	}
+	
+	DSGM_textLayer[layer->screen] = layer->layerNumber;
 	consoleSelect(&DSGM_text[layer->screen][layer->layerNumber]);
 	consoleClear();
-	layer->vramId = DSGM_text[layer->screen][layer->layerNumber].bgId;
-	DSGM_textLayer[layer->screen] = layer->layerNumber;
-	DSGM_Debug("Init text screen %d, layerNumber %d, vramId %d\n", layer->screen, layer->layerNumber, DSGM_text[layer->screen][layer->layerNumber].bgId);
 }
 
 inline void DSGM_SetTextLayer(u8 screen, u8 layerNumber) {
