@@ -41,7 +41,7 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			{
 				// Layer 0
 				{
-					//DSGM_DEFAULT_FONT,			// Background
+					//DSGM_DEFAULT_FONT,		// Background
 					&DSGM_Backgrounds[ComicSans],// Background
 					DSGM_BOTTOM,				// Screen
 					0,							// Layer
@@ -198,18 +198,5 @@ void DSGM_SetupRooms(int room) {
 }
 
 void hello_create(helloObjectInstance *me) {
-	/*int x, y;
-	for(x = 0; x < 32; x++) {
-		for(y = 0 ; y < 32; y++) {
-			DSGM_SetTile(&DSGM_layers[DSGM_BOTTOM][0], x, y, 0x23);
-		}
-	}*/
-	
-	//bgGetMapPtr(DSGM_layers[DSGM_BOTTOM][0].vramId)[0] = 0x23;
-	
-	//DSGM_InitTextF(&DSGM_layers[DSGM_BOTTOM][0]);
-	//DSGM_InitTextS(&DSGM_layers[DSGM_BOTTOM][0]);
-	//DSGM_DrawText(DSGM_BOTTOM, 1, 1, "Hello!");
-	//DSGM_SetTile(&DSGM_layers[DSGM_BOTTOM][0], 0, 0, 'a');
-	DSGM_BoxText(DSGM_BOTTOM, 1, 1, 21, 0, 2, "Hello!\n\nThis is the box text function, the parameters are as follows:\n\n - screen\n - x\n - y\n - width\n - height (no limit if 0)\n - delay between each letter\n - text\n - any additional variables to be used in text format");
+	DSGM_BoxText(DSGM_BOTTOM, 1, 1, 31, 0, 2, "Hello!\n\nThis text is being written in the ComicSans font included with DS Game Maker.");
 }
