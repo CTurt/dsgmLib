@@ -9,28 +9,26 @@ DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT] = {
 };
 
 DSGM_Background DSGM_Backgrounds[DSGM_BACKGROUND_COUNT] = {
+	DSGM_FORM_NITRO_FONT(ComicSans),
 };
 
 DSGM_Palette DSGM_Palettes[DSGM_PALETTE_COUNT] = {
-	DSGM_FORM_NITRO_PALETTE(DSGMPal0),
 };
 
 DSGM_Sprite DSGM_Sprites[DSGM_SPRITE_COUNT] = {
-	DSGM_FORM_NITRO_SPRITE(taptapman, DSGMPal0, SpriteSize_32x32, 9),
-	DSGM_FORM_NITRO_SPRITE(ball, DSGMPal0, SpriteSize_32x32, 1),
 };
 
 DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
-	// ball
+	// hello
 	{
-		&DSGM_Sprites[ballSprite],
+		DSGM_NO_SPRITE,
+		(DSGM_Event)hello_create,
 		DSGM_NO_EVENT,
-		(DSGM_Event)ball_loop,
 		DSGM_NO_EVENT,
 		DSGM_NO_EVENT,
 		NULL, 0,
 		
-		sizeof(*((ballObjectInstance *)0)->variables)
+		sizeof(*((helloObjectInstance *)0)->variables)
 	},
 };
 
@@ -43,7 +41,8 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			{
 				// Layer 0
 				{
-					DSGM_DEFAULT_FONT,			// Background
+					//DSGM_DEFAULT_FONT,			// Background
+					&DSGM_Backgrounds[ComicSans],// Background
 					DSGM_BOTTOM,				// Screen
 					0,							// Layer
 					false,						// Attached to view system
@@ -191,14 +190,26 @@ void DSGM_SetupRooms(int room) {
 	
 	DSGM_SetupObjectGroups(&DSGM_Rooms[Room_1], DSGM_BOTTOM, 1);
 	
-	DSGM_SetupObjectInstances(&DSGM_Rooms[Room_1].objectGroups[DSGM_BOTTOM][0], &DSGM_Objects[ball], DSGM_BOTTOM, 1,
-		64, 64
+	DSGM_SetupObjectInstances(&DSGM_Rooms[Room_1].objectGroups[DSGM_BOTTOM][0], &DSGM_Objects[hello], DSGM_BOTTOM, 1,
+		0, 0
 	);
 	
 	if(room != DSGM_ALL_ROOMS) return;
 }
 
-void ball_loop(ballObjectInstance *me) {
-	me->variables->counter++;
-	DSGM_DrawText(DSGM_BOTTOM, 0, 0, "%d", me->variables->counter);
+void hello_create(helloObjectInstance *me) {
+	/*int x, y;
+	for(x = 0; x < 32; x++) {
+		for(y = 0 ; y < 32; y++) {
+			DSGM_SetTile(&DSGM_layers[DSGM_BOTTOM][0], x, y, 0x23);
+		}
+	}*/
+	
+	//bgGetMapPtr(DSGM_layers[DSGM_BOTTOM][0].vramId)[0] = 0x23;
+	
+	//DSGM_InitTextF(&DSGM_layers[DSGM_BOTTOM][0]);
+	//DSGM_InitTextS(&DSGM_layers[DSGM_BOTTOM][0]);
+	//DSGM_DrawText(DSGM_BOTTOM, 1, 1, "Hello!");
+	//DSGM_SetTile(&DSGM_layers[DSGM_BOTTOM][0], 0, 0, 'a');
+	DSGM_BoxText(DSGM_BOTTOM, 1, 1, 21, 0, 2, "Hello!\n\nThis is the box text function, the parameters are as follows:\n\n - screen\n - x\n - y\n - width\n - height (no limit if 0)\n - delay between each letter\n - text\n - any additional variables to be used in text format");
 }

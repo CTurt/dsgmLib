@@ -11,6 +11,7 @@ DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT] = {
 };
 
 DSGM_Background DSGM_Backgrounds[DSGM_BACKGROUND_COUNT] = {
+	DSGM_FORM_NITRO_FONT(ComicSans),
 };
 
 DSGM_Palette DSGM_Palettes[DSGM_PALETTE_COUNT] = {
@@ -202,7 +203,8 @@ void DSGM_SetupRooms(int room) {
 // Several different things for you to try!
 
 void drawObject_create(drawObjectObjectInstance *me) {
-	DSGM_DrawTextToBackground(DSGM_BOTTOM, 40, 80, DSGM_DEFAULT_FONT, 2, DSGM_RED, "Draw on me!");
+	//DSGM_DrawTextToBackground(DSGM_BOTTOM, 40, 80, DSGM_DEFAULT_FONT, 2, DSGM_RED, "Draw on me!");
+	DSGM_DrawTextToBackground(DSGM_BOTTOM, 40, 80, &DSGM_Backgrounds[ComicSans], 2, DSGM_RED, "Draw on me!");
 	
 	// Test 1:
 	//int i;

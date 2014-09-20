@@ -8,7 +8,7 @@ void DSGM_InitText(DSGM_Layer *layer) {
 	
 	ConsoleFont font;
 	
-	if(layer->background != DSGM_TEXT_BACKGROUND) {
+	if(layer->background != DSGM_DEFAULT_FONT) {
 		font.gfx = bgGetGfxPtr(layer->vramId);
 		
 		DSGM_UnlockBackgroundPalette(layer->screen);
@@ -21,10 +21,10 @@ void DSGM_InitText(DSGM_Layer *layer) {
 		font.convertSingleColor = false;
 	}
 	
-	consoleInit(&DSGM_text[layer->screen][layer->layerNumber], layer->layerNumber, BgType_Text4bpp, BgSize_T_256x256, layer->mapBase, layer->tileBase, layer->screen, layer->background == DSGM_TEXT_BACKGROUND);
+	consoleInit(&DSGM_text[layer->screen][layer->layerNumber], layer->layerNumber, BgType_Text4bpp, BgSize_T_256x256, layer->mapBase, layer->tileBase, layer->screen, layer->background == DSGM_DEFAULT_FONT);
 	layer->vramId = DSGM_text[layer->screen][layer->layerNumber].bgId;
 	
-	if(layer->background != DSGM_TEXT_BACKGROUND) {
+	if(layer->background != DSGM_DEFAULT_FONT) {
 		consoleSetFont(&DSGM_text[layer->screen][layer->layerNumber], &font);
 		DSGM_LockBackgroundPalette(layer->screen);
 	}

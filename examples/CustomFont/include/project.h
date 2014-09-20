@@ -4,16 +4,23 @@
 #define DSGM_SOUND_EFFECT_COUNT 0
 #define DSGM_SOUND_COUNT (DSGM_SOUND_STREAM_COUNT + DSGM_SOUND_EFFECT_COUNT)
 #define DSGM_BACKGROUND_COUNT 1
-#define DSGM_PALETTE_COUNT 1
+#define DSGM_PALETTE_COUNT 0
 #define DSGM_SPRITE_COUNT 0
 #define DSGM_OBJECT_COUNT 1
 #define DSGM_ROOM_COUNT 1
 
 // Include backgrounds, palettes and sprites to be loaded from RAM
+#include "ComicSans_Tiles_bin.h"
+#include "ComicSans_Map_bin.h"
+#include "ComicSans_Pal_bin.h"
 
 // No sounds, no enum
 //typedef enum {
 //} DSGM_SoundNames;
+
+//typedef enum {
+	//ComicSans,
+//} DSGM_FontNames;
 
 typedef enum {
 	ComicSans,
@@ -28,14 +35,14 @@ typedef enum {
 //} DSGM_SpriteNames;
 
 typedef enum {
-	drawObject,
+	hello,
 } DSGM_ObjectNames;
 
 typedef struct {
 	DSGM_ObjectInstanceBase;
 	struct {
 	} *variables;
-} drawObjectObjectInstance;
+} helloObjectInstance;
 
 typedef enum {
 	Room_1,
@@ -52,5 +59,4 @@ extern int DSGM_currentRoom;
 
 void DSGM_SetupRooms(int room);
 
-void drawObject_create(drawObjectObjectInstance *me);
-void drawObject_loop(drawObjectObjectInstance *me);
+void hello_create(helloObjectInstance *me);

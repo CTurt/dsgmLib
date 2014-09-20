@@ -1,7 +1,6 @@
 #pragma once
 
 #define DSGM_NO_BACKGROUND NULL
-#define DSGM_TEXT_BACKGROUND (void *)1
 #define DSGM_DRAWABLE_BACKGROUND (void *)2
 
 #define DSGM_FORM_RAM_BACKGROUND(background, size, type)\

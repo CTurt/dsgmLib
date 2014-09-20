@@ -72,7 +72,7 @@ void DSGM_LoadBackgroundFull(DSGM_Layer *layer) {
 
 void DSGM_LoadBackgroundNitroFull(DSGM_Layer *layer) {
 	layer->background->tilesCount = DSGM_ReadFileManual(bgGetGfxPtr(layer->vramId), 0, DSGM_AUTO_LENGTH, layer->background->nitroTilesFilename) / 64;
-	DSGM_ReadFileManual(bgGetMapPtr(layer->vramId), 0, DSGM_AUTO_LENGTH, layer->background->nitroMapFilename);
+	if(layer->background->nitroMapFilename) DSGM_ReadFileManual(bgGetMapPtr(layer->vramId), 0, DSGM_AUTO_LENGTH, layer->background->nitroMapFilename);
 	DSGM_UnlockBackgroundPalette(layer->screen);
 	switch(layer->screen) {
 		case DSGM_TOP:
@@ -89,7 +89,7 @@ void DSGM_LoadBackgroundNitroFull(DSGM_Layer *layer) {
 void DSGM_LoadBackgroundRAMFull(DSGM_Layer *layer) {
 	dmaCopy(layer->background->tiles, bgGetGfxPtr(layer->vramId), *layer->background->tilesLength);
 	layer->background->tilesCount = (*layer->background->tilesLength) / 64;
-	dmaCopy(layer->background->map, bgGetMapPtr(layer->vramId), *layer->background->mapLength);
+	if(layer->background->map != NULL) dmaCopy(layer->background->map, bgGetMapPtr(layer->vramId), *layer->background->mapLength);
 	DSGM_UnlockBackgroundPalette(layer->screen);
 	switch(layer->screen) {
 		case DSGM_TOP:
@@ -104,7 +104,7 @@ void DSGM_LoadBackgroundRAMFull(DSGM_Layer *layer) {
 }
 
 void DSGM_ScrollBackgroundFull(DSGM_View *view, DSGM_Layer *layer) {
-	if(layer != NULL/* && background != DSGM_TEXT_BACKGROUND*/) {
+	if(layer != NULL/* && background != DSGM_DEFAULT_FONT*/) {
 		if(layer->background != NULL) {
 			if(layer->vramId != 0) {
 				bgSetScroll(layer->vramId, layer->x - layer->attachedToView ? view->x : 0, layer->y - layer->attachedToView ? view->y : 0);

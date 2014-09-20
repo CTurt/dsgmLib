@@ -26,7 +26,7 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 		for(layerNumber = 0; layerNumber < 4; layerNumber++) {
 			if(room->layers[screen][layerNumber].background != DSGM_NO_BACKGROUND) {
 				DSGM_Debug("Screen %d, layerNumber %d, background %p\n", screen, layerNumber, room->layers[screen][layerNumber].background);
-				if(room->layers[screen][layerNumber].background == DSGM_TEXT_BACKGROUND) DSGM_InitText(&room->layers[screen][layerNumber]);
+				if(room->layers[screen][layerNumber].background == DSGM_DEFAULT_FONT) DSGM_InitText(&room->layers[screen][layerNumber]);
 				else if(room->layers[screen][layerNumber].background == DSGM_DRAWABLE_BACKGROUND) {
 					if(layerNumber == 3) DSGM_InitDrawableBackground(&room->layers[screen][layerNumber]);
 				}

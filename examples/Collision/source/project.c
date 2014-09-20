@@ -55,7 +55,7 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			{
 				// Layer 0
 				{
-					DSGM_TEXT_BACKGROUND,		// Background
+					DSGM_DEFAULT_FONT,			// Background
 					DSGM_BOTTOM,				// Screen
 					0,							// Layer
 					false,						// Attached to view system
@@ -102,7 +102,7 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			{
 				// Layer 0
 				{
-					DSGM_TEXT_BACKGROUND,		// Background
+					DSGM_DEFAULT_FONT,			// Background
 					DSGM_TOP,					// Screen
 					0,							// Layer
 					false,						// Attached to view system
