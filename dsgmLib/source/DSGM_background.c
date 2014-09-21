@@ -107,7 +107,7 @@ void DSGM_ScrollBackgroundFull(DSGM_View *view, DSGM_Layer *layer) {
 	if(layer != NULL/* && background != DSGM_DEFAULT_FONT*/) {
 		if(layer->background != NULL) {
 			if(layer->vramId != 0) {
-				bgSetScroll(layer->vramId, layer->x - layer->attachedToView ? view->x : 0, layer->y - layer->attachedToView ? view->y : 0);
+				bgSetScroll(layer->vramId, layer->x - (layer->attachedToView ? view->x : 0), layer->y - (layer->attachedToView ? view->y : 0));
 			}
 		}
 	}

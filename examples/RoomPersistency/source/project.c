@@ -3,10 +3,10 @@
 #include "DSGM_projectHelper.h"
 
 // User variables / declarations
-#define LEFT 0
-#define RIGHT 1
+#define LEFT 1
+#define RIGHT 3
 #define UP 2
-#define DOWN 3
+#define DOWN 0
 
 bool walkableTile(u16 tile) {
 	switch(tile) {

@@ -19,7 +19,18 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 	
 	DSGM_invalidateRoom = 0;
 	
-	DSGM_InitCustomGFX(room->layers[DSGM_TOP][3].background == DSGM_DRAWABLE_BACKGROUND, room->layers[DSGM_BOTTOM][3].background == DSGM_DRAWABLE_BACKGROUND);
+	{
+		bool requiresMode3[2] = {false, false};
+		
+		for(screen = 0; screen < 2; screen++) {
+			if(room->layers[screen][3].background == DSGM_DRAWABLE_BACKGROUND || room->layers[screen][3].background->type == BgType_ExRotation) {
+				DSGM_Log(false, "Screen %d requires Mode 3\n", screen);
+				requiresMode3[screen] = true;
+			}
+		}
+		
+		DSGM_InitCustomGFX(requiresMode3[DSGM_TOP], requiresMode3[DSGM_BOTTOM]);
+	}
 	
 	for(screen = 0; screen < 2; screen++) {
 		// Load backgrounds
