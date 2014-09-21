@@ -66,6 +66,8 @@ void DSGM_LoadBackgroundFull(DSGM_Layer *layer) {
 	
 	//DSGM_ScrollBackgroundFull(layer);
 	
+	swiWaitForVBlank();
+	
 	bgUpdate();
 	bgShow(layer->vramId);
 }
