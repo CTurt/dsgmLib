@@ -68,5 +68,8 @@ inline BgSize DSGM_GetBGSize(u8 screen, int layerNumber);
 int DSGM_GetBGWidth(u8 screen, int layerNumber);
 int DSGM_GetBGHeight(u8 screen, int layerNumber);
 
-inline u16 DSGM_GetTile(DSGM_Layer *layer, int x, int y);
-inline void DSGM_SetTile(DSGM_Layer *layer, int x, int y, u16 tile);
+#define DSGM_GetTile(screen, layerNumber, x, y) DSGM_GetTileFull(&DSGM_layers[screen][layerNumber], x, y)
+inline u16 DSGM_GetTileFull(DSGM_Layer *layer, int x, int y);
+
+#define DSGM_SetTile(screen, layerNumber, x, y, tile) DSGM_SetTileFull(&DSGM_layers[screen][layerNumber], x, y, tile)
+inline void DSGM_SetTileFull(DSGM_Layer *layer, int x, int y, u16 tile);
