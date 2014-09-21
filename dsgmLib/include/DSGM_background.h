@@ -64,6 +64,12 @@ void DSGM_LoadBackgroundRAMFull(DSGM_Layer *layer);
 
 void DSGM_ScrollBackgroundFull(DSGM_View *view, DSGM_Layer *layer);
 
+#define DSGM_GetLayerPriority(screen, layerNumber) DSGM_GetLayerPriorityFull(&DSGM_layers[screen][layerNumber])
+inline unsigned int DSGM_GetLayerPriorityFull(DSGM_Layer *layer);
+
+#define DSGM_SetLayerPriority(screen, layerNumber, priority) DSGM_SetLayerPriorityFull(&DSGM_layer[screen][layerNumber], priority)
+inline void DSGM_SetLayerPriorityFull(DSGM_Layer *layer, unsigned int priority);
+
 inline BgSize DSGM_GetBGSize(u8 screen, int layerNumber);
 int DSGM_GetBGWidth(u8 screen, int layerNumber);
 int DSGM_GetBGHeight(u8 screen, int layerNumber);

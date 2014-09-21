@@ -113,6 +113,14 @@ void DSGM_ScrollBackgroundFull(DSGM_View *view, DSGM_Layer *layer) {
 	}
 }
 
+inline unsigned int DSGM_GetLayerPriorityFull(DSGM_Layer *layer) {
+	return (unsigned int)bgGetPriority(layer->vramId);
+}
+
+inline void DSGM_SetLayerPriorityFull(DSGM_Layer *layer, unsigned int priority) {
+	bgSetPriority(layer->vramId, priority);
+}
+
 inline BgSize DSGM_GetBGSize(u8 screen, int layerNumber) {
 	return bgState[layerNumber + ((screen == DSGM_BOTTOM) * 4)].size;
 }
@@ -167,8 +175,6 @@ inline u16 DSGM_GetTileFull(DSGM_Layer *layer, int x, int y) {
 	}
 	//y += 64 * ((y - 31) / 32);
 	//x %= 32;
-	//int t = y * DSGM_GetBGWidth(screen, layerNumber) / 16 + x;
-	//return bgGetMapPtr(background->vramId)[y * DSGM_GetBGWidth(screen, layerNumber) / 16 + x];
 	return bgGetMapPtr(layer->vramId)[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x];
 }
 
