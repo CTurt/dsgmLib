@@ -79,3 +79,12 @@ inline u16 DSGM_GetTileFull(DSGM_Layer *layer, int x, int y);
 
 #define DSGM_SetTile(screen, layerNumber, x, y, tile) DSGM_SetTileFull(&DSGM_layers[screen][layerNumber], x, y, tile)
 inline void DSGM_SetTileFull(DSGM_Layer *layer, int x, int y, u16 tile);
+
+#define DSGM_SetRotationCenter(screen, x, y) DSGM_SetRotationCenterFull(&DSGM_layers[screen][3], x, y)
+inline void DSGM_SetRotationCenterFull(DSGM_Layer *layer, int x, int y);
+
+#define DSGM_RotateBackground(screen, angle) DSGM_RotateBackgroundFull(&DSGM_layers[screen][3], angle)
+inline void DSGM_RotateBackgroundFull(DSGM_Layer *layer, int angle);
+
+#define DSGM_ScaleBackground(screen, x, y) DSGM_ScaleBackgroundFull(&DSGM_layers[screen][3], x, y)
+inline void DSGM_ScaleBackgroundFull(DSGM_Layer *layer, int x, int y);

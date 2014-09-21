@@ -191,3 +191,15 @@ inline void DSGM_SetTileFull(DSGM_Layer *layer, int x, int y, u16 tile) {
 	}
 	bgGetMapPtr(layer->vramId)[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x] = tile;
 }
+
+inline void DSGM_SetRotationCenterFull(DSGM_Layer *layer, int x, int y) {
+	bgSetCenter(layer->vramId, x, y);
+}
+
+inline void DSGM_RotateBackgroundFull(DSGM_Layer *layer, int angle) {
+	bgSetRotate(layer->vramId, angle);
+}
+
+inline void DSGM_ScaleBackgroundFull(DSGM_Layer *layer, int x, int y) {
+	bgSetScale(layer->vramId, x, y);
+}

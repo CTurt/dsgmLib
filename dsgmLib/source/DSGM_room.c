@@ -24,7 +24,7 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 		
 		for(screen = 0; screen < 2; screen++) {
 			if(room->layers[screen][3].background == DSGM_DRAWABLE_BACKGROUND || room->layers[screen][3].background->type == BgType_ExRotation) {
-				DSGM_Log(false, "Screen %d requires Mode 3\n", screen);
+				DSGM_Debug("Screen %d requires Mode 3\n", screen);
 				requiresMode3[screen] = true;
 			}
 		}
