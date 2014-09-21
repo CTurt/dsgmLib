@@ -413,8 +413,8 @@ void player_create(playerObjectInstance *me) {
 
 void player_loop(playerObjectInstance *me) {
 	// Position the player to be in the centre of the screen
-	me->x = DSGM_Rooms[DSGM_currentRoom].view[DSGM_BOTTOM].x + 111;
-	me->y = DSGM_Rooms[DSGM_currentRoom].view[DSGM_BOTTOM].y + 79;
+	me->x = DSGM_view[DSGM_BOTTOM].x + 111;
+	me->y = DSGM_view[DSGM_BOTTOM].y + 79;
 	
 	// Change direction
 	if(DSGM_held.Left && DSGM_NOT_HOLDING_3(Right, Up, Down) && me->variables->direction != LEFT) {
