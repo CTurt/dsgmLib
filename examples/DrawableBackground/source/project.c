@@ -15,7 +15,6 @@ DSGM_Background DSGM_Backgrounds[DSGM_BACKGROUND_COUNT] = {
 };
 
 DSGM_Palette DSGM_Palettes[DSGM_PALETTE_COUNT] = {
-	DSGM_FORM_NITRO_PALETTE(DSGMPal0),
 };
 
 DSGM_Sprite DSGM_Sprites[DSGM_SPRITE_COUNT] = {
