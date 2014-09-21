@@ -2,6 +2,7 @@
 
 #include <nds.h>
 
+#include <fat.h>
 #include <filesystem.h>
 #include <maxmod9.h>
 

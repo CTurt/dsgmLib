@@ -9,6 +9,9 @@
 #define DSGM_FORM_NITRO_BACKGROUND(background, size, type)\
 { #background "_Tiles.bin", #background "_Map.bin", #background "_Pal.bin", NULL, NULL, NULL, NULL, NULL, NULL, size, type, 0 }
 
+#define DSGM_FORM_FAT_BACKGROUND(background, size, type)\
+{ "fat:/" #background "_Tiles.bin", "fat:/" #background "_Map.bin", "fat:/" #background "_Pal.bin", NULL, NULL, NULL, NULL, NULL, NULL, size, type, 0 }
+
 #define DSGM_layers DSGM_Rooms[DSGM_currentRoom].layers
 
 typedef struct {

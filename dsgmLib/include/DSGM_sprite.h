@@ -8,6 +8,9 @@
 #define DSGM_FORM_NITRO_SPRITE(sprite, palette, size, frames)\
 { NULL, 0, #sprite "_Sprite.bin", &DSGM_Palettes[palette], size, frames, NULL }
 
+#define DSGM_FORM_FAT_SPRITE(sprite, palette, size, frames)\
+{ NULL, 0, "fat:/" #sprite "_Sprite.bin", &DSGM_Palettes[palette], size, frames, NULL }
+
 typedef struct {
 	u8 *tiles;
 	u32 *tilesLength;

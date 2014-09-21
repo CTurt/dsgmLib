@@ -10,9 +10,6 @@
 #define DSGM_ROOM_COUNT 1
 
 // Include backgrounds, palettes and sprites to be loaded from RAM
-#include "ComicSans_Tiles_bin.h"
-#include "ComicSans_Map_bin.h"
-#include "ComicSans_Pal_bin.h"
 
 // No sounds, no enum
 //typedef enum {

@@ -77,7 +77,10 @@ void DSGM_InitRand(void) {
 
 void DSGM_InitNitro(void) {
 	if(!nitroFSInit(NULL)) {
-		DSGM_Debug("NitroFS failed");
+		DSGM_Debug("NitroFS failed\n");
+	}
+	if(!fatInitDefault()) {
+		DSGM_Debug("FAT failed\n");
 	}
 	chdir("nitro:/");
 }

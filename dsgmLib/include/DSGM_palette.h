@@ -11,6 +11,9 @@ DSGM_Palettes[palette]
 #define DSGM_FORM_NITRO_PALETTE(palette)\
 { NULL, 0, #palette "_Pal.bin" }
 
+#define DSGM_FORM_FAT_PALETTE(palette)\
+{ NULL, 0, "fat:/" #palette "_Pal.bin" }
+
 #define DSGM_LOAD_TOP_PALETTE_RAM(paletteName, paletteNumber)\
 DSGM_LoadTopPaletteRAM(paletteName##_Pal_bin, paletteName##_Pal_bin_size, paletteNumber)
 

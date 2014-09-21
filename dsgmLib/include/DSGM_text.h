@@ -8,6 +8,9 @@
 #define DSGM_FORM_NITRO_FONT(background)\
 { #background "_Tiles.bin", NULL, #background "_Pal.bin", NULL, NULL, NULL, NULL, NULL, NULL, BgSize_T_256x256, BgType_Text4bpp, 0 }
 
+#define DSGM_FORM_FAT_FONT(background)\
+{ "fat:/" #background "_Tiles.bin", NULL, "fat:/" #background "_Pal.bin", NULL, NULL, NULL, NULL, NULL, NULL, BgSize_T_256x256, BgType_Text4bpp, 0 }
+
 extern PrintConsole DSGM_text[2][4];
 extern int DSGM_textLayer[2];
 
