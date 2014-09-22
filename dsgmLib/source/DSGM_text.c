@@ -38,6 +38,11 @@ inline void DSGM_SetTextLayer(u8 screen, u8 layerNumber) {
 	DSGM_textLayer[screen] = layerNumber;
 }
 
+// Todo: work for custom fonts
+inline void DSGM_SetTextColor(u8 screen, u16 color) {
+	(screen == DSGM_TOP ? BG_PALETTE : BG_PALETTE_SUB)[15 + (15 * 16)] = color;
+}
+
 void DSGM_ClearText(u8 screen) {
 	consoleSelect(&DSGM_text[screen][DSGM_textLayer[screen]]);
 	consoleClear();
