@@ -3,6 +3,7 @@
 #include "DSGM_projectHelper.h"
 
 // User variables / declarations
+int score;
 
 // Resources
 DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT] = {
@@ -56,12 +57,12 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			{
 				// Layer 0
 				{
-					DSGM_NO_BACKGROUND,		// Background
+					DSGM_DEFAULT_FONT,			// Background
 					DSGM_BOTTOM,				// Screen
 					0,							// Layer
 					false,						// Attached to view system
-					0,							// Map base
-					0,							// Tile base
+					8,							// Map base
+					2,							// Tile base
 					0, 0, 0
 				},
 				
@@ -218,6 +219,9 @@ void DSGM_SetupRooms(int room) {
 }
 
 void player_create(playerObjectInstance *me) {
+	// Reset score
+	score = 0;
+	
 	u16 backgroundColor = DSGM_RandomColor();
 	u16 lineColor = DSGM_RandomColor();
 	
@@ -240,6 +244,9 @@ void player_create(playerObjectInstance *me) {
 	DSGM_GetPaletteData(DSGM_BOTTOM, me->object->sprite->palette)[1] = lineColor;
 	DSGM_LockSpritePalette(DSGM_BOTTOM);
 	
+	// Change the font color
+	DSGM_SetTextColor(DSGM_BOTTOM, lineColor);
+	
 	DSGM_InitObjectInstanceRotScale(me);
 	me->by = me->y << me->bitshift;
 }
@@ -260,10 +267,15 @@ void player_loop(playerObjectInstance *me) {
 	
 	DSGM_view[me->screen].x += 2;
 	me->x = DSGM_view[me->screen].x + 32;
+	
+	DSGM_DrawText(DSGM_BOTTOM, 1, 1, "Score: %d", score);
 }
 
 void spike_loop(spikeObjectInstance *me) {
-	if(me->x - DSGM_view[me->screen].x <= -16) me->x = DSGM_view[me->screen].x + 256;
+	if(me->x - DSGM_view[me->screen].x <= -16) {
+		score++;
+		me->x = DSGM_view[me->screen].x + 256;
+	}
 }
 
 void player_collide_spike(playerObjectInstance *me, spikeObjectInstance *collider) {

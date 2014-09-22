@@ -50,6 +50,8 @@ typedef enum {
 	Room_1,
 } DSGM_RoomNames;
 
+extern int score;
+
 extern DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT];
 extern DSGM_Background DSGM_Backgrounds[DSGM_BACKGROUND_COUNT];
 extern DSGM_Palette DSGM_Palettes[DSGM_PALETTE_COUNT];
