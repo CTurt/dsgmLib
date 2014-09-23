@@ -1,11 +1,11 @@
 #pragma once
 
 #define DSGM_SOUND_STREAM_COUNT 1
-#define DSGM_SOUND_EFFECT_COUNT 2
+#define DSGM_SOUND_EFFECT_COUNT 0
 #define DSGM_SOUND_COUNT (DSGM_SOUND_STREAM_COUNT + DSGM_SOUND_EFFECT_COUNT)
-#define DSGM_BACKGROUND_COUNT 3
+#define DSGM_BACKGROUND_COUNT 1
 #define DSGM_PALETTE_COUNT 1
-#define DSGM_SPRITE_COUNT 2
+#define DSGM_SPRITE_COUNT 1
 #define DSGM_OBJECT_COUNT 1
 #define DSGM_ROOM_COUNT 2
 
@@ -14,14 +14,10 @@
 
 typedef enum {
 	FlatOutLies,
-	Ambulance,
-	Boom,
 } DSGM_SoundNames;
 
 typedef enum {
 	odale,
-	cloud,
-	space,
 } DSGM_BackgroundNames;
 
 typedef enum {

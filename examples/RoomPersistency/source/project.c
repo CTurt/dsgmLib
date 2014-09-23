@@ -49,14 +49,10 @@ bool walkableTile(u16 tile) {
 // Resources
 DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT] = {
 	DSGM_FORM_SOUND_STREAM(FlatOutLies),
-	DSGM_FORM_SOUND_EFFECT(Ambulance),
-	DSGM_FORM_SOUND_EFFECT(Boom),
 };
 
 DSGM_Background DSGM_Backgrounds[DSGM_BACKGROUND_COUNT] = {
 	DSGM_FORM_NITRO_BACKGROUND(odale, BgSize_T_512x512, BgType_Text8bpp),
-	DSGM_FORM_NITRO_BACKGROUND(cloud, BgSize_T_256x256, BgType_Text8bpp),
-	DSGM_FORM_NITRO_BACKGROUND(space, BgSize_T_256x256, BgType_Text8bpp),
 };
 
 DSGM_Palette DSGM_Palettes[DSGM_PALETTE_COUNT] = {
