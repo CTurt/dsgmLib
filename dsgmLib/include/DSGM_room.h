@@ -7,11 +7,15 @@
 	}\
 } while(0)
 
+typedef void (*DSGM_RoomHandler)(void);
+
 typedef struct {
 	DSGM_Layer layers[2][4];
 	
 	DSGM_View initialView[2];
 	DSGM_View view[2];
+	
+	DSGM_RoomHandler handler;
 	
 	DSGM_ObjectGroup *objectGroups[2];
 	int objectGroupCount[2];

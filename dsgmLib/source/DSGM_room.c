@@ -81,6 +81,9 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 	//	res = 1;
 	//}
 	
+	if(room->handler) room->handler();
+	DSGM_ValidateRoom();
+	
 	//+1?
 	for(sound = 0; sound < DSGM_soundInstanceCount; sound++) {
 		DSGM_SetSoundInstanceVolumeFull(&DSGM_soundInstances[sound], DSGM_soundInstances[sound].volume);
