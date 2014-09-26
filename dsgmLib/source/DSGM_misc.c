@@ -3,10 +3,57 @@
 #define DSGM_LegacySin(angle) (sinLerp(angle << 6) >> 4)
 #define DSGM_LegacyCos(angle) (cosLerp(angle << 6) >> 4)
 
+inline int DSGM_GetBrightness(u8 screen) {
+	int v = (screen == DSGM_TOP ? REG_MASTER_BRIGHT : REG_MASTER_BRIGHT_SUB);
+	return (v - (v & 1 << 14)) < 16 ? (v - (v & 1 << 14)) : -(v - (v & 2 << 14));
+}
+
+void DSGM_FadeIn(u8 screen, u8 delay) {
+	int brightness = DSGM_GetBrightness(DSGM_BOTTOM);
+	if(brightness == -15) {
+		// Fade in from black
+		while(brightness < 0) {
+			brightness += 1;
+			DSGM_SetBrightness(screen, brightness);
+			int i; for(i = 0; i < delay; i++) swiWaitForVBlank();
+		}
+	}
+	else if(brightness == 15) {
+		// Fade in from white
+		while(brightness > 0) {
+			brightness -= 1;
+			DSGM_SetBrightness(screen, brightness);
+			int i; for(i = 0; i < delay; i++) swiWaitForVBlank();
+		}
+	}
+}
+
+void DSGM_FadeOutToBlack(u8 screen, u8 delay) {
+	int brightness = DSGM_GetBrightness(DSGM_BOTTOM);
+	if(brightness == 0) {
+		while(brightness > -15) {
+			brightness -= 1;
+			DSGM_SetBrightness(screen, brightness);
+			int i; for(i = 0; i < delay; i++) swiWaitForVBlank();
+		}
+	}
+}
+
+void DSGM_FadeOutToWhite(u8 screen, u8 delay) {
+	int brightness = DSGM_GetBrightness(DSGM_BOTTOM);
+	if(brightness == 0) {
+		while(brightness < 15) {
+			brightness += 1;
+			DSGM_SetBrightness(screen, brightness);
+			int i; for(i = 0; i < delay; i++) swiWaitForVBlank();
+		}
+	}
+}
+
 static inline u64 DSGM_Distance(s32 x1, s32 y1, s32 x2, s32 y2) {
-   s64 h = x1 - x2;
-   s64 v = y1 - y2;
-   return h * h + v * v;
+	 s64 h = x1 - x2;
+	 s64 v = y1 - y2;
+	 return h * h + v * v;
 }
 
 static u16 DSGM_AdjustAngle(u16 angle, s16 anglerot, s32 startx, s32 starty, s32 targetx, s32 targety) {
@@ -25,8 +72,8 @@ static u16 DSGM_AdjustAngle(u16 angle, s16 anglerot, s32 startx, s32 starty, s32
 	tempangle &= 511;
 	distances[2] = DSGM_Distance(startx + DSGM_LegacyCos(tempangle), starty - DSGM_LegacySin(tempangle), targetx, targety);
 	
-	if(distances[0] < distances[1])  angle -= anglerot;
-	else if(distances[2] < distances[1])  angle += anglerot;
+	if(distances[0] < distances[1])	angle -= anglerot;
+	else if(distances[2] < distances[1])	angle += anglerot;
 	
 	return angle & 511;
 }
