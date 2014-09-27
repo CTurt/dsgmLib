@@ -1,5 +1,7 @@
 #include "DSGM.h"
 
+void *me = NULL;
+
 void DSGM_SetupObjectGroups(DSGM_Room *room, u8 screen, int objectGroupCount) {
 	room->objectGroupCount[screen] = objectGroupCount;
 	if(objectGroupCount > 0) {
@@ -146,7 +148,8 @@ DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Objec
 }
 
 DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance **meP, u8 screen, int x, int y, DSGM_Object *object) {
-	DSGM_ObjectInstanceRelation relation = DSGM_GetObjectInstanceRelationFull(room, *meP);
+	DSGM_ObjectInstanceRelation relation = { 0, 0 };
+	if(meP && *meP) relation = DSGM_GetObjectInstanceRelationFull(room, *meP);
 	
 	DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, screen, object);
 	
@@ -171,7 +174,7 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, DSGM_ObjectI
 		
 		DSGM_ActivateObjectInstance(room, &group->objectInstances[group->objectInstanceCount]);
 		
-		*meP = DSGM_GetMeFromObjectInstanceRelationFull(room, &relation);
+		if(meP && *meP) *meP = DSGM_GetMeFromObjectInstanceRelationFull(room, &relation);
 		
 		return &group->objectInstances[group->objectInstanceCount++];
 	}
@@ -201,7 +204,7 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, DSGM_ObjectI
 		
 		DSGM_ActivateObjectInstance(room, &group->objectInstances[0]);
 		
-		*meP = DSGM_GetMeFromObjectInstanceRelationFull(room, &relation);
+		if(meP && *meP) *meP = DSGM_GetMeFromObjectInstanceRelationFull(room, &relation);
 		
 		return &group->objectInstances[0];
 	}
@@ -245,12 +248,14 @@ void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *objectI
 }
 
 DSGM_ObjectInstanceRelation DSGM_GetObjectInstanceRelationFull(DSGM_Room *room, DSGM_ObjectInstance *me) {
-	DSGM_ObjectInstanceRelation relation;
-	DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, me->screen, me->object);
-	relation.screen = me->screen;
-	relation.ID = ((void *)me - (void *)(group->objectInstances)) / sizeof(DSGM_ObjectInstance);
-	relation.groupN = ((void *)group - (void *)room->objectGroups[me->screen]) / sizeof(DSGM_ObjectGroup);
-	
+	DSGM_ObjectInstanceRelation relation = { 0, 0 };
+	if(me) {
+  	DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, me->screen, me->object);
+		relation.screen = me->screen;
+		relation.ID = ((void *)me - (void *)(group->objectInstances)) / sizeof(DSGM_ObjectInstance);
+		relation.groupN = ((void *)group - (void *)room->objectGroups[me->screen]) / sizeof(DSGM_ObjectGroup);
+	}
+  
 	DSGM_Debug("Getting relation: group %d, ID %d\n", relation.groupN, relation.ID);
 	
 	return relation;

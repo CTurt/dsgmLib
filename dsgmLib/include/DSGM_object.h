@@ -66,6 +66,8 @@ typedef struct {
 
 #include "DSGM_room.h"
 
+extern void *me;
+
 void DSGM_SetupObjectGroups(DSGM_Room *room, u8 screen, int objectGroupCount);
 void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 screen, int objectInstanceCount, ...);
 void DSGM_RedistributeSpriteNumbers(DSGM_Room *room, u8 screen);
