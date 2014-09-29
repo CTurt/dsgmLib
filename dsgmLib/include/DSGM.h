@@ -4,7 +4,13 @@
 
 #include <fat.h>
 #include <filesystem.h>
+
 #include <maxmod9.h>
+
+#include <dswifi9.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,6 +47,7 @@ typedef DSGM_SpriteEntry DSGM_OAMStructLabel[0];
 #include "DSGM_sound.h"
 #include "DSGM_room.h"
 #include "DSGM_drawable.h"
+#include "DSGM_wireless.h"
 
 #ifndef BUILDINGLIB
 	#include "project.h"
