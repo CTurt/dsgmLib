@@ -63,8 +63,8 @@ void DSGM_LoadPaletteFull(u8 screen, DSGM_Palette *palette) {
 		if(screen == DSGM_BOTTOM) DSGM_ReadFileManual(VRAM_I_EXT_SPR_PALETTE[palette->paletteNumber[screen]], 0, DSGM_AUTO_LENGTH, palette->nitroFilename);
 	}
 	else {
-		if(screen == DSGM_TOP) dmaCopy(palette, VRAM_F_EXT_SPR_PALETTE[palette->paletteNumber[screen]], *palette->paletteLength);
-		if(screen == DSGM_BOTTOM) dmaCopy(palette, VRAM_I_EXT_SPR_PALETTE[palette->paletteNumber[screen]], *palette->paletteLength);
+		if(screen == DSGM_TOP) dmaCopy(palette->palette, VRAM_F_EXT_SPR_PALETTE[palette->paletteNumber[screen]], *palette->paletteLength);
+		if(screen == DSGM_BOTTOM) dmaCopy(palette->palette, VRAM_I_EXT_SPR_PALETTE[palette->paletteNumber[screen]], *palette->paletteLength);
 	}
 	DSGM_LockSpritePalette(screen);
 }
