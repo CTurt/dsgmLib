@@ -13,6 +13,7 @@ inline void setWirelessMode(enum WIRELESS_MODE mode);
 #define DSGM_wirelessData (DSGM_buffer + 32)
 
 extern char DSGM_buffer[4096];
+extern size_t DSGM_wirelessDataLength;
 extern bool DSGM_newWirelessData;
 
 void DSGM_WirelessHandler(int packetID, int readlength);

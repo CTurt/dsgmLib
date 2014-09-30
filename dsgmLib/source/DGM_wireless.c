@@ -1,11 +1,13 @@
 #include "DSGM.h"
 
 char DSGM_buffer[4096];
+size_t DSGM_wirelessDataLength = 0;
 bool DSGM_newWirelessData = false;
 
 void DSGM_WirelessHandler(int packetID, int readlength) {
   Wifi_RxRawReadPacket(packetID, readlength, (unsigned short *)DSGM_buffer);
   
+  DSGM_wirelessDataLength = readlength - 32;
   DSGM_newWirelessData = true;
 }
 

@@ -214,6 +214,6 @@ void hello_loop(helloObjectInstance *me) {
   }
   
   if(DSGM_newWirelessData) {
-    memcpy(&me->x, DSGM_wirelessData, 2 * sizeof(int));
+    if(DSGM_wirelessDataLength == 2 * sizeof(int)) memcpy(&me->x, DSGM_wirelessData, 2 * sizeof(int));
   }
 }
