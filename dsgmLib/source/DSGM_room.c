@@ -81,6 +81,8 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 	//	res = 1;
 	//}
 	
+  bool clearWireless = DSGM_newWirelessData;
+  
 	if(room->handler) room->handler();
 	DSGM_ValidateRoom();
 	
@@ -160,6 +162,8 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 		}
 	}
 	
+  if(clearWireless) DSGM_newWirelessData = false;
+  
 	//if(!res) {
 	//	mmStop();
 	//	mmStart(/*DSGM_Sounds[FlatOutLies].ID*/0, MM_PLAY_LOOP);
@@ -228,7 +232,7 @@ unsigned char DSGM_SaveRoom(DSGM_Room *room, char *filename) {
 	fclose(f);
 	
 	DSGM_Debug("Saved\n");*/
-	
+  
 	return 1;
 }
 
