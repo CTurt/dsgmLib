@@ -204,16 +204,16 @@ void hello_create(helloObjectInstance *me) {
 }
 
 void hello_loop(helloObjectInstance *me) {
-  unsigned short buffer[8];
+  unsigned short buffer[2 * sizeof(int)];
   
   if(DSGM_held.Stylus) {
     me->x = DSGM_stylus.x - 16;
     me->y = DSGM_stylus.y - 16;
-    memcpy(buffer, &me->x, 8);
-    DSGM_SendWirelessData(buffer, 8);
+    memcpy(buffer, &me->x, 2 * sizeof(int));
+    DSGM_SendWirelessData(buffer, 2 * sizeof(int));
   }
   
   if(DSGM_newWirelessData) {
-    memcpy(&me->x, DSGM_wirelessData, 8);
+    memcpy(&me->x, DSGM_wirelessData, 2 * sizeof(int));
   }
 }
