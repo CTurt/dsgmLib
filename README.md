@@ -96,6 +96,11 @@ Recompiling the Library
 ---------
 If you make changes to the library's source code (dsgmLib directory), you'll need to recompile it by running `make` in the directory. Now recompile any projects that link against the library.
 
+FAQs
+---------
+###Game works fine in the emulator but when playing on a DS with a flashcard there is just a black screen
+DS Game Maker uses `NitroFS`, a method of loading data (sprites, backgrounds, music, etc...)  for homebrew games from inside of the compiled .nds file. Unfortunately, many flashcards are designed soley for running pirated games and do not support this homebrew feature. Either you can make your game without using NitroFS (store files in RAM instead), or you can use the [Homebrew Menu](http://devkitpro.org/wiki/Homebrew_Menu) (which supports NitroFS) on your flashcard.
+
 Getting Help
 ------------
 [There's a forum](http://dsgamemaker.com/dsgmforum/viewforum.php?f=31) specifically for discussing bugs/feature requests, or [create a GitHub issue](https://github.com/DSGameMaker/dsgmLib/issues/new).
