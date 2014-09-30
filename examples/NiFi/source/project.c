@@ -200,6 +200,9 @@ void DSGM_SetupRooms(int room) {
 }
 
 void hello_create(helloObjectInstance *me) {
+  DSGM_DrawText(DSGM_TOP, 0, 4, "You can now remove the card\nand load the game on another DS");
+  DSGM_DrawText(DSGM_TOP, 0, 7, "Use the stylus to move the ball");
+  DSGM_DrawText(DSGM_TOP, 0, 9, "Movement will be transmitted\nwirelessly");
   DSGM_InitNiFi();
 }
 
