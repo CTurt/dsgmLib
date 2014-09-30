@@ -46,7 +46,7 @@ LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project (order is important)
 #---------------------------------------------------------------------------------
-LIBS	:= 	$(DSGMLIB)/dsgmLib.a -lfilesystem -lfat -lnds9 -lmm9
+LIBS	:= 	$(DSGMLIB)/dsgmLib.a -ldswifi9 -lfilesystem -lfat -lnds9 -lmm9
  
  
 #---------------------------------------------------------------------------------
