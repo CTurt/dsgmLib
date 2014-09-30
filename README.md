@@ -39,12 +39,6 @@ You will need the [devkitARM](http://sourceforge.net/projects/devkitpro/files/de
 ### Windows
 Download and run [devkitProUpdater-1.5.3.exe](http://sourceforge.net/projects/devkitpro/files/Automated%20Installer/devkitProUpdater-1.5.3.exe/download). Only "Minimal System" and "devkitARM" are required; install devkitPPC and devkitPSP only if you want to develop for the Nintendo Wii/Sony PSP respectively. Log out and log in again if there are compilation problems.
 
-Additionally, to make use of dsgmLib's DS to DS multiplayer (NiFi) support you will need dsgmDSWIFI. Download the latest version from here:
-
-https://github.com/DSGameMaker/dsgmDSWiFi/releases
-
-Extract the files to your libnds `lib` directory (for example `C:\devkitPro\libnds\lib\`).
-
 ### OS X, Linux, etc.
 Download [devkitARMupdate.pl](http://sourceforge.net/projects/devkitpro/files/Automated%20Installer/devkitARMupdate.pl/download) to your home directory (`/Users/(username)` on OS X or `/home/(username)` on Ubuntu); it's a Perl script. Open a terminal and run this:
 
@@ -60,6 +54,8 @@ Getting Started
 [Download dsgmLib](https://github.com/DSGameMaker/dsgmLib/archive/master.zip), and extract the archive to your devkitPro directory (for example `C:\devkitPro`), then rename the directory `dsgmLib-master` to `dsgmLib`.
 
 Then, create an environment variable called `DSGMLIB` with the value of the path to `dsgmLib.a`, for example `C:\devkitPro\dsgmLib\dsgmLib`.
+
+Additionally, to make use of dsgmLib's DS to DS multiplayer (NiFi) support you will need dsgmDSWIFI. Download the latest version from [here](https://github.com/DSGameMaker/dsgmDSWiFi/releases). Extract the files to your libnds `lib` directory (for example `C:\devkitPro\libnds\lib\`), click yes when asked if you want to overwrite files.
 
 Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this list of files and directories:
 
