@@ -71,8 +71,6 @@ void DSGM_SwitchRoom(int room, bool reset) {
 	if(room >= DSGM_ROOM_COUNT) room = 0;
 	if(room < 0) room = DSGM_ROOM_COUNT - 1;
 	
-	DSGM_invalidateRoom = 1;
-	
 	DSGM_ResetAll();
 	
 	DSGM_currentRoom = room;
@@ -82,4 +80,6 @@ void DSGM_SwitchRoom(int room, bool reset) {
 	}
 	
 	DSGM_LoadRoom(&DSGM_Rooms[room]);
+  
+  DSGM_invalidateRoom = 1;
 }

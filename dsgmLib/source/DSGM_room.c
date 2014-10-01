@@ -17,8 +17,6 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 	
 	DSGM_Debug("Loading room...\n");
 	
-	DSGM_invalidateRoom = 0;
-	
 	{
 		bool requiresMode3[2] = {false, false};
 		
