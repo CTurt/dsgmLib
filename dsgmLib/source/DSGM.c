@@ -48,9 +48,10 @@ void DSGM_InitGFX(void) {
 }
 
 // If you need anything more custom than this, you're going to have to write it yourself
-void DSGM_InitCustomGFX(bool topScreenDrawable, bool bottomScreenDrawable) {
-	if(topScreenDrawable) videoSetMode(MODE_3_2D);
-	else videoSetMode(MODE_0_2D);
+void DSGM_InitCustomGFX(bool topScreenDrawable, bool bottomScreenDrawable, bool main3D) {
+	if(topScreenDrawable) videoSetMode(main3D ? MODE_3_3D : MODE_3_2D);
+	else videoSetMode(main3D ? MODE_0_3D : MODE_0_2D);
+  
 	if(bottomScreenDrawable) videoSetModeSub(MODE_3_2D);
 	else videoSetModeSub(MODE_0_2D);
 	

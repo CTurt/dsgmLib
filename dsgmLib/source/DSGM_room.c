@@ -27,7 +27,7 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 			}
 		}
 		
-		DSGM_InitCustomGFX(requiresMode3[DSGM_TOP], requiresMode3[DSGM_BOTTOM]);
+		DSGM_InitCustomGFX(requiresMode3[DSGM_TOP], requiresMode3[DSGM_BOTTOM], room->layers[DSGM_TOP][0].background == DSGM_3D_RENDERER);
 	}
 	
 	for(screen = 0; screen < 2; screen++) {
@@ -39,7 +39,7 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 				else if(room->layers[screen][layerNumber].background == DSGM_DRAWABLE_BACKGROUND) {
 					if(layerNumber == 3) DSGM_InitDrawableBackground(&room->layers[screen][layerNumber]);
 				}
-				else {
+				else if(room->layers[screen][layerNumber].background != DSGM_3D_RENDERER) {
 					DSGM_LoadBackgroundFull(&room->layers[screen][layerNumber]);
 					if(room->layers[screen][layerNumber].background->type == BgType_Text4bpp) DSGM_InitText(&room->layers[screen][layerNumber]);
 				}
@@ -53,7 +53,7 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 		// Load sprites (all DSGM_ObjectInstances who have a sprite)
 		for(group = 0; group < room->objectGroupCount[screen]; group++) {
 			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
-				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
+        DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
 				DSGM_ActivateObjectInstance(room, objectInstance);
 				DSGM_ValidateRoom();
 			}
@@ -78,7 +78,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 	//	mmStart(/*DSGM_Sounds[FlatOutLies].ID*/0, MM_PLAY_LOOP);
 	//	res = 1;
 	//}
-	
+  
   bool clearWireless = DSGM_newWirelessData;
   
 	if(room->handler) room->handler();
@@ -96,7 +96,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 				DSGM_ScrollBackgroundFull(&room->view[screen], &room->layers[screen][layerNumber]);
 			}
 		}
-		
+    
 		//DSGM_Debug("Group count %d\n", room->objectGroupCount[screen]);
 		for(group = 0; group < room->objectGroupCount[screen]; group++) {
 			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
@@ -122,7 +122,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 				
 				// Copy into OAM
 				memcpy(&(objectInstance->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[objectInstance->spriteNumber], &objectInstance->oam, sizeof(DSGM_SpriteEntry));
-				
+        
 				// Maybe one of these is better than memcpy?
 				//DC_FlushAll();
 				//dmaCopy();
@@ -160,6 +160,8 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 		}
 	}
 	
+  if(room->layers[DSGM_TOP][0].background == DSGM_3D_RENDERER) glFlush(0);
+  
   if(clearWireless) DSGM_newWirelessData = false;
   
 	//if(!res) {

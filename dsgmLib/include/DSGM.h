@@ -32,6 +32,7 @@ typedef char DSGM_CharStructLabel[0];
 typedef short DSGM_ShortStructLabel[0];
 typedef int DSGM_IntStructLabel[0];
 
+#include "DSGM_3D.h"
 #include "DSGM_misc.h"
 #include "DSGM_malloc.h"
 #include "DSGM_file.h"
@@ -57,7 +58,7 @@ void DSGM_Debug(char *text, ...);
 void DSGM_Log(bool wait, char *text, ...);
 
 void DSGM_InitGFX(void);
-void DSGM_InitCustomGFX(bool topScreenDrawable, bool bottomScreenDrawable);
+void DSGM_InitCustomGFX(bool topScreenDrawable, bool bottomScreenDrawable, bool main3D);
 void DSGM_InitRand(void);
 void DSGM_InitNitro(void);
 
