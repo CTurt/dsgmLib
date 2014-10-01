@@ -122,11 +122,11 @@ void DSGM_ResetSprites(DSGM_Sprite *sprites, int spriteCount) {
 	memset(&DSGM_rotsetTracker, 0, sizeof(DSGM_rotsetTracker));
 	//DSGM_nextFreeRotset[DSGM_TOP] = 0;
 	//DSGM_nextFreeRotset[DSGM_BOTTOM] = 0;
-	
-	for(i = 0; i < 128; i++) {	
-		//oamSet(&oamMain, i, 0, 0, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, NULL, -1, false, true, false, false, false);
-		//oamSet(&oamSub, i, 0, 0, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, NULL, -1, false, true, false, false, false);
-	}
+  
+  oamClear(&oamMain, 0, 0);
+  oamClear(&oamSub, 0, 0);
+  //oamUpdate(&oamMain);
+  //oamUpdate(&oamSub);
 }
 
 void DSGM_LoadSpriteFull(u8 screen, DSGM_Sprite *sprite) {
