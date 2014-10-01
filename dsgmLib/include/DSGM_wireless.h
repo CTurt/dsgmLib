@@ -18,4 +18,6 @@ extern bool DSGM_newWirelessData;
 
 void DSGM_WirelessHandler(int packetID, int readlength);
 void DSGM_InitNiFi(void);
+#define DSGM_DisableWireless() Wifi_DisableWifi()
+
 void DSGM_SendWirelessData(unsigned short *buffer, int length);
