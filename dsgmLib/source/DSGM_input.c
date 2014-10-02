@@ -10,8 +10,13 @@ void DSGM_UpdateInput(void) {
 	int held = keysHeld();
 	int release = keysUp();
 	
-	touchRead((touchPosition *)&DSGM_stylus);
-	
+  touchPosition tempStylus;
+	touchRead(&tempStylus);
+  DSGM_stylus.dx = tempStylus.px - DSGM_stylus.x;
+  DSGM_stylus.dy = tempStylus.py - DSGM_stylus.y;
+	DSGM_stylus.x = tempStylus.px;
+	DSGM_stylus.y = tempStylus.py;
+  
 	#define MAP_KEY(DSGMKey, libndsKey)\
 	DSGM_newpress.DSGMKey = (newpress & libndsKey);\
 	DSGM_held.DSGMKey = (held & libndsKey);\

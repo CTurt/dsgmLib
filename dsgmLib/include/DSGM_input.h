@@ -20,14 +20,11 @@ typedef struct {
 	bool Lid;
 } DSGM_Input;
 
-// adapted from libnds
 typedef struct {
-	u16	rawx; //!< Raw x value from the A2D
-	u16	rawy; //!< Raw y value from the A2D
-	u16	x;    //!< Processed pixel X value
-	u16	y;    //!< Processed pixel Y value
-	u16	z1;   //!< Raw cross panel resistance
-	u16	z2;   //!< Raw cross panel resistance
+	int	x;
+	int	y;
+  int dx;
+  int dy;
 } DSGM_TouchPosition;
 
 extern DSGM_Input DSGM_newpress, DSGM_held, DSGM_release;
