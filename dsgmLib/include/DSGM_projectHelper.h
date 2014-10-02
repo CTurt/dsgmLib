@@ -80,6 +80,6 @@ void DSGM_SwitchRoom(int room, bool reset) {
 	}
 	
 	DSGM_LoadRoom(&DSGM_Rooms[room]);
-  
-  DSGM_invalidateRoom = 1;
+	
+	DSGM_invalidateRoom = 1;
 }

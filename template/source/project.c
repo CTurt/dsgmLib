@@ -157,8 +157,8 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			}
 		},
 		
-    NULL,
-    
+		NULL,
+		
 		// Object groups are dynamic, so must be set up at run time, see DSGM_SetupRooms.
 		{
 			NULL,

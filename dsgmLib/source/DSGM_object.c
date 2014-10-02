@@ -250,12 +250,12 @@ void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *objectI
 DSGM_ObjectInstanceRelation DSGM_GetObjectInstanceRelationFull(DSGM_Room *room, DSGM_ObjectInstance *me) {
 	DSGM_ObjectInstanceRelation relation = { 0, 0 };
 	if(me) {
-  	DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, me->screen, me->object);
+		DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, me->screen, me->object);
 		relation.screen = me->screen;
 		relation.ID = ((void *)me - (void *)(group->objectInstances)) / sizeof(DSGM_ObjectInstance);
 		relation.groupN = ((void *)group - (void *)room->objectGroups[me->screen]) / sizeof(DSGM_ObjectGroup);
 	}
-  
+	
 	DSGM_Debug("Getting relation: group %d, ID %d\n", relation.groupN, relation.ID);
 	
 	return relation;

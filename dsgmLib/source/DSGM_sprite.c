@@ -10,7 +10,7 @@
 	oam->oamMemory[id].hFlip = hflip;
 	oam->oamMemory[id].vFlip = vflip;
 	oam->oamMemory[id].isMosaic = mosaic;
-    oam->oamMemory[id].gfxIndex = oamGfxPtrToOffset(oam, gfxOffset);
+		oam->oamMemory[id].gfxIndex = oamGfxPtrToOffset(oam, gfxOffset);
 */
 
 int DSGM_nextFreeSprite[2] = { 0, 0 };
@@ -122,11 +122,11 @@ void DSGM_ResetSprites(DSGM_Sprite *sprites, int spriteCount) {
 	memset(&DSGM_rotsetTracker, 0, sizeof(DSGM_rotsetTracker));
 	//DSGM_nextFreeRotset[DSGM_TOP] = 0;
 	//DSGM_nextFreeRotset[DSGM_BOTTOM] = 0;
-  
-  oamClear(&oamMain, 0, 0);
-  oamClear(&oamSub, 0, 0);
-  //oamUpdate(&oamMain);
-  //oamUpdate(&oamSub);
+	
+	oamClear(&oamMain, 0, 0);
+	oamClear(&oamSub, 0, 0);
+	//oamUpdate(&oamMain);
+	//oamUpdate(&oamSub);
 }
 
 void DSGM_LoadSpriteFull(u8 screen, DSGM_Sprite *sprite) {
@@ -208,3 +208,36 @@ void DSGM_SetSpritePriority(u8 screen, int spriteNumber, ObjPriority priority) {
 void DSGM_SetRotset(u8 screen, int rotset, int angle, int scaleX, int scaleY) {
 	oamRotateScale(screen == DSGM_TOP ? &oamMain : &oamSub, rotset, angle, scaleX, scaleY);
 }
+
+/*u16 DSGM_GetSpriteColor(DSGM_Sprite *sprite, int frame, int x, int y) {
+	int tileX = x / 8;
+	int tileY = y / 8;
+	int pmx = x - tileX * 8;
+	int pmy = y - tileY * 8;
+	if(sprite->topTiles) {
+		u16 *gfx = sprite->topTiles[frame];
+		
+		int pixel = 0;
+		for(pixel = 0; pixel < 32; pixel++) {
+			unsigned short word = gfx[((tileX + tileY * DSGM_GetSpriteWidth(sprite) / 8) << 5) + pixel];
+			
+			int px = ((tile & 3) << 3) + ((pixel << 1) & 7);
+			int py = ((tile >> 2) << 3) + (pixel >> 2);
+			
+			if((word & 0xF0) >> 4 != 0) {
+				//if(px == pmx && py == pmy) DSGM_DrawFilledRectangleToBackgroundFull(room, screen, x + ((px + 1) % 8) * size, y + (py % 8) * size, size, size, color);
+			}
+			
+			if((word & 0x0F) != 0) {
+				//if(px == pmx && pmy) DSGM_DrawFilledRectangleToBackgroundFull(room, screen, x + (px % 8) * size, y + (py % 8) * size, size, size, color);
+			}
+		}
+	}
+	else if(sprite->bottomTiles) {
+		u16 *gfx = &sprite->bottomTiles[frame][tileX + tileY * DSGM_GetSpriteWidth(sprite) / 8];
+	}
+	else {
+		DSGM_LoadSpriteFull(DSGM_TOP, sprite);
+		return DSGM_GetSpriteColor(sprite, frame, x, y);
+	}
+}*/

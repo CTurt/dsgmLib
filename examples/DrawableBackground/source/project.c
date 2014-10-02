@@ -239,7 +239,7 @@ void drawObject_loop(drawObjectObjectInstance *me) {
 	}
 	
 	// Test 9:
-  if(DSGM_held.Stylus && !DSGM_newpress.Stylus) {
+	if(DSGM_held.Stylus && !DSGM_newpress.Stylus) {
 		DSGM_DrawLineToBackground(DSGM_BOTTOM, DSGM_stylus.x - DSGM_stylus.dx, DSGM_stylus.y - DSGM_stylus.dy, DSGM_stylus.x, DSGM_stylus.y, 6, DSGM_GREEN);
 	}
 }

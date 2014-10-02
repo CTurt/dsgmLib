@@ -53,7 +53,7 @@ void DSGM_LoadRoom(DSGM_Room *room) {
 		// Load sprites (all DSGM_ObjectInstances who have a sprite)
 		for(group = 0; group < room->objectGroupCount[screen]; group++) {
 			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
-        DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
+				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
 				DSGM_ActivateObjectInstance(room, objectInstance);
 				DSGM_ValidateRoom();
 			}
@@ -78,9 +78,9 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 	//	mmStart(/*DSGM_Sounds[FlatOutLies].ID*/0, MM_PLAY_LOOP);
 	//	res = 1;
 	//}
-  
-  bool clearWireless = DSGM_newWirelessData;
-  
+	
+	bool clearWireless = DSGM_newWirelessData;
+	
 	if(room->handler) room->handler();
 	DSGM_ValidateRoom();
 	
@@ -96,7 +96,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 				DSGM_ScrollBackgroundFull(&room->view[screen], &room->layers[screen][layerNumber]);
 			}
 		}
-    
+		
 		//DSGM_Debug("Group count %d\n", room->objectGroupCount[screen]);
 		for(group = 0; group < room->objectGroupCount[screen]; group++) {
 			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
@@ -122,7 +122,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 				
 				// Copy into OAM
 				memcpy(&(objectInstance->screen == DSGM_TOP ? oamMain : oamSub).oamMemory[objectInstance->spriteNumber], &objectInstance->oam, sizeof(DSGM_SpriteEntry));
-        
+				
 				// Maybe one of these is better than memcpy?
 				//DC_FlushAll();
 				//dmaCopy();
@@ -160,10 +160,10 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 		}
 	}
 	
-  if(room->layers[DSGM_TOP][0].background == DSGM_3D_RENDERER) glFlush(0);
-  
-  if(clearWireless) DSGM_newWirelessData = false;
-  
+	if(room->layers[DSGM_TOP][0].background == DSGM_3D_RENDERER) glFlush(0);
+	
+	if(clearWireless) DSGM_newWirelessData = false;
+	
 	//if(!res) {
 	//	mmStop();
 	//	mmStart(/*DSGM_Sounds[FlatOutLies].ID*/0, MM_PLAY_LOOP);
@@ -232,7 +232,7 @@ unsigned char DSGM_SaveRoom(DSGM_Room *room, char *filename) {
 	fclose(f);
 	
 	DSGM_Debug("Saved\n");*/
-  
+	
 	return 1;
 }
 

@@ -128,10 +128,10 @@ $(OUTPUT).elf	:	$(OFILES) soundbank.h
 soundbank.h: ../$(NITRODATA)/soundbank.bin
 
 define AUDIO_CONVERT
-    @if [[ -n "$(AUDIOFILES)" ]]; then \
+		@if [[ -n "$(AUDIOFILES)" ]]; then \
 		echo Converting audio; \
-        mmutil $^ -d -o../$(NITRODATA)/soundbank.bin -hsoundbank.h; \
-    fi
+				mmutil $^ -d -o../$(NITRODATA)/soundbank.bin -hsoundbank.h; \
+		fi
 endef
 
 ../$(NITRODATA)/soundbank.bin: $(AUDIOFILES)

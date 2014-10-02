@@ -87,7 +87,7 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			
 			// Top screen
 			{
-        // Only top screen layer 0 can be a 3D renderer
+				// Only top screen layer 0 can be a 3D renderer
 				// Layer 0
 				{
 					DSGM_3D_RENDERER,			// Background
@@ -160,8 +160,8 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			}
 		},
 		
-    NULL,
-    
+		NULL,
+		
 		// Object groups are dynamic, so must be set up at run time, see DSGM_SetupRooms.
 		{
 			NULL,
@@ -203,27 +203,27 @@ void DSGM_SetupRooms(int room) {
 void hello_create(helloObjectInstance *me) {
 	glInit();
 	glEnable(GL_ANTIALIAS);
-  
+	
 	glClearColor(0, 0, 0, 31);
 	glClearPolyID(63);
 	glClearDepth(0x7FFF);
-  
+	
 	glViewport(0, 0, 255, 191);
 }
 
 void hello_loop(helloObjectInstance *me) {
-  glMatrixMode(GL_PROJECTION);
+	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(70, 256.0 / 192.0, 0.1, 10);
 	glPolyFmt(POLY_ALPHA(31) | POLY_CULL_FRONT);
-  
+	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-  
+	
 	glTranslatef(0, 0, -5);
-  
+	
 	glRotateX(ry++);
-  glRotateY(rx++);
-  
+	glRotateY(rx++);
+	
 	DSGM_DrawCube(-1, -1, -1, 2, 2, 2);
 }

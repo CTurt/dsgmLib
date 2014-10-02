@@ -70,26 +70,26 @@ void DSGM_BoxText(u8 screen, u8 x, u8 y, u8 width, u8 height, u8 delay, const ch
 	vsnprintf(text, 1023, format, args);
 	va_end(args);
 	
-    int i;
-    int len = strlen(text);
+		int i;
+		int len = strlen(text);
 	u8 dx;
 	u8 dy;
 	u8 jx = 0;
 	u8 jy = 0;
-    
+		
 	consoleSelect(&DSGM_text[screen][DSGM_textLayer[screen]]);
 	
-    for(i = 0; i < len; i++) {
+		for(i = 0; i < len; i++) {
 		dx = x + ((i - jx) % width);
 		dy = y + ((i - jx) / width) + jy;
 		if(height && dy >= y + height) break;
 		DSGM_text[screen][DSGM_textLayer[screen]].cursorX = dx;
 		DSGM_text[screen][DSGM_textLayer[screen]].cursorY = dy;
-        printf("%c", text[i]);
+				printf("%c", text[i]);
 		if(text[i] == '\n' || (text[i] == ' ' && DSGM_GetWordLength(text + i + 1) >= width - (dx - x) && (dx - x) > 0)) {
 			jy++;
 			jx += dx;
 		}
 		DSGM_Delay(delay);
-    }
+		}
 }

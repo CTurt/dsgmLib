@@ -12,11 +12,11 @@ DSGM_Background DSGM_Backgrounds[DSGM_BACKGROUND_COUNT] = {
 };
 
 DSGM_Palette DSGM_Palettes[DSGM_PALETTE_COUNT] = {
-  DSGM_FORM_RAM_PALETTE(DSGMPal0),
+	DSGM_FORM_RAM_PALETTE(DSGMPal0),
 };
 
 DSGM_Sprite DSGM_Sprites[DSGM_SPRITE_COUNT] = {
-  DSGM_FORM_RAM_SPRITE(ball, DSGMPal0, SpriteSize_32x32, 1),
+	DSGM_FORM_RAM_SPRITE(ball, DSGMPal0, SpriteSize_32x32, 1),
 };
 
 DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
@@ -159,8 +159,8 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			}
 		},
 		
-    NULL,
-    
+		NULL,
+		
 		// Object groups are dynamic, so must be set up at run time, see DSGM_SetupRooms.
 		{
 			NULL,
@@ -200,23 +200,23 @@ void DSGM_SetupRooms(int room) {
 }
 
 void hello_create(helloObjectInstance *me) {
-  DSGM_DrawText(DSGM_TOP, 0, 4, "You can now remove the card\nand load the game on another DS");
-  DSGM_DrawText(DSGM_TOP, 0, 7, "Use the stylus to move the ball");
-  DSGM_DrawText(DSGM_TOP, 0, 9, "Movement will be transmitted\nwirelessly");
-  DSGM_InitNiFi();
+	DSGM_DrawText(DSGM_TOP, 0, 4, "You can now remove the card\nand load the game on another DS");
+	DSGM_DrawText(DSGM_TOP, 0, 7, "Use the stylus to move the ball");
+	DSGM_DrawText(DSGM_TOP, 0, 9, "Movement will be transmitted\nwirelessly");
+	DSGM_InitNiFi();
 }
 
 void hello_loop(helloObjectInstance *me) {
-  unsigned short buffer[2 * sizeof(int)];
-  
-  if(DSGM_held.Stylus) {
-    me->x = DSGM_stylus.x - 16;
-    me->y = DSGM_stylus.y - 16;
-    memcpy(buffer, &me->x, 2 * sizeof(int));
-    DSGM_SendWirelessData(buffer, 2 * sizeof(int));
-  }
-  
-  if(DSGM_newWirelessData) {
-    if(DSGM_wirelessDataLength == 2 * sizeof(int)) memcpy(&me->x, DSGM_wirelessData, 2 * sizeof(int));
-  }
+	unsigned short buffer[2 * sizeof(int)];
+	
+	if(DSGM_held.Stylus) {
+		me->x = DSGM_stylus.x - 16;
+		me->y = DSGM_stylus.y - 16;
+		memcpy(buffer, &me->x, 2 * sizeof(int));
+		DSGM_SendWirelessData(buffer, 2 * sizeof(int));
+	}
+	
+	if(DSGM_newWirelessData) {
+		if(DSGM_wirelessDataLength == 2 * sizeof(int)) memcpy(&me->x, DSGM_wirelessData, 2 * sizeof(int));
+	}
 }

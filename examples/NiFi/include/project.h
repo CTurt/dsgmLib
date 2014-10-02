@@ -23,12 +23,12 @@
 
 // No palettes, no enum
 typedef enum {
-  DSGMPal0,
+	DSGMPal0,
 } DSGM_PaletteNames;
 
 // No sprites, no enum
 typedef enum {
-  ball,
+	ball,
 } DSGM_SpriteNames;
 
 typedef enum {

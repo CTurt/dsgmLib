@@ -18,14 +18,14 @@ typedef struct {
 	bool Y;
 	bool Stylus;
 	bool Lid;
-  bool Any;
+	bool Any;
 } DSGM_Input;
 
 typedef struct {
 	int	x;
 	int	y;
-  int dx;
-  int dy;
+	int dx;
+	int dy;
 } DSGM_TouchPosition;
 
 extern DSGM_Input DSGM_newpress, DSGM_held, DSGM_release;

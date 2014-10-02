@@ -37,7 +37,7 @@ typedef struct {
 	struct {
 		int direction;
 	} *variables;
-}  playerObjectInstance;
+} playerObjectInstance;
 
 typedef enum {
 	Room_1,
