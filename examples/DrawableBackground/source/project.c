@@ -3,8 +3,6 @@
 #include "DSGM_projectHelper.h"
 
 // User variables / declarations
-int oldX;
-int oldY;
 
 // Resources
 DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT] = {
@@ -241,13 +239,7 @@ void drawObject_loop(drawObjectObjectInstance *me) {
 	}
 	
 	// Test 9:
-	if(DSGM_newpress.Stylus) {
-		oldX = DSGM_stylus.x;
-		oldY = DSGM_stylus.y;
-	}
-	if(DSGM_held.Stylus) {
-		DSGM_DrawLineToBackground(DSGM_BOTTOM, oldX, oldY, DSGM_stylus.x, DSGM_stylus.y, 6, DSGM_GREEN);
-		oldX = DSGM_stylus.x;
-		oldY = DSGM_stylus.y;
+  if(DSGM_held.Stylus && !DSGM_newpress.Stylus) {
+		DSGM_DrawLineToBackground(DSGM_BOTTOM, DSGM_stylus.x - DSGM_stylus.dx, DSGM_stylus.y - DSGM_stylus.dy, DSGM_stylus.x, DSGM_stylus.y, 6, DSGM_GREEN);
 	}
 }
