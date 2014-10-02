@@ -18,6 +18,7 @@ typedef struct {
 	bool Y;
 	bool Stylus;
 	bool Lid;
+  bool Any;
 } DSGM_Input;
 
 typedef struct {

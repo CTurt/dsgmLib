@@ -38,4 +38,8 @@ void DSGM_UpdateInput(void) {
 	MAP_KEY(Lid,	KEY_LID);
 	
 	#undef MAP_KEY
+  
+  DSGM_newpress.Any = (DSGM_newpress.A || DSGM_newpress.B || DSGM_newpress.Select || DSGM_newpress.Start || DSGM_newpress.Right || DSGM_newpress.Left || DSGM_newpress.Up || DSGM_newpress.Down || DSGM_newpress.R || DSGM_newpress.L || DSGM_newpress.X || DSGM_newpress.Y || DSGM_newpress.Stylus || DSGM_newpress.Lid);
+  DSGM_held.Any = (DSGM_held.A || DSGM_held.B || DSGM_held.Select || DSGM_held.Start || DSGM_held.Right || DSGM_held.Left || DSGM_held.Up || DSGM_held.Down || DSGM_held.R || DSGM_held.L || DSGM_held.X || DSGM_held.Y || DSGM_held.Stylus || DSGM_held.Lid);
+  DSGM_release.Any = (DSGM_release.A || DSGM_release.B || DSGM_release.Select || DSGM_release.Start || DSGM_release.Right || DSGM_release.Left || DSGM_release.Up || DSGM_release.Down || DSGM_release.R || DSGM_release.L || DSGM_release.X || DSGM_release.Y || DSGM_release.Stylus || DSGM_release.Lid);
 }
