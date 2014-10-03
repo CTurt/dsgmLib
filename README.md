@@ -55,7 +55,7 @@ Getting Started
 
 Then, create an environment variable called `DSGMLIB` with the value of the path to `dsgmLib.a`, for example `C:\devkitPro\dsgmLib\dsgmLib`.
 
-Additionally, to make use of dsgmLib's DS to DS multiplayer (NiFi) support you will need dsgmDSWIFI. Download the latest version from [here](https://github.com/DSGameMaker/dsgmDSWiFi/releases). Extract the files to your libnds `lib` directory (for example `C:\devkitPro\libnds\lib\`), click yes when asked if you want to overwrite files.
+Additionally, dsgmLib uses a fork of dswifi called dsgmDSWiFi in order to support local DS to DS multiplayer (NiFi). Download the latest version from [here](https://github.com/DSGameMaker/dsgmDSWiFi/releases). Extract the files to your libnds `lib` directory (for example `C:\devkitPro\libnds\lib\`), and click yes when asked if you want to overwrite files.
 
 Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this list of files and directories:
 
@@ -99,6 +99,9 @@ If you make changes to the library's source code (dsgmLib directory), you'll nee
 
 FAQs
 ---------
+###Linker error "undefined reference to `setWirelessMode`"
+This is caused by using dswifi instead of dsgmDSWiFi. Download [dsgmDSWiFi](https://github.com/DSGameMaker/dsgmDSWiFi/releases) and extract it to your libnds lib directory (for example C:\devkitPro\libnds\lib).
+
 ###Game works fine in the emulator but when playing on a DS with a flashcard there is just a black screen
 DS Game Maker uses `NitroFS`, a method of loading data (sprites, backgrounds, music, etc...) for homebrew games from inside of the compiled .nds file. Unfortunately, many flashcards are designed soley for running pirated games and do not support this homebrew feature. Either you can make your game without using NitroFS (store files in RAM instead), or you can use the [Homebrew Menu](http://devkitpro.org/wiki/Homebrew_Menu) (which supports NitroFS) on your flashcard.
 
