@@ -55,7 +55,7 @@ Getting Started
 
 Then, create an environment variable called `DSGMLIB` with the value of the path to `dsgmLib.a`, for example `C:\devkitPro\dsgmLib\dsgmLib`.
 
-Additionally, dsgmLib uses a fork of dswifi called dsgmDSWiFi in order to support local DS to DS multiplayer (NiFi). Download the latest version from [here](https://github.com/DSGameMaker/dsgmDSWiFi/releases). Extract the files to your libnds `lib` directory (for example `C:\devkitPro\libnds\lib\`), and click yes when asked if you want to overwrite files.
+Additionally, dsgmLib requires a fork of dswifi called dsgmDSWiFi which enables support for local DS to DS multiplayer (NiFi). Download the latest version from [here](https://github.com/DSGameMaker/dsgmDSWiFi/releases). Extract the files in `include` to your libnds `include` directory (for example `C:\devkitPro\libnds\include`) and the files in `lib` to your libnds `lib` directory (for example `C:\devkitPro\libnds\lib\`).
 
 Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this list of files and directories:
 
