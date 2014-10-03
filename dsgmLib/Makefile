@@ -59,7 +59,6 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
  
 export OUTPUT	:=	$(CURDIR)/$(TARGET).a
-#export OUTPUT	:=	$(CURDIR)/b.a
  
 export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)

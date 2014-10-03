@@ -8,6 +8,8 @@
 #include <maxmod9.h>
 
 #include <dswifi9.h>
+#include <dsgmDSWiFi.h>
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>

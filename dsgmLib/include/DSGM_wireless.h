@@ -1,15 +1,5 @@
 #pragma once
 
-#ifndef WIRELESS_DEFINES
-enum WIRELESS_MODE {
-	WIRELESS_MODE_WIFI,
-	WIRELESS_MODE_NIFI,
-};
-extern enum WIRELESS_MODE wirelessMode;
-inline void setWirelessMode(enum WIRELESS_MODE mode);
-#define WIRELESS_DEFINES
-#endif
-
 #define DSGM_wirelessData (DSGM_buffer + 32)
 
 extern char DSGM_buffer[4096];
