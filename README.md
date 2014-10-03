@@ -51,18 +51,17 @@ Great! We're done.
 
 Getting Started
 ---------------
-[Download dsgmLib](https://github.com/DSGameMaker/dsgmLib/archive/master.zip), and extract the archive to your devkitPro directory (for example `C:\devkitPro`), then rename the directory `dsgmLib-master` to `dsgmLib`.
-
-Then, create an environment variable called `DSGMLIB` with the value of the path to `dsgmLib.a`, for example `C:\devkitPro\dsgmLib\dsgmLib`.
+[Download dsgmLib](https://github.com/DSGameMaker/dsgmLib/archive/master.zip), and extract the archive to your devkitPro directory (for example `C:\devkitPro`), then rename the directory from `dsgmLib-master` to `dsgmLib`.
 
 Additionally, dsgmLib requires a fork of dswifi called dsgmDSWiFi which enables support for local DS to DS multiplayer (NiFi). Download the latest version from [here](https://github.com/DSGameMaker/dsgmDSWiFi/releases). Extract the files in `include` to your libnds `include` directory (for example `C:\devkitPro\libnds\include`) and the files in `lib` to your libnds `lib` directory (for example `C:\devkitPro\libnds\lib\`).
 
 Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this list of files and directories:
 
-    dsgmLib
     examples
+    include
+    lib
+    source
     template
-    .gitignore
     LICENSE
     Makefile
     README.md
@@ -100,7 +99,7 @@ If you make changes to the library's source code (dsgmLib directory), you'll nee
 FAQs
 ---------
 ###Compile error of "cannot find -ldsgmdswifi9"
-This is occurs when dsgmDSWiFi has not been installed. Download [dsgmDSWiFi](https://github.com/DSGameMaker/dsgmDSWiFi/releases) and extract the lib and include files to your libnds paths (for example C:\devkitPro\libnds\lib and C:\devkitPro\libnds\include).
+This is occurs when dsgmDSWiFi has not been installed. Download [dsgmDSWiFi](https://github.com/DSGameMaker/dsgmDSWiFi/releases) and extract the lib and include files to your libnds paths (for example `C:\devkitPro\libnds\lib` and `C:\devkitPro\libnds\include`).
 
 ###Game works fine in the emulator but when playing on a DS with a flashcard there is just a black screen
 DS Game Maker uses `NitroFS`, a method of loading data (sprites, backgrounds, music, etc...) for homebrew games from inside of the compiled .nds file. Unfortunately, many flashcards are designed soley for running pirated games and do not support this homebrew feature. Either you can make your game without using NitroFS (store files in RAM instead), or you can use the [Homebrew Menu](http://devkitpro.org/wiki/Homebrew_Menu) (which supports NitroFS) on your flashcard.
