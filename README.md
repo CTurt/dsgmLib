@@ -99,8 +99,8 @@ If you make changes to the library's source code (dsgmLib directory), you'll nee
 
 FAQs
 ---------
-###Linker error "undefined reference to `setWirelessMode`"
-This is caused by using dswifi instead of dsgmDSWiFi. Download [dsgmDSWiFi](https://github.com/DSGameMaker/dsgmDSWiFi/releases) and extract it to your libnds lib directory (for example C:\devkitPro\libnds\lib).
+###Compile error of "cannot find -ldsgmdswifi9"
+This is occurs when dsgmDSWiFi has not been installed. Download [dsgmDSWiFi](https://github.com/DSGameMaker/dsgmDSWiFi/releases) and extract the lib and include files to your libnds paths (for example C:\devkitPro\libnds\lib and C:\devkitPro\libnds\include).
 
 ###Game works fine in the emulator but when playing on a DS with a flashcard there is just a black screen
 DS Game Maker uses `NitroFS`, a method of loading data (sprites, backgrounds, music, etc...) for homebrew games from inside of the compiled .nds file. Unfortunately, many flashcards are designed soley for running pirated games and do not support this homebrew feature. Either you can make your game without using NitroFS (store files in RAM instead), or you can use the [Homebrew Menu](http://devkitpro.org/wiki/Homebrew_Menu) (which supports NitroFS) on your flashcard.
