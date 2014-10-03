@@ -1,4 +1,4 @@
-dsgmLib/build/
+build/
 template/build/
 template/*.elf
 examples/*/build/

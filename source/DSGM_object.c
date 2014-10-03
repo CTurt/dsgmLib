@@ -210,7 +210,18 @@ DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, DSGM_ObjectI
 	}
 }
 
-void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *objectInstance) {
+void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance **meP, DSGM_ObjectInstance *objectInstance) {
+	printf("full\n");
+	swiWaitForVBlank();
+	
+	if(objectInstance->object->destroy) {
+		printf("destr i[ here\n");
+		swiWaitForVBlank();
+	}
+	
+	DSGM_ObjectInstanceRelation relation = { 0, 0 };
+	if(meP && *meP) relation = DSGM_GetObjectInstanceRelationFull(room, *meP);
+	
 	DSGM_ObjectGroup *group = DSGM_GetObjectGroupFull(room, objectInstance->screen, objectInstance->object);
 	
 	if(!group) {
@@ -228,15 +239,36 @@ void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *objectI
 	int ID = DSGM_GetObjectInstanceIDFull(room, objectInstance);
 	DSGM_Debug("Deleting object instance with ID %d\n", ID);
 	
-	if(objectInstance->object->destroy) objectInstance->object->destroy(objectInstance);
+	printf("got ID\n");
+	swiWaitForVBlank();
+	
+	if(objectInstance->object->destroy) {
+		printf("destr part 1\n");
+		swiWaitForVBlank();
+	
+		objectInstance->object->destroy(objectInstance);
+	}
+	
+	printf("destr\n");
+	swiWaitForVBlank();
+	
 	DSGM_DeinitObjectInstanceRotScale(objectInstance);
+	
+	printf("rotscaled\n");
+	swiWaitForVBlank();
 	
 	if(ID < group->objectInstanceCount - 1) {
 		DSGM_Debug("Shifting %d object instances for deletion\n", (group->objectInstanceCount - ID - 1));
 		memcpy(&group->objectInstances[ID], &group->objectInstances[ID + 1], (group->objectInstanceCount - ID - 1) * sizeof(DSGM_ObjectInstance));
 	}
 	
+	printf("shifted\n");
+	swiWaitForVBlank();
+	
 	group->objectInstances = realloc(group->objectInstances, --group->objectInstanceCount * sizeof(DSGM_ObjectInstance));
+	
+	printf("re\n");
+	swiWaitForVBlank();
 	
 	if(spriteNumbersChange) {
 		int i;
@@ -245,6 +277,8 @@ void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *objectI
 		}
 		DSGM_RedistributeSpriteNumbers(room, screen);
 	}
+	
+	if(meP && *meP) *meP = DSGM_GetMeFromObjectInstanceRelationFull(room, &relation);
 }
 
 DSGM_ObjectInstanceRelation DSGM_GetObjectInstanceRelationFull(DSGM_Room *room, DSGM_ObjectInstance *me) {

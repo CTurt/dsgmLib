@@ -77,8 +77,13 @@ DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Objec
 #define DSGM_CreateObjectInstance(screen, x, y, object) DSGM_CreateObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], (DSGM_ObjectInstance **)&me, screen, x, y, object)
 DSGM_ObjectInstance *DSGM_CreateObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance **meP, u8 screen, int x, int y, DSGM_Object *object);
 
-#define DSGM_DeleteObjectInstance(objectInstance) DSGM_DeleteObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], (DSGM_ObjectInstance *)objectInstance)
-void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance *objectInstance);
+#define DSGM_DeleteObjectInstance(objectInstance) do {\
+	bool kill = false;\
+	if((DSGM_ObjectInstance *)objectInstance == (DSGM_ObjectInstance *)me) kill = true;\
+	DSGM_DeleteObjectInstanceFull(&DSGM_Rooms[DSGM_currentRoom], (DSGM_ObjectInstance **)&me, (DSGM_ObjectInstance *)objectInstance);\
+	if(kill) return;\
+} while(0)
+void DSGM_DeleteObjectInstanceFull(DSGM_Room *room, DSGM_ObjectInstance **meP, DSGM_ObjectInstance *objectInstance);
 
 #define DSGM_GetObjectInstanceRelation(me) DSGM_GetObjectInstanceRelationFull(&DSGM_Rooms[DSGM_currentRoom], (DSGM_ObjectInstance *)me)
 DSGM_ObjectInstanceRelation DSGM_GetObjectInstanceRelationFull(DSGM_Room *room, DSGM_ObjectInstance *me);

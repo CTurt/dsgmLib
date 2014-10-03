@@ -8,9 +8,7 @@ endif
 
 include $(DEVKITARM)/ds_rules
 
-ifeq ($(strip $(DSGMLIB)),)
-$(error "Please set in your environment. export DSGMLIB=<path to dsgmLib>")
-endif
+DSGMLIB	:=	$(DEVKITPRO)/dsgmLib
 
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
@@ -46,7 +44,7 @@ LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project (order is important)
 #---------------------------------------------------------------------------------
-LIBS	:= 	$(DSGMLIB)/dsgmLib.a -ldsgmdswifi9 -lfilesystem -lfat -lnds9 -lmm9
+LIBS	:= 	-ldsgm -ldsgmdswifi9 -lfilesystem -lfat -lnds9 -lmm9
  
  
 #---------------------------------------------------------------------------------
