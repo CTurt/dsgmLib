@@ -171,40 +171,6 @@ void DSGM_CreateSprite(u8 screen, int spriteNumber, int x, int y, ObjPriority pr
 	oamUpdate(screen == DSGM_TOP ? &oamMain : &oamSub);
 }
 
-void DSGM_SetSpriteXY(u8 screen, int spriteNumber, int x, int y) {
-	switch(screen) {
-		case DSGM_TOP:
-			oamMain.oamMemory[spriteNumber].x = x;
-			oamMain.oamMemory[spriteNumber].y = y;
-			break;
-			
-		case DSGM_BOTTOM:
-			oamSub.oamMemory[spriteNumber].x = x;
-			oamSub.oamMemory[spriteNumber].y = y;
-			break;
-	}
-}
-
-void DSGM_SetSpriteFrame(u8 screen, int spriteNumber, DSGM_Sprite *sprite, u8 frame) {
-	if(screen == DSGM_TOP) oamMain.oamMemory[spriteNumber].gfxIndex = oamGfxPtrToOffset(&oamMain, sprite->topTiles[frame]);
-	if(screen == DSGM_BOTTOM) oamSub.oamMemory[spriteNumber].gfxIndex = oamGfxPtrToOffset(&oamSub, sprite->bottomTiles[frame]);
-}
-
-void DSGM_SetSpriteHFlip(u8 screen, int spriteNumber, bool flip) {
-	if(screen == DSGM_TOP) oamMain.oamMemory[spriteNumber].hFlip = flip;
-	if(screen == DSGM_BOTTOM) oamSub.oamMemory[spriteNumber].hFlip = flip;
-}
-
-void DSGM_SetSpriteVFlip(u8 screen, int spriteNumber, bool flip) {
-	if(screen == DSGM_TOP) oamMain.oamMemory[spriteNumber].vFlip = flip;
-	if(screen == DSGM_BOTTOM) oamSub.oamMemory[spriteNumber].vFlip = flip;
-}
-
-void DSGM_SetSpritePriority(u8 screen, int spriteNumber, ObjPriority priority) {
-	if(screen == DSGM_TOP) oamMain.oamMemory[spriteNumber].priority = priority;
-	if(screen == DSGM_BOTTOM) oamSub.oamMemory[spriteNumber].priority = priority;
-}
-
 void DSGM_SetRotset(u8 screen, int rotset, int angle, int scaleX, int scaleY) {
 	oamRotateScale(screen == DSGM_TOP ? &oamMain : &oamSub, rotset, angle, scaleX, scaleY);
 }

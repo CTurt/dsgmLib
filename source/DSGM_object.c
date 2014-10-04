@@ -141,9 +141,6 @@ DSGM_ObjectGroup *DSGM_GetObjectGroupFull(DSGM_Room *room, u8 screen, DSGM_Objec
 	int i;
 	for(i = 0; i < room->objectGroupCount[screen]; i++) {
 		if(room->objectGroups[screen][i].object == object) return &room->objectGroups[screen][i];
-		//if(room->objectGroups[screen][i].objectInstanceCount > 0) {
-		//	if(room->objectGroups[screen][i].objectInstances[0].object == object) return &room->objectGroups[screen][i];
-		//}
 	}
 	return NULL;
 }

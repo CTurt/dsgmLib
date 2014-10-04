@@ -115,11 +115,7 @@ void DSGM_ResetSprites(DSGM_Sprite *sprites, int spriteCount);
 void DSGM_LoadSpriteFull(u8 screen, DSGM_Sprite *sprite);
 
 void DSGM_CreateSprite(u8 screen, int spriteNumber, int x, int y, ObjPriority priority, int frame, bool hFlip, bool vFlip, DSGM_Sprite *sprite);
-//void DSGM_CreateSprite(DSGM_ObjectInstance *instance);
 
-void DSGM_SetSpriteXY(u8 screen, int spriteNumber, int x, int y);
-void DSGM_SetSpriteFrame(u8 screen, int spriteNumber, DSGM_Sprite *sprite, u8 frame);
-void DSGM_SetSpriteHFlip(u8 screen, int spriteNumber, bool flip);
-void DSGM_SetSpriteVFlip(u8 screen, int spriteNumber, bool flip);
-void DSGM_SetSpritePriority(u8 screen, int spriteNumber, ObjPriority priority);
 void DSGM_SetRotset(u8 screen, int rotset, int angle, int scaleX, int scaleY);
+
+//u16 DSGM_GetSpriteColor(DSGM_Sprite *sprite, int frame, int x, int y);
