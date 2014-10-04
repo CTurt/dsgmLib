@@ -4,6 +4,11 @@
 
 #define DSGM_DEFAULT_BITSHIFT 8
 
+#define DSGM_ValidateObjectInstance(objectInstance); if(objectInstance == DSGM_invalidObjectInstance) {\
+	DSGM_invalidObjectInstance = NULL;\
+	continue;\
+}
+
 struct DSGM_objectInstance;
 
 typedef void (*DSGM_Event)(struct DSGM_objectInstance *me);
@@ -67,6 +72,7 @@ typedef struct {
 #include "DSGM_room.h"
 
 extern void *me;
+DSGM_ObjectInstance *DSGM_invalidObjectInstance;
 
 void DSGM_SetupObjectGroups(DSGM_Room *room, u8 screen, int objectGroupCount);
 void DSGM_SetupObjectInstances(DSGM_ObjectGroup *group, DSGM_Object *object, u8 screen, int objectInstanceCount, ...);

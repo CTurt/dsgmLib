@@ -131,11 +131,13 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 				
 				if(objectInstance->object->loop) objectInstance->object->loop(objectInstance);
 				DSGM_ValidateRoom();
+				DSGM_ValidateObjectInstance(objectInstance);
 				
 				if(screen == DSGM_BOTTOM && objectInstance->object->touch) {
 					if(DSGM_newpress.Stylus && DSGM_StylusOverObjectInstanceFull(room, objectInstance)) {
 						objectInstance->object->touch(objectInstance);
 						DSGM_ValidateRoom();
+						DSGM_ValidateObjectInstance(objectInstance);
 					}
 				}
 				
@@ -147,6 +149,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 						if(DSGM_ObjectInstanceCollision(objectInstance, &colliderGroup->objectInstances[collider])) {
 							objectInstance->object->collisionEvents[collisionEvent].function(objectInstance, &colliderGroup->objectInstances[collider]);
 							DSGM_ValidateRoom();
+							DSGM_ValidateObjectInstance(objectInstance);
 						}
 					}
 				}
