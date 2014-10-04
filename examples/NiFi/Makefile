@@ -26,6 +26,15 @@ NITRODATA	:=	nitrofiles
 MAXMOD_SOUNDBANK := music
 
 #---------------------------------------------------------------------------------
+# ROM header properties
+#---------------------------------------------------------------------------------
+GAME_TITLE	:=	$(notdir $(OUTPUT))
+GAME_SUBTITLE1	:=	
+GAME_SUBTITLE2	:=	
+
+GAME_ICON      :=      $(DSGMLIB)/icon.bmp
+
+#---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
 ARCH	:=	-mthumb -mthumb-interwork -march=armv5te -mtune=arm946e-s
