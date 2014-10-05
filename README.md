@@ -23,7 +23,7 @@ Importantly we didn't get the sprite number of our object instance and set the p
 
 Dealing with sprite numbers directly is clunky; the end user shouldn't have to do this. A key feature (or principle) of dsgmLib is providing an abstraction from the OAM (Object Attribute Memory). You don't have to care about sprite numbers or rotation sets - only object instances (which could have any sprite numbers). We've designed this abstraction to make common tasks such as moving a sprite (object instance) as easy as possible.
 
-dsgmLib is feature rich. It has an object grouping system, loads backgrounds and sprites, scrolls backgrounds, and plays sound effects and music.
+dsgmLib is feature rich. It supports: high level object oriented programming, wireless DS to DS multiplayer (NiFi), 3D (supports models and textures), drawable backgrounds, rotatable and scalable backgrounds, custom fonts, scaling and rotating of sprites, sound effects, and music.
 
 ### As a PAlib Replacement
 
@@ -72,6 +72,7 @@ Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this
     Collision
     CustomFont
     DrawableBackground
+    MarioKart
     NiFi
     RoomPersistency
     TopDownShooter
