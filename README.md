@@ -68,7 +68,7 @@ Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this
 
 `cd` to `examples` and run `ls` to list the examples:
 
-    3D
+    Basic3D
     Collision
     CustomFont
     DrawableBackground
