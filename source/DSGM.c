@@ -56,12 +56,14 @@ void DSGM_InitCustomGFX(bool topScreenDrawable, bool bottomScreenDrawable, bool 
 	else videoSetModeSub(MODE_0_2D);
 	
 	vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
-	vramSetBankB(VRAM_B_MAIN_SPRITE_0x06400000);
+	if(!main3D) vramSetBankB(VRAM_B_MAIN_SPRITE_0x06400000);
+	else vramSetBankB(VRAM_B_TEXTURE_SLOT1);
 	vramSetBankC(VRAM_C_SUB_BG_0x06200000);
 	vramSetBankD(VRAM_D_SUB_SPRITE);
 	vramSetBankE(VRAM_E_BG_EXT_PALETTE);
 	vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
-	vramSetBankG(VRAM_G_LCD);
+	if(!main3D) vramSetBankG(VRAM_G_LCD);
+	else vramSetBankG(VRAM_G_MAIN_SPRITE_0x06400000);
 	vramSetBankH(VRAM_H_SUB_BG_EXT_PALETTE);
 	vramSetBankI(VRAM_I_SUB_SPRITE_EXT_PALETTE);
 	
