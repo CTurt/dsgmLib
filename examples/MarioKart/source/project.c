@@ -250,13 +250,13 @@ void renderer_create(rendererObjectInstance *me) {
 	DSGM_DrawText(DSGM_BOTTOM, 1, 22, "models & textures by Nintendo");
 	
 	glInit();
-	glEnable(GL_ANTIALIAS);
+	glEnable(GL_BLEND);
+	glColor(RGB15(31, 31, 31));
 	
+	glEnable(GL_ANTIALIAS);
 	glClearColor(0, 0, 0, 0);
 	glClearPolyID(63);
 	glClearDepth(0x7FFF);
-	
-	glEnable(GL_BLEND);
 	
 	// When 3D mode is not enabled, VRAM bank B is used for top screen sprites, bank G is unused
 	// When 3D mode is enabled, VRAM bank B is used for textures, and bank G is used for top screen sprites
@@ -286,31 +286,37 @@ void renderer_create(rendererObjectInstance *me) {
 	gluPerspective(70, 256.0 / 192.0, 0.1, 40);
 	
 	gluLookAt(0.0, 1.0, -2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	
+	glMaterialf(GL_AMBIENT, RGB15(16,16,16));
+	glMaterialf(GL_DIFFUSE, RGB15(16,16,16));
+	glMaterialf(GL_SPECULAR, BIT(15) | RGB15(8,8,8));
+	glMaterialf(GL_EMISSION, RGB15(16,16,16));
+	glMaterialShinyness();
+	
+	glLight(0, RGB15(31, 31, 31), 0, floattov10(-1.0), 0);
+	
+	glPolyFmt(POLY_ALPHA(31) | POLY_CULL_BACK | POLY_MODULATION | POLY_FORMAT_LIGHT0);
 }
 
 void renderer_loop(rendererObjectInstance *me) {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	
-	glMaterialf(GL_AMBIENT, RGB15(8,8,8));
-	glMaterialf(GL_DIFFUSE, RGB15(24,24,24));
-	glMaterialf(GL_SPECULAR, RGB15(0,0,0));
-	glMaterialf(GL_EMISSION, RGB15(0,0,0));
-	
-	glPolyFmt(POLY_ALPHA(31) | POLY_CULL_BACK | POLY_DECAL);
-	
 	glRotateY(rotation++);
 	
 	glBindTexture(0, carBodyTextureID);
 	glCallList((u32 *)carBody_bin);
 	
-	glColor(RGB15(31, 31, 31));
-	glPolyFmt(POLY_ALPHA(31) | POLY_CULL_BACK | POLY_MODULATION);
+	/*glPushMatrix();
+	glColor(RGB15(0,8,0));
+	glPolyFmt(POLY_SHADOW | POLY_CULL_NONE | POLY_ALPHA(15) | POLY_ID(6));
+	glTranslatef(0, 0.0f, 0);
+	glBindTexture(0, 0);
+	glCallList((u32 *)carBody_bin);
+	glPopMatrix(1);*/
 	
 	glBindTexture(0, carEmblemTextureID);
 	glCallList((u32 *)carEmblem_bin);
-	
-	glPolyFmt(POLY_ALPHA(31) | POLY_CULL_BACK | POLY_DECAL);
 	
 	if(!DSGM_held.A) {
 		/*
