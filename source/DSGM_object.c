@@ -93,11 +93,12 @@ void DSGM_ActivateObjectInstance(DSGM_Room *room, DSGM_ObjectInstance *objectIns
 	}
 	
 	DSGM_Sprite *sprite = objectInstance->object->sprite;
-	DSGM_Palette *palette = sprite->palette;
 	u8 screen = objectInstance->screen;
 	int spriteNumber = -1;
 	
-	if(sprite != DSGM_NO_SPRITE) {
+	if(sprite) {
+		DSGM_Palette *palette = NULL;
+		
 		int x, y;
 		
 		spriteNumber = DSGM_NextFreeSpriteNumber(screen);
