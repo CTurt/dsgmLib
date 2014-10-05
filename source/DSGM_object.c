@@ -97,7 +97,7 @@ void DSGM_ActivateObjectInstance(DSGM_Room *room, DSGM_ObjectInstance *objectIns
 	int spriteNumber = -1;
 	
 	if(sprite) {
-		DSGM_Palette *palette = NULL;
+		DSGM_Palette *palette = sprite->palette;
 		
 		int x, y;
 		
