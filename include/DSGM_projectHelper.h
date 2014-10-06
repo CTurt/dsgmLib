@@ -62,8 +62,8 @@ void DSGM_ResetAll(void) {
 	DSGM_ClearText(DSGM_TOP);
 	DSGM_ClearText(DSGM_BOTTOM);
 	DSGM_ResetSprites(DSGM_Sprites, DSGM_SPRITE_COUNT);
-	DSGM_ClearPalettes(DSGM_Palettes, DSGM_PALETTE_COUNT);
 	DSGM_ResetSound();
+	DSGM_ClearPalettes(DSGM_Palettes, DSGM_PALETTE_COUNT);
 	DSGM_FreeAll();
 }
 

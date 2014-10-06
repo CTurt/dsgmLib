@@ -28,7 +28,6 @@ inline void DSGM_LockSpritePalette(u8 screen) {
 
 inline u16 *DSGM_GetPaletteData(u8 screen, DSGM_Palette *palette) {
 	return (screen == DSGM_TOP ? VRAM_F_EXT_SPR_PALETTE : VRAM_I_EXT_SPR_PALETTE)[palette->paletteNumber[screen]];
-	
 }
 
 inline int DSGM_NextFreePalette(u8 screen) {
