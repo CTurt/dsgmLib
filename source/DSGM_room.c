@@ -85,9 +85,9 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 	DSGM_ValidateRoom();
 	
 	//+1?
-	for(sound = 0; sound < DSGM_soundInstanceCount; sound++) {
-		DSGM_SetSoundInstanceVolumeFull(&DSGM_soundInstances[sound], DSGM_soundInstances[sound].volume);
-		DSGM_SetSoundInstancePanningFull(&DSGM_soundInstances[sound], DSGM_soundInstances[sound].panning);
+	for(sound = 0; sound < DSGM_soundEffectInstanceCount; sound++) {
+		DSGM_SetSoundInstanceVolumeFull(&DSGM_soundEffectInstances[sound], DSGM_soundEffectInstances[sound].volume);
+		DSGM_SetSoundInstancePanningFull(&DSGM_soundEffectInstances[sound], DSGM_soundEffectInstances[sound].panning);
 	}
 	
 	for(screen = 0; screen < 2; screen++) {

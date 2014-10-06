@@ -2,8 +2,10 @@
 
 int DSGM_soundStreamCount = 0;
 
-DSGM_SoundInstance DSGM_soundInstances[DSGM_MAX_SOUNDS];
-int DSGM_soundInstanceCount = 0;
+DSGM_SoundInstance DSGM_soundStreamInstance;
+
+DSGM_SoundInstance DSGM_soundEffectInstances[DSGM_MAX_SOUND_EFFECT_INSTANCES];
+int DSGM_soundEffectInstanceCount = 0;
 
 void DSGM_InitSoundFull(int soundStreamCount) {
 	mmInitDefault("nitro:/soundbank.bin");
@@ -11,29 +13,33 @@ void DSGM_InitSoundFull(int soundStreamCount) {
 }
 
 void DSGM_ResetSound(void) {
-	/*mmStop();
+	mmStop();
 	mmEffectCancelAll();
 	
-	int i;
-	for(i = 0; i < DSGM_soundInstanceCount; i++) {
-		if(DSGM_soundInstances[i].sound->type == DSGM_SOUND_STREAM) {
-			// MaxMod is broken :(
-			//mmUnload(DSGM_soundInstances[i].sound->ID);
-			//DSGM_soundInstances[i].sound->loaded = false;
-		}
-		else {
-			//mmUnloadEffect(DSGM_soundInstances[i].sound->ID - DSGM_soundStreamCount);
-			//DSGM_soundInstances[i].sound->loaded = false;
-		}
+	if(DSGM_soundStreamInstance.sound) {
+		mmUnload(DSGM_soundStreamInstance.sound->ID);
+		DSGM_soundStreamInstance.sound->loaded = false;
 	}
 	
-	DSGM_soundInstanceCount = 0;*/
+	int i;
+	for(i = 0; i < DSGM_soundEffectInstanceCount; i++) {
+		mmUnloadEffect(DSGM_soundEffectInstances[i].sound->ID - DSGM_soundStreamCount);
+		DSGM_soundEffectInstances[i].sound->loaded = false;
+	}
+	
+	DSGM_soundEffectInstanceCount = 0;
 }
 
 DSGM_SoundInstance *DSGM_AddSoundInstance(DSGM_Sound *sound) {
-	// still playing?
-	if(DSGM_soundInstanceCount == DSGM_MAX_SOUNDS) DSGM_soundInstanceCount = sound->type == DSGM_SOUND_STREAM ? 0 : DSGM_RESERVED_STREAMS;
-	return &DSGM_soundInstances[DSGM_soundInstanceCount++];
+	if(sound->type == DSGM_SOUND_STREAM) {
+		DSGM_soundStreamInstance.sound = sound;
+		return &DSGM_soundStreamInstance;
+	}
+	else {
+		if(DSGM_soundEffectInstanceCount < DSGM_MAX_SOUND_EFFECT_INSTANCES) DSGM_soundEffectInstanceCount++;
+		DSGM_soundEffectInstances[DSGM_soundEffectInstanceCount - 1].sound = sound;
+		return &DSGM_soundEffectInstances[DSGM_soundEffectInstanceCount - 1];
+	}
 }
 
 DSGM_SoundInstance *DSGM_PlaySoundFull(DSGM_Sound *sound) {

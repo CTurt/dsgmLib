@@ -408,6 +408,7 @@ void player_create(playerObjectInstance *me) {
 	else {
 		DSGM_DrawText(DSGM_TOP, 1, 5, "Room_2");
 	}
+	
 	DSGM_PlaySound(FlatOutLies);
 }
 
@@ -477,14 +478,5 @@ void player_loop(playerObjectInstance *me) {
 }
 
 void player_touch(playerObjectInstance *me) {
-	//mmStop();
-	//DSGM_Sounds[FlatOutLies].loaded = false;
-	//DSGM_PlaySound(FlatOutLies);
-	//mmLoad(DSGM_Sounds[FlatOutLies].ID);
-	//swiWaitForVBlank();
-	//mmStart(DSGM_Sounds[FlatOutLies].ID, MM_PLAY_LOOP);
-	
 	DSGM_GotoNextRoom(false);
-	/*if(DSGM_currentRoom == Room_1) DSGM_SwitchRoom(Room_2, false);
-	else if(DSGM_currentRoom == Room_2) DSGM_SwitchRoom(Room_1, false);*/
 }

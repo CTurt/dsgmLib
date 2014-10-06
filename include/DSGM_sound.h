@@ -1,6 +1,6 @@
 #pragma once
 
-#define DSGM_MAX_SOUNDS 32
+#define DSGM_MAX_SOUND_EFFECT_INSTANCES 32
 #define DSGM_RESERVED_STREAMS 1
 
 #define DSGM_SOUND_STREAM 0
@@ -28,8 +28,10 @@ typedef struct {
 
 extern int DSGM_soundStreamCount;
 
-extern DSGM_SoundInstance DSGM_soundInstances[DSGM_MAX_SOUNDS];
-extern int DSGM_soundInstanceCount;
+extern DSGM_SoundInstance DSGM_soundStreamInstance;
+
+extern DSGM_SoundInstance DSGM_soundEffectInstances[DSGM_MAX_SOUND_EFFECT_INSTANCES];
+extern int DSGM_soundEffectInstanceCount;
 
 void DSGM_InitSoundFull(int soundStreamCount);
 void DSGM_ResetSound(void);
