@@ -108,3 +108,11 @@ DS Game Maker uses `NitroFS`, a method of loading data (sprites, backgrounds, mu
 Getting Help
 ------------
 [There's a forum](http://dsgamemaker.com/dsgmforum/viewforum.php?f=31) specifically for discussing bugs/feature requests, or [create a GitHub issue](https://github.com/DSGameMaker/dsgmLib/issues/new).
+
+Acknowledgements
+------------
+- devkitARM and libnds by [devkitPro team](http://devkitpro.org/),
+- MaxMod by [devkitPro team](http://devkitpro.org/maxmod.org/),
+- dswifi by [Stephen Stair](http://akkit.org/dswifi/),
+- MD2 loading code by [David Henry](http://tfc.duke.free.fr/),
+- MD2 DS optimisation by [Smealum](https://github.com/smealum/portalDS),
