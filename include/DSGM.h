@@ -52,6 +52,8 @@ typedef DSGM_SpriteEntry DSGM_OAMStructLabel[0];
 #include "DSGM_drawable.h"
 #include "DSGM_wireless.h"
 
+#include "DSGM_displayList.h"
+
 #ifndef BUILDINGLIB
 	#include "project.h"
 #endif
