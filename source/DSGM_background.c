@@ -129,38 +129,88 @@ inline BgSize DSGM_GetBGSize(u8 screen, int layerNumber) {
 
 int DSGM_GetBGWidth(u8 screen, int layerNumber) {
 	switch(DSGM_GetBGSize(screen, layerNumber)) {
+		case BgSize_R_128x128:
+		case BgSize_ER_128x128:
+		case BgSize_B8_128x128:
+		case BgSize_B16_128x128:
+			return 128;
+			break;
+			
 		case BgSize_T_256x256:
 		case BgSize_T_256x512:
+		case BgSize_R_256x256:
+		case BgSize_ER_256x256:
+		case BgSize_B8_256x256:
+		case BgSize_B16_256x256:
 			return 256;
 			break;
 			
 		case BgSize_T_512x256:
 		case BgSize_T_512x512:
+		case BgSize_R_512x512:
+		case BgSize_ER_512x512:
+		case BgSize_B8_512x512:
+		case BgSize_B8_512x256:
+		case BgSize_B8_512x1024:
+		case BgSize_B16_512x512:
+		case BgSize_B16_512x256:
 			return 512;
+			break;
+			
+		case BgSize_R_1024x1024:
+		case BgSize_ER_1024x1024:
+		case BgSize_B8_1024x512:
+			return 1024;
 			break;
 			
 		default:
 			break;
 	}
-	return 512;
+	
+	return 256;
 }
 
 int DSGM_GetBGHeight(u8 screen, int layerNumber) {
 	switch(DSGM_GetBGSize(screen, layerNumber)) {
+		case BgSize_R_128x128:
+		case BgSize_ER_128x128:
+		case BgSize_B8_128x128:
+		case BgSize_B16_128x128:
+			return 128;
+			break;
+			
 		case BgSize_T_256x256:
 		case BgSize_T_512x256:
+		case BgSize_R_256x256:
+		case BgSize_ER_256x256:
+		case BgSize_B8_256x256:
+		case BgSize_B8_512x256:
+		case BgSize_B16_256x256:
+		case BgSize_B16_512x256:
 			return 256;
 			break;
 			
 		case BgSize_T_256x512:
 		case BgSize_T_512x512:
+		case BgSize_R_512x512:
+		case BgSize_ER_512x512:
+		case BgSize_B8_512x512:
+		case BgSize_B8_1024x512:
+		case BgSize_B16_512x512:
 			return 512;
+			break;
+			
+		case BgSize_R_1024x1024:
+		case BgSize_ER_1024x1024:
+		case BgSize_B8_512x1024:
+			return 1024;
 			break;
 			
 		default:
 			break;
 	}
-	return 512;
+	
+	return 256;
 }
 
 inline u16 DSGM_GetTileFull(DSGM_Layer *layer, int x, int y) {
