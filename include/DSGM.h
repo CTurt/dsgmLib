@@ -42,6 +42,7 @@ typedef int DSGM_IntStructLabel[0];
 #include "DSGM_alarm.h"
 #include "DSGM_view.h"
 #include "DSGM_background.h"
+#include "DSGM_largeBackground.h"
 #include "DSGM_text.h"
 #include "DSGM_palette.h"
 #include "DSGM_sprite.h"

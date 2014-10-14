@@ -46,6 +46,8 @@ typedef struct {
 	int x;
 	int y;
 	int vramId;
+	
+	u16 *largeBackgroundMap;
 } DSGM_Layer;
 
 inline void DSGM_LockBackgroundPalette(u8 screen);
