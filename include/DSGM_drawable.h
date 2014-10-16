@@ -1,5 +1,7 @@
 #pragma once
 
+#define DSGM_DRAWABLE_BACKGROUND (void *)2
+
 #define DSGM_Color(r, g, b) ARGB16(1, r, g, b)
 #define DSGM_RandomColor() DSGM_Random(0, DSGM_Color(31, 31, 31))
 
