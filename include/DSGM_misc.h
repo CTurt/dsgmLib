@@ -1,5 +1,8 @@
 #pragma once
 
+#define DSGM_RealSin(a) fixedToFloat(sinLerp(a), 12)
+#define DSGM_RealCos(a) fixedToFloat(cosLerp(a), 12)
+
 inline int DSGM_GetBrightness(u8 screen);
 #define DSGM_SetBrightness(screen, brightness) setBrightness((-screen) + 2, brightness)
 void DSGM_FadeIn(u8 screen, u8 delay);
