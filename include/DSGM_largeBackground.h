@@ -38,5 +38,7 @@ typedef enum {
 } DSGM_LARGE_BACKGROUND_SIZES;
 
 inline int DSGM_LargeBackgroundSizeToPixels(DSGM_LARGE_BACKGROUND_SIZES size);
+
 void DSGM_LargeBackgroundCopyScreen(DSGM_Layer *layer);
-void DSGM_LargeBackgroundUpdate(DSGM_Layer *layer);
+
+void DSGM_LargeBackgroundUpdateFull(DSGM_View *view, DSGM_Layer *layer);

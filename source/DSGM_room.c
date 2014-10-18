@@ -96,7 +96,7 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 				DSGM_ScrollBackgroundFull(&room->view[screen], &room->layers[screen][layerNumber]);
 				
 				if(room->layers[screen][layerNumber].background->type == DSGM_LARGE_BACKGROUND) {
-					DSGM_LargeBackgroundUpdate(&room->layers[screen][layerNumber]);
+					DSGM_LargeBackgroundUpdateFull(&room->view[screen], &room->layers[screen][layerNumber]);
 				}
 			}
 		}
