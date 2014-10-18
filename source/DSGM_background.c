@@ -80,7 +80,9 @@ void DSGM_LoadBackgroundNitroFull(DSGM_Layer *layer) {
 	size_t mapLength = DSGM_GetFileLength(layer->background->nitroMapFilename);
 	
 	if(layer->background->type == DSGM_LARGE_BACKGROUND) {
+		DSGM_Debug("Allocating %d bytes for large background map\n", mapLength);
 		layer->largeBackgroundMap = malloc(mapLength);
+		DSGM_Debug("Gave %p\n", layer->largeBackgroundMap);
 		map = layer->largeBackgroundMap;
 	}
 	else {
@@ -107,7 +109,9 @@ void DSGM_LoadBackgroundRAMFull(DSGM_Layer *layer) {
 	size_t mapLength = *layer->background->mapLength;
 	
 	if(layer->background->type == DSGM_LARGE_BACKGROUND) {
+		DSGM_Debug("Allocating %d bytes for large background map\n", mapLength);
 		layer->largeBackgroundMap = malloc(mapLength);
+		DSGM_Debug("Gave %p\n", layer->largeBackgroundMap);
 		map = layer->largeBackgroundMap;
 	}
 	else {
