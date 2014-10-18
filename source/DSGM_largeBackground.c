@@ -1,15 +1,15 @@
 #include "DSGM.h"
 
 inline int DSGM_LargeBackgroundSizeToPixels(DSGM_LARGE_BACKGROUND_SIZES size) {
-	return 1 << (size + 9);
+	return (size + 1) * 256;
 }
 
 void DSGM_LargeBackgroundCopyScreen(DSGM_Layer *layer) {
 	int tilesLength = DSGM_LargeBackgroundSizeToPixels(layer->background->size) / 8;
 	
 	int xl, yl;
-	for(xl = 0; xl < tilesLength; xl++) {
-		for(yl = 0; yl < tilesLength; yl++) {
+	for(xl = 0; xl < 256 / 8; xl++) {
+		for(yl = 0; yl < 192 / 8; yl++) {
 			int x = xl;
 			int y = yl;
 			
@@ -22,7 +22,7 @@ void DSGM_LargeBackgroundCopyScreen(DSGM_Layer *layer) {
 				y += 32;
 			}*/
 			
-			DSGM_SetTileFull(layer, x, y, layer->largeBackgroundMap[y * tilesLength / 2 + x]);
+			DSGM_SetTileFull(layer, x, y, layer->largeBackgroundMap[y * tilesLength + x]);
 		}
 	}
 }
