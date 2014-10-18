@@ -81,6 +81,8 @@ inline u16 DSGM_GetTileFull(DSGM_Layer *layer, int x, int y);
 #define DSGM_SetTile(screen, layerNumber, x, y, tile) DSGM_SetTileFull(&DSGM_layers[screen][layerNumber], x, y, tile)
 inline void DSGM_SetTileFull(DSGM_Layer *layer, int x, int y, u16 tile);
 
+inline void DSGM_SetTileForceVRAM(DSGM_Layer *layer, int x, int y, u16 tile);
+
 #define DSGM_SetRotationCenter(screen, x, y) DSGM_SetRotationCenterFull(&DSGM_layers[screen][3], x, y)
 inline void DSGM_SetRotationCenterFull(DSGM_Layer *layer, int x, int y);
 

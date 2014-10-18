@@ -247,6 +247,14 @@ int DSGM_GetBGHeight(u8 screen, int layerNumber) {
 }
 
 inline u16 DSGM_GetTileFull(DSGM_Layer *layer, int x, int y) {
+	u16 *map;
+	if(layer->background->type == DSGM_LARGE_BACKGROUND) {
+		map = layer->largeBackgroundMap;
+	}
+	else {
+		map = bgGetMapPtr(layer->vramId);
+	}
+	
 	// todo: optimise with div and modulus rather than loop
 	while(y > 31) {
 		y -= 32;
@@ -260,10 +268,18 @@ inline u16 DSGM_GetTileFull(DSGM_Layer *layer, int x, int y) {
 	}
 	//y += 64 * ((y - 31) / 32);
 	//x %= 32;
-	return bgGetMapPtr(layer->vramId)[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x];
+	return map[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x];
 }
 
 inline void DSGM_SetTileFull(DSGM_Layer *layer, int x, int y, u16 tile) {
+	u16 *map;
+	if(layer->background->type == DSGM_LARGE_BACKGROUND) {
+		map = layer->largeBackgroundMap;
+	}
+	else {
+		map = bgGetMapPtr(layer->vramId);
+	}
+	
 	while(y > 31) {
 		y -= 32;
 		x += 64;
@@ -272,7 +288,28 @@ inline void DSGM_SetTileFull(DSGM_Layer *layer, int x, int y, u16 tile) {
 		x -= 32;
 		y += 32;
 	}
-	bgGetMapPtr(layer->vramId)[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x] = tile;
+	
+	map[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x] = tile;
+}
+
+inline void DSGM_SetTileForceVRAM(DSGM_Layer *layer, int x, int y, u16 tile) {
+	u16 *map = bgGetMapPtr(layer->vramId);
+	
+	if(layer->background->type == DSGM_LARGE_BACKGROUND) {
+		x %= 512 / 8;
+		y %= 512 / 8;
+	}
+	
+	while(y > 31) {
+		y -= 32;
+		x += 64;
+	}
+	while(x > 31) {
+		x -= 32;
+		y += 32;
+	}
+	
+	map[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x] = tile;
 }
 
 inline void DSGM_SetRotationCenterFull(DSGM_Layer *layer, int x, int y) {
