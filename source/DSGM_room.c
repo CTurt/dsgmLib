@@ -94,6 +94,10 @@ void DSGM_LoopRoom(DSGM_Room *room) {
 		for(layerNumber = 0; layerNumber < 4; layerNumber++) {
 			if(room->layers[screen][layerNumber].background != DSGM_NO_BACKGROUND) {
 				DSGM_ScrollBackgroundFull(&room->view[screen], &room->layers[screen][layerNumber]);
+				
+				if(room->layers[screen][layerNumber].background->type == DSGM_LARGE_BACKGROUND) {
+					DSGM_LargeBackgroundUpdate(&room->layers[screen][layerNumber]);
+				}
 			}
 		}
 		
@@ -180,13 +184,13 @@ void DSGM_LeaveRoom(DSGM_Room *room) {
 	u8 screen;
 	int group;
 	int object;
-	int layer;
+	int layerNumber;
 	
 	for(screen = 0; screen < 2; screen++) {
-		for(layer = 0; layer < 4; layer++) {
-			if(room->layers[screen][layer].background->type == DSGM_LARGE_BACKGROUND) {
-				DSGM_Debug("Freeing large background map %p\n", room->layers[screen][layer].largeBackgroundMap);
-				free(room->layers[screen][layer].largeBackgroundMap);
+		for(layerNumber = 0; layerNumber < 4; layerNumber++) {
+			if(room->layers[screen][layerNumber].background->type == DSGM_LARGE_BACKGROUND) {
+				DSGM_Debug("Freeing large background map %p\n", room->layers[screen][layerNumber].largeBackgroundMap);
+				free(room->layers[screen][layerNumber].largeBackgroundMap);
 			}
 		}
 		

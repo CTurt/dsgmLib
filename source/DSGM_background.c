@@ -67,6 +67,10 @@ void DSGM_LoadBackgroundFull(DSGM_Layer *layer) {
 		DSGM_LoadBackgroundRAMFull(layer);
 	}
 	
+	if(layer->background->type == DSGM_LARGE_BACKGROUND) {
+		DSGM_LargeBackgroundCopyScreen(layer);
+	}
+	
 	//DSGM_ScrollBackgroundFull(layer);
 	
 	swiWaitForVBlank();
