@@ -45,13 +45,16 @@ inline bool DSGM_BackgroundIsNitroFull(DSGM_Background *background) {
 }
 
 void DSGM_LoadBackgroundFull(DSGM_Layer *layer) {
+	BgType type = layer->background->type;
+	BgSize size = layer->background->size;
+	
 	switch(layer->screen) {
 		case DSGM_TOP:
-			layer->vramId = bgInit(layer->layerNumber, layer->background->type, layer->background->size, layer->mapBase, layer->tileBase);
+			layer->vramId = bgInit(layer->layerNumber, type, size, layer->mapBase, layer->tileBase);
 			break;
 			
 		case DSGM_BOTTOM:
-			layer->vramId = bgInitSub(layer->layerNumber, layer->background->type, layer->background->size, layer->mapBase, layer->tileBase);
+			layer->vramId = bgInitSub(layer->layerNumber, type, size, layer->mapBase, layer->tileBase);
 			break;
 	}
 	
