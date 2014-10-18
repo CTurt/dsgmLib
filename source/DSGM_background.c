@@ -45,8 +45,8 @@ inline bool DSGM_BackgroundIsNitroFull(DSGM_Background *background) {
 }
 
 void DSGM_LoadBackgroundFull(DSGM_Layer *layer) {
-	BgType type = layer->background->type;
-	BgSize size = layer->background->size;
+	BgType type = (layer->background->type == DSGM_LARGE_BACKGROUND) ? BgType_Text8bpp : layer->background->type;
+	BgSize size = (layer->background->type == DSGM_LARGE_BACKGROUND) ? BgSize_T_512x512 : layer->background->size;
 	
 	switch(layer->screen) {
 		case DSGM_TOP:
@@ -76,8 +76,19 @@ void DSGM_LoadBackgroundFull(DSGM_Layer *layer) {
 }
 
 void DSGM_LoadBackgroundNitroFull(DSGM_Layer *layer) {
+	void *map;
+	size_t mapLength = DSGM_GetFileLength(layer->background->nitroMapFilename);
+	
+	if(layer->background->type == DSGM_LARGE_BACKGROUND) {
+		layer->largeBackgroundMap = malloc(mapLength);
+		map = layer->largeBackgroundMap;
+	}
+	else {
+		map = bgGetMapPtr(layer->vramId);
+	}
+	
 	layer->background->tilesCount = DSGM_ReadFileManual(bgGetGfxPtr(layer->vramId), 0, DSGM_AUTO_LENGTH, layer->background->nitroTilesFilename) / 64;
-	if(layer->background->nitroMapFilename) DSGM_ReadFileManual(bgGetMapPtr(layer->vramId), 0, DSGM_AUTO_LENGTH, layer->background->nitroMapFilename);
+	if(layer->background->nitroMapFilename) DSGM_ReadFileManual(map, 0, DSGM_AUTO_LENGTH, layer->background->nitroMapFilename);
 	DSGM_UnlockBackgroundPalette(layer->screen);
 	switch(layer->screen) {
 		case DSGM_TOP:
@@ -92,9 +103,20 @@ void DSGM_LoadBackgroundNitroFull(DSGM_Layer *layer) {
 }
 
 void DSGM_LoadBackgroundRAMFull(DSGM_Layer *layer) {
+	void *map;
+	size_t mapLength = *layer->background->mapLength;
+	
+	if(layer->background->type == DSGM_LARGE_BACKGROUND) {
+		layer->largeBackgroundMap = malloc(mapLength);
+		map = layer->largeBackgroundMap;
+	}
+	else {
+		map = bgGetMapPtr(layer->vramId);
+	}
+	
 	dmaCopy(layer->background->tiles, bgGetGfxPtr(layer->vramId), *layer->background->tilesLength);
 	layer->background->tilesCount = (*layer->background->tilesLength) / 64;
-	if(layer->background->map != NULL) dmaCopy(layer->background->map, bgGetMapPtr(layer->vramId), *layer->background->mapLength);
+	if(layer->background->map != NULL) dmaCopy(layer->background->map, map, *layer->background->mapLength);
 	DSGM_UnlockBackgroundPalette(layer->screen);
 	switch(layer->screen) {
 		case DSGM_TOP:

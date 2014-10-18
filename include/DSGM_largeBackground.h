@@ -1,6 +1,6 @@
 #pragma once
 
-#define DSGM_LARGE_BACKGROUND (void *)4
+#define DSGM_LARGE_BACKGROUND 6 
 
 typedef enum {
 	DSGM_LARGE_BACKGROUND_512,
