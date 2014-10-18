@@ -180,8 +180,16 @@ void DSGM_LeaveRoom(DSGM_Room *room) {
 	u8 screen;
 	int group;
 	int object;
+	int layer;
 	
 	for(screen = 0; screen < 2; screen++) {
+		for(layer = 0; layer < 4; layer++) {
+			if(room->layers[screen][layer].background->type == DSGM_LARGE_BACKGROUND) {
+				DSGM_Debug("Freeing large background map %p\n", room->layers[screen][layer].largeBackgroundMap);
+				free(room->layers[screen][layer].largeBackgroundMap);
+			}
+		}
+		
 		for(group = 0; group < room->objectGroupCount[screen]; group++) {
 			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
 				DSGM_Debug("Freeing object instance custom variables\n");
