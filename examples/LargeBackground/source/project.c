@@ -197,7 +197,7 @@ void Room_1_handler(void) {
 		DSGM_view[DSGM_BOTTOM].y--;
 	}
 	
-	if(DSGM_held.Down && DSGM_view[DSGM_BOTTOM].y < 256 - 192) {
+	if(DSGM_held.Down && DSGM_view[DSGM_BOTTOM].y < 240 - 192) {
 		DSGM_view[DSGM_BOTTOM].y++;
 	}
 	
