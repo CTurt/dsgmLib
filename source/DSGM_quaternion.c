@@ -202,18 +202,18 @@ inline void DSGM_RotateRollPitchYaw(int32 roll, int32 pitch, int32 yaw) {
 	glMultMatrix4x4(&m);
 }
 
-/*
-void Quaternion_normalize(Quaternion * quaternion) {
-	float magnitude;
+
+void Quaternion_normalize(Quaternion *quaternion) {
+	int32 magnitude;
 	
-	magnitude = sqrtf32((quaternion->x * quaternion->x) +
-	                 (quaternion->y * quaternion->y) +
-	                 (quaternion->z * quaternion->z) +
-	                 (quaternion->w * quaternion->w));
-	quaternion->x /= magnitude;
-	quaternion->y /= magnitude;
-	quaternion->z /= magnitude;
-	quaternion->w /= magnitude;
+	magnitude = sqrtf32(mulf32(quaternion->x, quaternion->x) +
+	                 mulf32(quaternion->y, quaternion->y) +
+	                 mulf32(quaternion->z, quaternion->z) +
+	                 mulf32(quaternion->w, quaternion->w));
+	quaternion->x = divf32(quaternion->x, magnitude);
+	quaternion->y = divf32(quaternion->y, magnitude);
+	quaternion->z = divf32(quaternion->z, magnitude);
+	quaternion->w = divf32(quaternion->w, magnitude);
 }
 
 Quaternion Quaternion_normalized(Quaternion quaternion) {
@@ -221,7 +221,7 @@ Quaternion Quaternion_normalized(Quaternion quaternion) {
 	return quaternion;
 }
 
-#define SLERP_TO_LERP_SWITCH_THRESHOLD 0.01f
+/*#define SLERP_TO_LERP_SWITCH_THRESHOLD 0.01f
 
 Quaternion Quaternion_slerp(Quaternion start, Quaternion end, float alpha) {
 	float startWeight, endWeight, difference;

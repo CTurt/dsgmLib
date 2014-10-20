@@ -58,11 +58,11 @@ Quaternion Quaternion_multiplied(Quaternion quaternion1, Quaternion quaternion2)
 
 inline void DSGM_RotateRollPitchYaw(int32 roll, int32 pitch, int32 yaw);
 
-/*
+
 void Quaternion_normalize(Quaternion * quaternion);
 Quaternion Quaternion_normalized(Quaternion quaternion);
 
-Quaternion Quaternion_slerp(Quaternion start, Quaternion end, float alpha);
+/*Quaternion Quaternion_slerp(Quaternion start, Quaternion end, float alpha);
 
 void Quaternion_rotate(Quaternion * quaternion, vect3D axis, float angle);
 Quaternion Quaternion_rotated(Quaternion quaternion, vect3D axis, float angle);
