@@ -23,8 +23,10 @@
 /*
 	Modified for dsgmLib integration, 2014
 	
-	Additional help from elhobbs and
+	Additional help from: 
+	elhobbs
 	http://www.j3d.org/matrix_faq/matrfaq_latest.html#Q60
+	http://content.gpwiki.org/index.php/OpenGL%3aTutorials%3aUsing_Quaternions_to_represent_rotation#Quaternion_from_Euler_angles
 	
 	Not all quaternion functionality has been implemented, only what was needed
 */
@@ -48,7 +50,7 @@ Quaternion Quaternion_fromVector(vect3D vector);
 vect3D Quaternion_toVector(Quaternion quaternion);
 Quaternion Quaternion_fromAxisAngle(vect3D axis, int angle);
 //void Quaternion_toAxisAngle(Quaternion quaternion, vect3D *axis, float * angle);
-Quaternion Quaternion_fromRollPitchYaw(int32 roll, int32 pitch, int32 yaw);
+inline Quaternion Quaternion_fromRollPitchYaw(int32 roll, int32 pitch, int32 yaw);
 m4x4 Quaternion_toMatrix(Quaternion quaternion);
 
 void Quaternion_multiply(Quaternion * quaternion1, Quaternion quaternion2);
