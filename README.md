@@ -17,7 +17,7 @@ DS Game Maker generates dsgmLib code like this:
 
 It's clear that when any instance of `ball` is touched, it is moved down and right by 32 pixels.
 
-Importantly we didn't get the sprite number of our object instance and set the position - this would be ugly, and it's how older versions of DS Game Maker worked:
+Importantly we didn't have to rely on the sprite number of our object instance to update its position - this would be ugly, and it's how older versions of DS Game Maker worked:
 
     DSGM_SetSpriteXY(
         me->screen,
