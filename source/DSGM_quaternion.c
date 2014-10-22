@@ -146,6 +146,63 @@ inline Quaternion Quaternion_fromRollPitchYaw(int32 roll, int32 pitch, int32 yaw
 	return this;
 }
 
+vect3D Quaternion_toEuler(Quaternion q) {
+	//http://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToEuler/index.htm
+	
+	vect3D v;
+	
+	int32 test = mulf32(q.x, q.y) + mulf32(q.z, q.w);
+	if(test > floatToFixed(0.499f, 12)) { // singularity at north pole
+		v.x = 2 * atan2Lerp(q.x, q.w);
+		v.y = floatToFixed(M_PI / 2.0f, 12);
+		v.z = 0;
+		return v;
+	}
+	if(test < floatToFixed(-0.499f, 12)) { // singularity at south pole
+		v.x = -2 * atan2Lerp(q.x, q.w);
+		v.y = floatToFixed(-M_PI / 2.0f, 12);
+		v.z = 0;
+		return v;
+	}
+	
+    int32 sqx = mulf32(q.x, q.x);
+    int32 sqy = mulf32(q.y, q.y);
+    int32 sqz = mulf32(q.z, q.z);
+	
+    v.x = atan2Lerp(2 * mulf32(q.y, q.w) - 2 * mulf32(q.x, q.z), (1 << 12) - 2 * sqy - 2 * sqz);
+	v.y = asinLerp(2 * test);
+	v.z = atan2Lerp(2 * mulf32(q.x, q.w) - 2 * mulf32(q.y, q.z), (1 << 12) - 2 * sqx - 2 * sqz);
+	
+	/*const int32 w2 = mulf32(q.w, q.w);
+    const int32 x2 = mulf32(q.x, q.x);
+    const int32 y2 = mulf32(q.y, q.y);
+    const int32 z2 = mulf32(q.z, q.z);
+    const int32 unitLength = w2 + x2 + y2 + z2;    // Normalised == 1, otherwise correction divisor.
+    const int32 abcd = mulf32(q.w, q.x) + mulf32(q.y, q.z);
+    //const int32 eps = 1e-7;    // TODO: pick from your math lib instead of hardcoding.
+    const int32 eps = EPSINT32;    // TODO: pick from your math lib instead of hardcoding.
+    
+	if (abcd > (0.5 - eps) * unitLength) {
+        v.x = 2 * atan2Lerp(q.y, q.w);
+        v.y = M_PI;
+        v.z = 0;
+    }
+    else if (abcd < (-0.5 + eps) * unitLength) {
+        v.x = -2 * atan2Lerp(q.y, q.w);
+        v.y = -M_PI;
+        v.z = 0;
+    }
+    else {
+        const int32 adbc = mulf32(q.w, q.z) - mulf32(q.x, q.y);
+        const int32 acbd = mulf32(q.w, q.y) - mulf32(q.x, q.z);
+        v.x = atan2Lerp(2 * adbc, (1 << 12) - 2 * (z2 + x2));
+        v.y = asinLerp(2 * abcd / unitLength);
+        v.z = atan2Lerp(2 * acbd, (1 << 12) - 2 * (y2 + x2));
+    }*/
+	
+	return v;
+}
+
 m4x4 Quaternion_toMatrix(Quaternion quaternion) {
 	m4x4 matrix;
 	
