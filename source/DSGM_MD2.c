@@ -194,7 +194,7 @@ int DSGM_LoadModel(const char *filename, DSGM_Model *mdl) {
 	return 1;
 }
 
-static void freeMd2FrameData(md2_frame_t* f, bool dl) {
+static void freeMd2FrameData(md2_frame_t *f, bool dl) {
 	if(!f) return;
 	
 	if(f->verts) free(f->verts);

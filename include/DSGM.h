@@ -35,6 +35,7 @@ typedef short DSGM_ShortStructLabel[0];
 typedef int DSGM_IntStructLabel[0];
 
 #include "DSGM_3D.h"
+#include "DSGM_atan2Lerp.h"
 #include "DSGM_misc.h"
 #include "DSGM_texture.h"
 #include "DSGM_quaternion.h"
