@@ -17,13 +17,18 @@ DS Game Maker generates dsgmLib code like this:
 
 It's clear that when any instance of `ball` is touched, it is moved down and right by 32 pixels.
 
-Importantly we didn't get the sprite number of our object instance and set the position - this would be ugly, and it's how older versions of DS Game Maker worked:
+Importantly we didn't have to rely on the sprite number of our object instance to update its position - this would be ugly, and it's how older versions of DS Game Maker worked:
 
-    DSGM_SetSpriteXY(me->screen, me->spriteNumber, DSGM_GetSpriteX(me->screen, me->spriteNumber) + 32, DSGM_GetSpriteY(me->screen, me->spriteNumber) + 32);
+    DSGM_SetSpriteXY(
+        me->screen,
+        me->spriteNumber,
+        DSGM_GetSpriteX(me->screen, me->spriteNumber) + 32,
+        DSGM_GetSpriteY(me->screen, me->spriteNumber) + 32
+    );
 
 Dealing with sprite numbers directly is clunky; the end user shouldn't have to do this. A key feature (or principle) of dsgmLib is providing an abstraction from the OAM (Object Attribute Memory). You don't have to care about sprite numbers or rotation sets - only object instances (which could have any sprite numbers). We've designed this abstraction to make common tasks such as moving a sprite (object instance) as easy as possible.
 
-dsgmLib is feature rich. It supports: high level object oriented programming, wireless DS to DS multiplayer (NiFi), 3D (models and textures), drawable backgrounds, rotatable and scalable backgrounds, custom fonts, scaling and rotating of sprites, sound effects, and music.
+dsgmLib is feature rich. It supports: high level object oriented programming, wireless DS to DS multiplayer (NiFi), 3D (support for MD2 models including animation and texturing as well as abstractions from complex 3D math such as quaternions), drawable backgrounds, rotatable and scalable backgrounds, custom fonts, scaling and rotating of sprites, sound effects, and music.
 
 ### As a PAlib Replacement
 
