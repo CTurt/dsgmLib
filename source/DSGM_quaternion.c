@@ -25,6 +25,7 @@
 	
 	Additional help from: 
 	elhobbs
+	mtheall
 	http://www.j3d.org/matrix_faq/matrfaq_latest.html#Q60
 	http://content.gpwiki.org/index.php/OpenGL%3aTutorials%3aUsing_Quaternions_to_represent_rotation#Quaternion_from_Euler_angles
 	
@@ -93,24 +94,6 @@ Quaternion Quaternion_fromAxisAngle(vect3D axis, int angle) {
 	return quaternion;
 }
 
-/*void Quaternion_toAxisAngle(Quaternion quaternion, vect3D *axis, float *angle) {
-	float sinAngle;
-	
-	Quaternion_normalize(&quaternion);
-	sinAngle = sqrt(1.0f - (quaternion.w * quaternion.w));
-	if (fabs(sinAngle) < 0.0005f) sinAngle = 1.0f;
-	
-	if (axis != NULL) {
-		axis->x = (quaternion.x / sinAngle);
-		axis->y = (quaternion.y / sinAngle);
-		axis->z = (quaternion.z / sinAngle);
-	}
-	
-	if (angle != NULL) {
-		*angle = (acos(quaternion.w) * 2.0f);
-	}
-}*/
-
 inline Quaternion Quaternion_fromRollPitchYaw(int32 roll, int32 pitch, int32 yaw) {
 	//http://www.j3d.org/matrix_faq/matrfaq_latest.html#Q60
 	/*Quaternion q = Quaternion_identity();
@@ -173,33 +156,6 @@ vect3D Quaternion_toEuler(Quaternion q) {
 	v.y = asinLerp(2 * test);
 	v.z = atan2Lerp(2 * mulf32(q.x, q.w) - 2 * mulf32(q.y, q.z), (1 << 12) - 2 * sqx - 2 * sqz);
 	
-	/*const int32 w2 = mulf32(q.w, q.w);
-    const int32 x2 = mulf32(q.x, q.x);
-    const int32 y2 = mulf32(q.y, q.y);
-    const int32 z2 = mulf32(q.z, q.z);
-    const int32 unitLength = w2 + x2 + y2 + z2;    // Normalised == 1, otherwise correction divisor.
-    const int32 abcd = mulf32(q.w, q.x) + mulf32(q.y, q.z);
-    //const int32 eps = 1e-7;    // TODO: pick from your math lib instead of hardcoding.
-    const int32 eps = EPSINT32;    // TODO: pick from your math lib instead of hardcoding.
-    
-	if (abcd > (0.5 - eps) * unitLength) {
-        v.x = 2 * atan2Lerp(q.y, q.w);
-        v.y = M_PI;
-        v.z = 0;
-    }
-    else if (abcd < (-0.5 + eps) * unitLength) {
-        v.x = -2 * atan2Lerp(q.y, q.w);
-        v.y = -M_PI;
-        v.z = 0;
-    }
-    else {
-        const int32 adbc = mulf32(q.w, q.z) - mulf32(q.x, q.y);
-        const int32 acbd = mulf32(q.w, q.y) - mulf32(q.x, q.z);
-        v.x = atan2Lerp(2 * adbc, (1 << 12) - 2 * (z2 + x2));
-        v.y = asinLerp(2 * abcd / unitLength);
-        v.z = atan2Lerp(2 * acbd, (1 << 12) - 2 * (y2 + x2));
-    }*/
-	
 	return v;
 }
 
@@ -259,7 +215,6 @@ inline void DSGM_RotateRollPitchYaw(int32 roll, int32 pitch, int32 yaw) {
 	glMultMatrix4x4(&m);
 }
 
-
 void Quaternion_normalize(Quaternion *quaternion) {
 	int32 magnitude;
 	
@@ -278,72 +233,21 @@ Quaternion Quaternion_normalized(Quaternion quaternion) {
 	return quaternion;
 }
 
-/*#define SLERP_TO_LERP_SWITCH_THRESHOLD 0.01f
-
-Quaternion Quaternion_slerp(Quaternion start, Quaternion end, float alpha) {
-	float startWeight, endWeight, difference;
-	Quaternion result;
-	
-	difference = (start.x * end.x) + (start.y * end.y) + (start.z * end.z) + (start.w * end.w);
-	if ((1.0f - fabs(difference)) > SLERP_TO_LERP_SWITCH_THRESHOLD) {
-		float theta, oneOverSinTheta;
-		
-		theta = acos(fabs(difference));
-		oneOverSinTheta = 1.0f / sin(theta);
-		startWeight = sin(theta * (1.0f - alpha)) * oneOverSinTheta;
-		endWeight = sin(theta * alpha) * oneOverSinTheta;
-		if (difference < 0.0f) {
-			startWeight = -startWeight;
-		}
-	} else {
-		startWeight = 1.0f - alpha;
-		endWeight = alpha;
-	}
-	result.x = (start.x * startWeight) + (end.x * endWeight);
-	result.y = (start.y * startWeight) + (end.y * endWeight);
-	result.z = (start.z * startWeight) + (end.z * endWeight);
-	result.w = (start.w * startWeight) + (end.w * endWeight);
-	Quaternion_normalize(&result);
-	
-	return result;
-}
-
-void Quaternion_rotate(Quaternion * quaternion, vect3D axis, float angle) {
-	Quaternion rotationQuaternion;
-	
-	rotationQuaternion = Quaternion_fromAxisAngle(axis, angle);
-	Quaternion_multiply(quaternion, rotationQuaternion);
-}
-
-Quaternion Quaternion_rotated(Quaternion quaternion, vect3D axis, float angle) {
-	Quaternion_rotate(&quaternion, axis, angle);
-	return quaternion;
-}
-
-void Quaternion_invert(Quaternion * quaternion) {
-	float length;
-	
-	length = 1.0f / ((quaternion->x * quaternion->x) +
-	                 (quaternion->y * quaternion->y) +
-	                 (quaternion->z * quaternion->z) +
-	                 (quaternion->w * quaternion->w));
-	quaternion->x *= -length;
-	quaternion->y *= -length;
-	quaternion->z *= -length;
-	quaternion->w *= length;
-}
-
 Quaternion Quaternion_inverted(Quaternion quaternion) {
 	Quaternion_invert(&quaternion);
 	return quaternion;
 }
 
-vect3D Quaternion_multiplyVector(Quaternion quaternion, vect3D vector) {
-	Quaternion vectorQuaternion, inverseQuaternion, result;
+void Quaternion_invert(Quaternion *quaternion) {
+	int32 magnitude;
 	
-	vectorQuaternion = Quaternion_fromvect3D(vector);
-	inverseQuaternion = Quaternion_inverted(quaternion);
-	result = Quaternion_multiplied(quaternion, Quaternion_multiplied(vectorQuaternion, inverseQuaternion));
-	return Quaternion_toVector(result);
+	magnitude = sqrtf32(mulf32(quaternion->x, quaternion->x) +
+	                 mulf32(quaternion->y, quaternion->y) +
+	                 mulf32(quaternion->z, quaternion->z) +
+	                 mulf32(quaternion->w, quaternion->w));
+	
+	quaternion->x = divf32(-quaternion->x, magnitude);
+	quaternion->y = divf32(-quaternion->y, magnitude);
+	quaternion->z = divf32(-quaternion->z, magnitude);
+	quaternion->w = divf32(quaternion->w, magnitude);
 }
-*/

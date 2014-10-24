@@ -49,7 +49,6 @@ Quaternion Quaternion_withValues(int32 x, int32 y, int32 z, int32 w);
 Quaternion Quaternion_fromVector(vect3D vector);
 vect3D Quaternion_toVector(Quaternion quaternion);
 Quaternion Quaternion_fromAxisAngle(vect3D axis, int angle);
-//void Quaternion_toAxisAngle(Quaternion quaternion, vect3D *axis, float * angle);
 inline Quaternion Quaternion_fromRollPitchYaw(int32 roll, int32 pitch, int32 yaw);
 vect3D Quaternion_toEuler(Quaternion q);
 m4x4 Quaternion_toMatrix(Quaternion quaternion);
@@ -59,17 +58,8 @@ Quaternion Quaternion_multiplied(Quaternion quaternion1, Quaternion quaternion2)
 
 inline void DSGM_RotateRollPitchYaw(int32 roll, int32 pitch, int32 yaw);
 
-
 void Quaternion_normalize(Quaternion *quaternion);
 Quaternion Quaternion_normalized(Quaternion quaternion);
 
-/*Quaternion Quaternion_slerp(Quaternion start, Quaternion end, float alpha);
-
-void Quaternion_rotate(Quaternion * quaternion, vect3D axis, float angle);
-Quaternion Quaternion_rotated(Quaternion quaternion, vect3D axis, float angle);
-
-void Quaternion_invert(Quaternion * quaternion);
 Quaternion Quaternion_inverted(Quaternion quaternion);
-
-vect3D Quaternion_multiplyVector(Quaternion quaternion, vect3D vector);
-*/
+void Quaternion_invert(Quaternion *quaternion);
