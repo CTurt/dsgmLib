@@ -82,7 +82,6 @@ Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this
     NiFi
     RoomPersistency
     TopDownShooter
-    CustomVariables
     Priority
     RotsetEffects
     Unpossible
