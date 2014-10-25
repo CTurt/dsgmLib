@@ -18,6 +18,13 @@ void DSGM_ApplyQuaternion(Quaternion *q) {
 	glMultMatrix4x4(&m);
 }
 
+void DSGM_ApplyInverseQuaternion(Quaternion *q) {
+	Quaternion_normalize(q);
+	Quaternion qi = Quaternion_inverted(*q);
+	m4x4 m = Quaternion_toMatrix(qi);
+	glMultMatrix4x4(&m);
+}
+
 void DSGM_DrawCube(float x, float y, float z, float width, float height, float depth) {
 	glBegin(GL_QUADS);
 	//z	face
