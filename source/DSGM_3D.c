@@ -7,6 +7,11 @@ inline u64 DSGM_Distance3D(s32 x1, s32 y1, s32 z1, s32 x2, s32 y2, s32 z2) {
 	return h * h + v * v + b * b;
 }
 
+void DSGM_GetPositionMatrix(struct m4x4 *m) {
+	glGetFixed(GL_GET_MATRIX_POSITION, m->m);
+	glMatrixMode(GL_POSITION);
+}
+
 void DSGM_DrawCube(float x, float y, float z, float width, float height, float depth) {
 	glBegin(GL_QUADS);
 	//z	face
