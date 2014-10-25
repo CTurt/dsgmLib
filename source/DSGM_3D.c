@@ -1,5 +1,12 @@
 #include "DSGM.h"
 
+inline u64 DSGM_Distance3D(s32 x1, s32 y1, s32 z1, s32 x2, s32 y2, s32 z2) {
+	s64 h = x1 - x2;
+	s64 v = y1 - y2;
+	s64 b = z1 - z2;
+	return h * h + v * v + b * b;
+}
+
 void DSGM_DrawCube(float x, float y, float z, float width, float height, float depth) {
 	glBegin(GL_QUADS);
 	//z	face
