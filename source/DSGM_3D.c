@@ -12,6 +12,12 @@ void DSGM_GetPositionMatrix(struct m4x4 *m) {
 	glMatrixMode(GL_POSITION);
 }
 
+void DSGM_ApplyQuaternion(Quaternion *q) {
+	Quaternion_normalize(q);
+	m4x4 m = Quaternion_toMatrix(*q);
+	glMultMatrix4x4(&m);
+}
+
 void DSGM_DrawCube(float x, float y, float z, float width, float height, float depth) {
 	glBegin(GL_QUADS);
 	//z	face
