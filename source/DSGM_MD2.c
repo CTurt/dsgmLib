@@ -63,6 +63,10 @@ static void packFrameData(DSGM_Model *mdl, md2_frame_t *f) {
 	
 	f->min = vect(mulf32(f->min.x, f->scale.x) * 128 * 32, mulf32(f->min.y, f->scale.y) * 128 * 32, mulf32(f->min.z, f->scale.z) * 128 * 32);
 	f->max = vect(mulf32(f->max.x, f->scale.x) * 128 * 32, mulf32(f->max.y, f->scale.y) * 128 * 32, mulf32(f->max.z, f->scale.z) * 128 * 32);
+	
+	//f->min = vect(f->min.x * f->scale.x, f->min.y * f->scale.y, f->min.z * f->scale.z);
+	//f->max = vect(f->max.x * f->scale.x, f->max.y * f->scale.y, f->max.z * f->scale.z);
+	
 	f->min = addVect(f->min, f->translate);
 	f->max = addVect(f->max, f->translate);
 }
@@ -341,7 +345,7 @@ void DSGM_RenderModelFrame(int n, const DSGM_Model *mdl) {
 	
 	glPushMatrix();
 	
-	glRotateXi(-(1<<13));
+	//glRotateXi(-(1<<13));
 	
 	// vect3D u=vect(inttof32(1),0,0);
 	
@@ -389,7 +393,7 @@ void DSGM_RenderModelFrameInterp(int n, int n2, int m, bool t, const DSGM_Model 
 	
 	glPushMatrix();
 	
-	glRotateXi(-(1<<13));
+	//glRotateXi(-(1<<13));
 	
 	glTranslate3f32(pframe->translate.x+((pframe2->translate.x-pframe->translate.x)*m)/4,pframe->translate.y+((pframe2->translate.y-pframe->translate.y)*m)/4,pframe->translate.z+((pframe2->translate.z-pframe->translate.z)*m)/4);
 	
