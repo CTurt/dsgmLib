@@ -63,3 +63,5 @@ Quaternion Quaternion_normalized(Quaternion quaternion);
 
 Quaternion Quaternion_inverted(Quaternion quaternion);
 void Quaternion_invert(Quaternion *quaternion);
+
+vect3D Quaternion_toUpVector(Quaternion *q);

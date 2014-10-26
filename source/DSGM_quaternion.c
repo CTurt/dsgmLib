@@ -251,3 +251,21 @@ void Quaternion_invert(Quaternion *quaternion) {
 	quaternion->z = divf32(-quaternion->z, magnitude);
 	quaternion->w = divf32(quaternion->w, magnitude);
 }
+
+vect3D Quaternion_toUpVector(Quaternion *q) {
+	m4x4 initialMatrix, resultantMatrix;
+	vect3D deltaPosition;
+	
+	glPushMatrix();
+	DSGM_GetPositionMatrix(&initialMatrix);
+	
+	DSGM_ApplyQuaternion(q);
+	glTranslatef32(0, 1 << 12, 0);
+	
+	DSGM_GetPositionMatrix(&resultantMatrix);
+	glPopMatrix(1);
+	
+	deltaPosition = DSGM_MatrixTranslationToVector(initialMatrix, resultantMatrix);
+	
+	return deltaPosition;
+}
