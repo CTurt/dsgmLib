@@ -12,6 +12,14 @@ void DSGM_GetPositionMatrix(struct m4x4 *m) {
 	glMatrixMode(GL_POSITION);
 }
 
+vect3D DSGM_MatrixTranslationToVector(m4x4 initialMatrix, m4x4 resultantMatrix) {
+	vect3D deltaPosition;
+	deltaPosition.x = resultantMatrix.m[DSGM_MATRIX_X] - initialMatrix.m[DSGM_MATRIX_X];
+	deltaPosition.y = resultantMatrix.m[DSGM_MATRIX_Y] - initialMatrix.m[DSGM_MATRIX_Y];
+	deltaPosition.z = resultantMatrix.m[DSGM_MATRIX_Z] - initialMatrix.m[DSGM_MATRIX_Z];
+	return deltaPosition;
+}
+
 void DSGM_ApplyQuaternion(Quaternion *q) {
 	Quaternion_normalize(q);
 	m4x4 m = Quaternion_toMatrix(*q);
