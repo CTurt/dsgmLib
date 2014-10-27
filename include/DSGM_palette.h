@@ -40,4 +40,4 @@ inline bool DSGM_PaletteIsNitro(DSGM_Palette *palette);
 
 void DSGM_ClearPalettes(DSGM_Palette *palettes, int paletteCount);
 
-void DSGM_LoadPaletteFull(u8 screen, DSGM_Palette *Palette);
+void DSGM_LoadPaletteFull(DSGM_Room *room, u8 screen, DSGM_Palette *Palette);
