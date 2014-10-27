@@ -2,31 +2,27 @@
 
 int DSGM_nextPalette[2] = { 0, 0 };
 
-inline void DSGM_UnlockSpritePaletteFull(DSGM_Room *room, u8 screen) {
-	if(room->layers[screen][0] != DSGM_3D_RENDERER) {
-		switch(screen) {
-			case DSGM_TOP:
-				vramSetBankF(VRAM_F_LCD);
-				break;
-				
-			case DSGM_BOTTOM:
-				vramSetBankI(VRAM_I_LCD);
-				break;
-		}
+inline void DSGM_UnlockSpritePalette(u8 screen) {
+	switch(screen) {
+		case DSGM_TOP:
+			vramSetBankF(VRAM_F_LCD);
+			break;
+			
+		case DSGM_BOTTOM:
+			vramSetBankI(VRAM_I_LCD);
+			break;
 	}
 }
 
-inline void DSGM_LockSpritePaletteFull(DSGM_Room *room, u8 screen) {
-	if(room->layers[screen][0] != DSGM_3D_RENDERER) {
-		switch(screen) {
-			case DSGM_TOP:
-				vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
-				break;
-				
-			case DSGM_BOTTOM:
-				vramSetBankI(VRAM_I_SUB_SPRITE_EXT_PALETTE);
-				break;
-		}
+inline void DSGM_LockSpritePalette(u8 screen) {
+	switch(screen) {
+		case DSGM_TOP:
+			vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
+			break;
+			
+		case DSGM_BOTTOM:
+			vramSetBankI(VRAM_I_SUB_SPRITE_EXT_PALETTE);
+			break;
 	}
 }
 

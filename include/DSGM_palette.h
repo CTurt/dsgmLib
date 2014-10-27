@@ -24,12 +24,8 @@ typedef struct {
 
 extern int DSGM_nextPalette[2];
 
-#define DSGM_UnlockSpritePalette(screen) DSGM_UnlockSpritePaletteFull(&DSGM_Rooms[DSGM_currentRoom], screen)
-inline void DSGM_UnlockSpritePaletteFull(DSGM_Room *room, u8 screen);
-
-#define DSGM_LockSpritePalette(screen) DSGM_LockSpritePaletteFull(&DSGM_Rooms[DSGM_currentRoom], screen)
-inline void DSGM_LockSpritePaletteFull(DSGM_Room *room, u8 screen);
-
+inline void DSGM_UnlockSpritePalette(u8 screen);
+inline void DSGM_LockSpritePalette(u8 screen);
 inline u16 *DSGM_GetPaletteData(u8 screen, DSGM_Palette *palette);
 
 inline int DSGM_NextFreePalette(u8 screen);
