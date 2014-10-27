@@ -185,11 +185,11 @@ void DSGM_SetupRooms(int room) {
 }
 
 void Room_1_handler(void) {	
-	if(DSGM_held.Left && DSGM_view[DSGM_BOTTOM].x > 0) {
+	if(DSGM_held.Left/* && DSGM_view[DSGM_BOTTOM].x > 0*/) {
 		DSGM_view[DSGM_BOTTOM].x--;
 	}
 	
-	if(DSGM_held.Right && DSGM_view[DSGM_BOTTOM].x < DSGM_LargeBackgroundSizeToPixels(DSGM_Backgrounds[marioMap].size) - 256) {
+	if(DSGM_held.Right/* && DSGM_view[DSGM_BOTTOM].x < DSGM_LargeBackgroundSizeToPixels(DSGM_Backgrounds[marioMap].size) - 256*/) {
 		DSGM_view[DSGM_BOTTOM].x++;
 	}
 	
