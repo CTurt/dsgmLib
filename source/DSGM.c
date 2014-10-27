@@ -49,7 +49,8 @@ void DSGM_InitGFX(void) {
 
 /*
 	2D: http://mtheall.com/banks.html#A=MBG0&B=MOBJ0&C=SBG&D=SOBJ&E=BGEPAL&F=OBJEPAL&H=SBGEPAL&I=SOBJEPAL
-	3D: http://mtheall.com/banks.html#A=MBG0&B=TS1&C=SBG&D=SOBJ&E=BGEPAL&F=OBJEPAL&G=MOBJ00&H=SBGEPAL&I=SOBJEPAL
+	3D (ext sprite pal): http://mtheall.com/banks.html#A=MBG0&B=TS1&C=SBG&D=SOBJ&E=BGEPAL&F=OBJEPAL&G=MOBJ00&H=SBGEPAL&I=SOBJEPAL
+	3D (texture pal): http://mtheall.com/banks.html#A=MBG0&B=TS1&C=SBG&D=SOBJ&E=BGEPAL&F=TPAL0&G=MOBJ00&H=SBGEPAL&I=SOBJEPAL
 */
 
 // If you need anything more custom than this, you're going to have to write it yourself
@@ -66,7 +67,8 @@ void DSGM_InitCustomGFX(bool topScreenDrawable, bool bottomScreenDrawable, bool 
 	vramSetBankC(VRAM_C_SUB_BG_0x06200000);
 	vramSetBankD(VRAM_D_SUB_SPRITE);
 	vramSetBankE(VRAM_E_BG_EXT_PALETTE);
-	vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
+	if(!main3D) vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
+	else vramSetBankF(VRAM_F_TEX_PALETTE_SLOT0);
 	if(!main3D) vramSetBankG(VRAM_G_LCD);
 	else vramSetBankG(VRAM_G_MAIN_SPRITE_0x06400000);
 	vramSetBankH(VRAM_H_SUB_BG_EXT_PALETTE);
