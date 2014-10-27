@@ -47,6 +47,11 @@ void DSGM_InitGFX(void) {
 	oamInit(&oamSub, SpriteMapping_1D_128, true);
 }
 
+/*
+	2D: http://mtheall.com/banks.html#A=MBG0&B=MOBJ0&C=SBG&D=SOBJ&E=BGEPAL&F=OBJEPAL&H=SBGEPAL&I=SOBJEPAL
+	3D: http://mtheall.com/banks.html#A=MBG0&B=TS1&C=SBG&D=SOBJ&E=BGEPAL&F=OBJEPAL&G=MOBJ00&H=SBGEPAL&I=SOBJEPAL
+*/
+
 // If you need anything more custom than this, you're going to have to write it yourself
 void DSGM_InitCustomGFX(bool topScreenDrawable, bool bottomScreenDrawable, bool main3D) {
 	if(topScreenDrawable) videoSetMode(main3D ? MODE_3_3D : MODE_3_2D);
