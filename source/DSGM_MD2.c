@@ -358,9 +358,9 @@ void DSGM_RenderModelFrame(int n, const DSGM_Model *mdl) {
 		// if(fakeDotProduct(anorms_table2[pframe->verts[mdl->triangles[i].vertex[0]].normalIndex],u)>0)
 		{
 			for(j = 0; j < 3; j++) {
-				GFX_TEX_COORD=mdl->packedTexcoords[mdl->triangles[i].st[j]];
+				GFX_TEX_COORD = mdl->packedTexcoords[mdl->triangles[i].st[j]];
 				
-				// GFX_NORMAL = anorms_table[pframe->verts[mdl->triangles[i].vertex[j]].normalIndex];
+				GFX_NORMAL = anorms_table[pframe->verts[mdl->triangles[i].vertex[j]].normalIndex];
 				
 				//v16
 				// vect3D v = pframe->packedVerts[mdl->triangles[i].vertex[j]];
@@ -420,7 +420,8 @@ void DSGM_RenderModelFrameInterp(int n, int n2, int m, bool t, const DSGM_Model 
 					GFX_TEX_COORD = mdl->packedTexcoords[mdl->triangles[i].st[j]];
 					GFX_NORMAL = anorms_table[pframe->verts[mdl->triangles[i].vertex[j]].normalIndex];
 					
-					vect3D v = vect((pvert->v[0]*2+((pvert2->v[0]-pvert->v[0])*m)/2),(pvert->v[1]*2+((pvert2->v[1]-pvert->v[1])*m)/2),(pvert->v[2]*2+((pvert2->v[2]-pvert->v[2])*m)/2));
+					//vect3D v = vect((pvert->v[0]*2+((pvert2->v[0]-pvert->v[0])*m)/2),(pvert->v[1]*2+((pvert2->v[1]-pvert->v[1])*m)/2),(pvert->v[2]*2+((pvert2->v[2]-pvert->v[2])*m)/2));
+					vect3D v = vect((pvert->v[0]+((pvert2->v[0]-pvert->v[0])*m)/2),(pvert->v[1]+((pvert2->v[1]-pvert->v[1])*m)/2),(pvert->v[2]+((pvert2->v[2]-pvert->v[2])*m)/2));
 					
 					if(t) GFX_VERTEX10 = NORMAL_PACK(v.x - 128, v.y - 128, v.z - 128);
 					else GFX_VERTEX10 = NORMAL_PACK(v.x, v.y, v.z);
@@ -436,9 +437,11 @@ void DSGM_RenderModelFrameInterp(int n, int n2, int m, bool t, const DSGM_Model 
 void DSGM_InitModelInstance(DSGM_ModelInstance *mi, DSGM_Model *mdl) {
 	if(!mi || !mdl) return;
 	mi->currentAnim = 0;
+	mi->interpolate = false;
 	mi->interpCounter = 0;
 	mi->currentFrame = 0;
 	mi->nextFrame = 0;
+	mi->animationSpeed = 4;
 	mi->palette = NULL;
 	mi->model = mdl;
 }
@@ -458,7 +461,7 @@ void DSGM_SetModelInstanceAnimation(DSGM_ModelInstance *mi, u16 newAnim, bool on
 void DSGM_UpdateModelInstanceAnimation(DSGM_ModelInstance *mi) {
 	if(!mi) return;
 	if(!mi->oneshot) mi->oldAnim = mi->currentAnim;
-	mi->interpCounter++;
+	mi->interpCounter += mi->animationSpeed;
 	if(mi->interpCounter >= 4) {
 		mi->interpCounter = 0;
 		mi->currentFrame = mi->nextFrame;
@@ -471,5 +474,6 @@ void DSGM_UpdateModelInstanceAnimation(DSGM_ModelInstance *mi) {
 }
 
 inline void DSGM_RenderModelInstance(DSGM_ModelInstance *mi) {
-	DSGM_RenderModelFrameInterp(mi->currentFrame, mi->nextFrame, mi->interpCounter, mi->fixTransformations, mi->model);
+	if(mi->interpolate) DSGM_RenderModelFrameInterp(mi->currentFrame, mi->nextFrame, mi->interpCounter, mi->fixTransformations, mi->model);
+	else DSGM_RenderModelFrame(mi->currentFrame, mi->model);
 }

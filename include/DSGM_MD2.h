@@ -90,7 +90,9 @@ typedef struct {
 	u8 currentAnim;
 	u8 oldAnim;
 	bool oneshot;
+	u8 animationSpeed;
 	bool fixTransformations;
+	bool interpolate;
 	u32 *palette;
 	DSGM_Model *model;
 } DSGM_ModelInstance;
