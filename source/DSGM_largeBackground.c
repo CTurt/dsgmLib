@@ -21,19 +21,21 @@ void DSGM_LargeBackgroundCopyScreen(DSGM_Layer *layer) {
 void DSGM_LargeBackgroundUpdateFull(DSGM_View *view, DSGM_Layer *layer) {
 	int tilesLength = DSGM_LargeBackgroundSizeToPixels(layer->background->size) / 8;
 	
-	int minX = (layer->x + (layer->attachedToView ? view->x : 0) / 8) - 1;
+	int minX = ((layer->x + (layer->attachedToView ? view->x : 0)) / 8) - 1;
 	int minXt = minX;
+	DSGM_Log(false, "minXt before: %d\n", minXt);
 	while(minXt < 0) minXt += tilesLength;
+	DSGM_Log(false, "minXt after:  %d\n", minXt);
 	
-	int maxX = (layer->x + (layer->attachedToView ? view->x : 0) / 8) + (256 / 8);
+	int maxX = ((layer->x + (layer->attachedToView ? view->x : 0) + 257) / 8);
 	int maxXt = maxX;
 	while(maxXt < 0) maxXt += tilesLength;
 	
-	int minY = (layer->y + (layer->attachedToView ? view->y : 0) / 8) - 1;
+	int minY = ((layer->y + (layer->attachedToView ? view->y : 0)) / 8) - 1;
 	int minYt = minY;
 	while(minYt < 0) minYt += tilesLength;
 	
-	int maxY = (layer->y + (layer->attachedToView ? view->y : 0) / 8) + (192 / 8);
+	int maxY = ((layer->y + (layer->attachedToView ? view->y : 0) + 193) / 8);
 	int maxYt = maxY;
 	while(maxYt < 0) maxYt += tilesLength;
 	
@@ -63,11 +65,11 @@ void DSGM_LargeBackgroundUpdateFull(DSGM_View *view, DSGM_Layer *layer) {
 		int ya = minY;
 		while(ya < 0) ya += (512 / 8);
 		while(ya > tilesLength) ya -= (512 / 8);
-		DSGM_SetTileForceVRAM(layer, xa, minY, layer->largeBackgroundMap[(minYt % tilesLength) * tilesLength + (x % tilesLength)]);
+		DSGM_SetTileForceVRAM(layer, xa, ya, layer->largeBackgroundMap[(minYt % tilesLength) * tilesLength + (x % tilesLength)]);
 		
 		ya = maxY;
 		while(ya < 0) ya += (512 / 8);
 		while(ya > tilesLength) ya -= (512 / 8);
-		DSGM_SetTileForceVRAM(layer, xa, maxY, layer->largeBackgroundMap[(maxYt % tilesLength) * tilesLength + (x % tilesLength)]);
+		DSGM_SetTileForceVRAM(layer, xa, ya, layer->largeBackgroundMap[(maxYt % tilesLength) * tilesLength + (x % tilesLength)]);
 	}
 }
