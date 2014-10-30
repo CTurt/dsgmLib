@@ -94,7 +94,7 @@ Quaternion Quaternion_fromAxisAngle(vect3D axis, int angle) {
 	return quaternion;
 }
 
-inline Quaternion Quaternion_fromRollPitchYaw(int32 roll, int32 pitch, int32 yaw) {
+inline Quaternion Quaternion_fromEuler(int32 roll, int32 pitch, int32 yaw) {
 	//http://www.j3d.org/matrix_faq/matrfaq_latest.html#Q60
 	/*Quaternion q = Quaternion_identity();
 	Quaternion qt = Quaternion_identity();
@@ -207,12 +207,6 @@ void Quaternion_multiply(Quaternion * quaternion1, Quaternion quaternion2) {
 Quaternion Quaternion_multiplied(Quaternion quaternion1, Quaternion quaternion2) {
 	Quaternion_multiply(&quaternion1, quaternion2);
 	return quaternion1;
-}
-
-inline void DSGM_RotateRollPitchYaw(int32 roll, int32 pitch, int32 yaw) {
-	Quaternion q = Quaternion_fromRollPitchYaw(roll, pitch, yaw);
-	m4x4 m = Quaternion_toMatrix(q);
-	glMultMatrix4x4(&m);
 }
 
 void Quaternion_normalize(Quaternion *quaternion) {
