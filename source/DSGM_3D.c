@@ -1,5 +1,35 @@
 #include "DSGM.h"
 
+void DSGM_InitStandard3D(void) {
+	glInit();
+	glEnable(GL_BLEND);
+	glColor(RGB15(31, 31, 31));
+	
+	glEnable(GL_ANTIALIAS);
+	glClearColor(0, 0, 0, 0);
+	glClearPolyID(63);
+	glClearDepth(0x7FFF);
+	
+	// When 3D mode is not enabled, VRAM bank B is used for top screen sprites, bank G is unused
+	// When 3D mode is enabled, VRAM bank B is used for textures, and bank G is used for top screen sprites
+	// Since bank G is smaller, we will have less VRAM available for sprites on the top screen
+	glEnable(GL_TEXTURE_2D);
+	
+	glViewport(0, 0, 255, 191);
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(70, 256.0 / 192.0, 0.1, 512);
+	
+	glMaterialf(GL_AMBIENT, RGB15(4, 4, 4));
+	glMaterialf(GL_DIFFUSE, RGB15(31, 31, 31));
+	glMaterialf(GL_SPECULAR, BIT(15) | RGB15(8, 8, 8));
+	glMaterialShinyness();
+	
+	glMatrixMode(GL_POSITION);
+	glLoadIdentity();
+}
+
 inline void DSGM_UseCamera(DSGM_Camera *camera) {
 	//glLoadIdentity();
 	gluLookAtf32(camera->position.x, camera->position.y, camera->position.z, camera->lookAt.x, camera->lookAt.y, camera->lookAt.z, camera->up.x, camera->up.y, camera->up.z);

@@ -15,6 +15,8 @@ typedef struct {
 	vect3D up;
 } DSGM_Camera;
 
+void DSGM_InitStandard3D(void);
+
 inline void DSGM_UseCamera(DSGM_Camera *camera);
 
 inline u64 DSGM_Distance3D(s32 x1, s32 y1, s32 z1, s32 x2, s32 y2, s32 z2);
