@@ -23,6 +23,9 @@ inline void DSGM_ClearDrawableBackgroundFull(DSGM_Room *room, u8 screen);
 #define DSGM_DrawPixelToBackground(screen, x, y, color) DSGM_DrawPixelToBackgroundFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y, color)
 inline void DSGM_DrawPixelToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, u16 color);
 
+#define DSGM_GetDrawablePixel(screen, x, y) DSGM_GetDrawablePixelFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y)
+inline u16 DSGM_GetDrawablePixelFull(DSGM_Room *room, u8 screen, int x, int y);
+
 #define DSGM_DrawRectangleToBackground(screen, x, y, width, height, thickness, color) DSGM_DrawRectangleToBackgroundFull(&DSGM_Rooms[DSGM_currentRoom], screen, x, y, width, height, thickness, color)
 inline void DSGM_DrawRectangleToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, int width, int height, int thickness, u16 color);
 

@@ -22,6 +22,11 @@ inline void DSGM_DrawPixelToBackgroundFull(DSGM_Room *room, u8 screen, int x, in
 	bgGetGfxPtr(room->layers[screen][3].vramId)[x + (y << 8)] = color;
 }
 
+inline u16 DSGM_GetDrawablePixelFull(DSGM_Room *room, u8 screen, int x, int y) {
+	if(x >= 0 && y >= 0 && x < 256 && y < 192) return bgGetGfxPtr(room->layers[screen][3].vramId)[x + (y << 8)];
+	else return ARGB16(0, 0, 0, 0);
+}
+
 inline void DSGM_DrawRectangleToBackgroundFull(DSGM_Room *room, u8 screen, int x, int y, int width, int height, int thickness, u16 color) {
 	DSGM_DrawLineToBackgroundFull(room, screen, x, y, x + width, y, thickness, color);
 	DSGM_DrawLineToBackgroundFull(room, screen, x + width, y, x + width, y + height, thickness, color);
