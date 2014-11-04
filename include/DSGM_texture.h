@@ -11,3 +11,4 @@ typedef struct {
 } DSGM_Texture;
 
 void DSGM_LoadTexture(DSGM_Texture *texture);
+void DSGM_ScaleTexture(float x, float y);

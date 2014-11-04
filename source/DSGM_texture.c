@@ -10,3 +10,10 @@ void DSGM_LoadTexture(DSGM_Texture *texture) {
 	glBindTexture(0, texture->id);
 	glTexImage2D(0, 0, texture->type, texture->width, texture->height, 0, TEXGEN_TEXCOORD, texture->data);
 }
+
+void DSGM_ScaleTexture(float x, float y) {
+	glMatrixMode(GL_TEXTURE);
+	glLoadIdentity();
+	glScalef(x, y, 1);
+	glMatrixMode(GL_POSITION);
+}
