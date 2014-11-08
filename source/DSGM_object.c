@@ -333,6 +333,11 @@ void (DSGM_DeinitObjectInstanceRotScale)(DSGM_ObjectInstance *me) {
 		int rotset = ((void *)me->angle - (void *)&DSGM_rotations[me->screen][0]) / sizeof(DSGM_rotations[0][0]);
 		DSGM_rotsetTracker[me->screen][rotset]--;
 		DSGM_Debug("Freeing up one usage of rotset %d\n", rotset);
+		
+		if(DSGM_rotsetTracker[me->screen][rotset] == 0) {
+			DSGM_rotations[me->screen][rotset] = 0;
+			DSGM_Debug("No object instances using rotset, reset its angle to 0\n");
+		}
 	}
 }
 
