@@ -81,6 +81,7 @@ Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this
     MarioKart
     NiFi
     RoomPersistency
+    RotationBackground
     TopDownShooter
     Priority
     RotsetEffects
