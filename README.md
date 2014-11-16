@@ -86,6 +86,7 @@ Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this
     Priority
     RotsetEffects
     Unpossible
+    Worms
     Makefile
 
 Let's compile the `Collision` example.
