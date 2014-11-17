@@ -3,7 +3,7 @@
 #define DSGM_SOUND_STREAM_COUNT 0
 #define DSGM_SOUND_EFFECT_COUNT 0
 #define DSGM_SOUND_COUNT (DSGM_SOUND_STREAM_COUNT + DSGM_SOUND_EFFECT_COUNT)
-#define DSGM_BACKGROUND_COUNT 2
+#define DSGM_BACKGROUND_COUNT 1
 #define DSGM_PALETTE_COUNT 1
 #define DSGM_SPRITE_COUNT 1
 #define DSGM_OBJECT_COUNT 2
@@ -17,7 +17,6 @@
 //} DSGM_SoundNames;
 
 typedef enum {
-	ComicSans,
 	worms,
 } DSGM_BackgroundNames;
 

@@ -10,7 +10,6 @@ DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT] = {
 };
 
 DSGM_Background DSGM_Backgrounds[DSGM_BACKGROUND_COUNT] = {
-	DSGM_FORM_NITRO_FONT(ComicSans),
 	DSGM_FORM_NITRO_BACKGROUND(worms, BgSize_T_256x256, BgType_Text8bpp),
 };
 
