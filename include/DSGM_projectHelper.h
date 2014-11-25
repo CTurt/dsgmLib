@@ -18,6 +18,20 @@ void DSGM_Init(void) {
 	DSGM_SetupRooms(DSGM_ALL_ROOMS);
 }
 
+int main(int argc, char **argv) {
+	DSGM_Init();
+	
+	DSGM_LoadRoom(&DSGM_Rooms[DSGM_currentRoom]);
+	
+	while(1) {
+		DSGM_LoopRoom(&DSGM_Rooms[DSGM_currentRoom]);
+		
+		DSGM_Update();
+	}
+	
+	return 0;
+}
+
 #define DSGM_GetGroup(objectInstance) DSGM_GetObjectGroupFull(&DSGM_Rooms[DSGM_currentRoom], objectInstance->screen, objectInstance->object)
 
 #define DSGM_GetObjectGroup(screen, object) DSGM_GetObjectGroupFull(&DSGM_Rooms[DSGM_currentRoom], screen, object)
