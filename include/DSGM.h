@@ -24,8 +24,6 @@
 #include <dirent.h>
 #include <unistd.h>
 
-#include "exception.h"
-
 #define DSGM_TOP 1
 #define DSGM_BOTTOM 0
 
