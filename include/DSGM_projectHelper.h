@@ -9,6 +9,8 @@
 #define DSGM_GotoNextRoom(persistent) DSGM_SwitchRoom(DSGM_currentRoom + 1, persistent)
 
 void DSGM_Init(void) {
+	defaultExceptionHandler();
+	
 	DSGM_InitGFX();
 	DSGM_InitRand();
 	DSGM_InitNitro();
