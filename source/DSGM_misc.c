@@ -70,13 +70,13 @@ static u16 DSGM_AdjustAngle(u16 angle, s16 anglerot, s32 startx, s32 starty, s32
 	targety = targety << 10; // 8
 	u16 tempangle = (angle - anglerot) & (511 << 6);
 	
-	distances[0] = DSGM_Distance(startx + cosLerp(tempangle), starty - sinLerp(tempangle), targetx, targety);
+	distances[0] = DSGM_SquareDistance(startx + cosLerp(tempangle), starty - sinLerp(tempangle), targetx, targety);
 	tempangle += anglerot;
 	tempangle &= 511 << 6;
-	distances[1] = DSGM_Distance(startx + cosLerp(tempangle), starty - sinLerp(tempangle), targetx, targety);
+	distances[1] = DSGM_SquareDistance(startx + cosLerp(tempangle), starty - sinLerp(tempangle), targetx, targety);
 	tempangle += anglerot;
 	tempangle &= 511 << 6;
-	distances[2] = DSGM_Distance(startx + cosLerp(tempangle), starty - sinLerp(tempangle), targetx, targety);
+	distances[2] = DSGM_SquareDistance(startx + cosLerp(tempangle), starty - sinLerp(tempangle), targetx, targety);
 	
 	if(distances[0] < distances[1])	angle -= anglerot;
 	else if(distances[2] < distances[1]) angle += anglerot;
