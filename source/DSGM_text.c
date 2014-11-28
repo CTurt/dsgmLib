@@ -70,26 +70,27 @@ void DSGM_BoxText(u8 screen, u8 x, u8 y, u8 width, u8 height, u8 delay, const ch
 	vsnprintf(text, 1023, format, args);
 	va_end(args);
 	
-		int i;
-		int len = strlen(text);
-	u8 dx;
-	u8 dy;
-	u8 jx = 0;
-	u8 jy = 0;
-		
+	int i;
+	int len = strlen(text);
+	u8 dx = x;
+	u8 dy = y;
+	
 	consoleSelect(&DSGM_text[screen][DSGM_textLayer[screen]]);
 	
-		for(i = 0; i < len; i++) {
-		dx = x + ((i - jx) % width);
-		dy = y + ((i - jx) / width) + jy;
-		if(height && dy >= y + height) break;
+	//consoleSetWindow(&DSGM_text[screen][DSGM_textLayer[screen]], x, y, width, height);
+	
+	for(i = 0; i < len; i++) {
 		DSGM_text[screen][DSGM_textLayer[screen]].cursorX = dx;
 		DSGM_text[screen][DSGM_textLayer[screen]].cursorY = dy;
-				printf("%c", text[i]);
-		if(text[i] == '\n' || (text[i] == ' ' && DSGM_GetWordLength(text + i + 1) >= width - (dx - x) && (dx - x) > 0)) {
-			jy++;
-			jx += dx;
+		printf("%c", text[i]);
+		
+		dx += 1;
+		
+		if(text[i] == '\n' || (text[i] == ' ' && DSGM_GetWordLength(text + i + 1) + (dx - x) >= width && (dx - x) > 0)) {
+			dx = x;
+			dy += 1;
 		}
+		
 		DSGM_Delay(delay);
-		}
+	}
 }
