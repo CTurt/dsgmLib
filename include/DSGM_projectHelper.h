@@ -8,12 +8,28 @@
 #define DSGM_GotoPreviousRoom(persistent) DSGM_SwitchRoom(DSGM_currentRoom - 1, persistent)
 #define DSGM_GotoNextRoom(persistent) DSGM_SwitchRoom(DSGM_currentRoom + 1, persistent)
 
-void DSGM_Init(void) {
+void DSGM_InitSaving(int argc, char **argv) {
+	char saveName[256] = { '\0' };
+	
+	if(argc > 0 && strlen(argv[0]) > 4) {
+	  snprintf(saveName, 255, "fat:/%.*s.sav", strlen(argv[0]) - 4, argv[0]);
+	}
+	else {
+	  sprintf(saveName, "fat:/" GAME_NAME ".sav");
+	}
+	
+	if(!fopen(saveName, "rb")) fopen(saveName, "wb");
+	
+	DSGM_save = fopen(saveName, "r+b");
+}
+
+void DSGM_Init(int argc, char **argv) {
 	defaultExceptionHandler();
 	
 	DSGM_InitGFX();
 	DSGM_InitRand();
-	DSGM_InitNitro();
+	DSGM_InitFS();
+	DSGM_InitSaving(argc, argv);
 	DSGM_InitSoundFull(DSGM_SOUND_STREAM_COUNT);
 	
 	DSGM_ClearPalettes(DSGM_Palettes, DSGM_PALETTE_COUNT);
@@ -21,7 +37,7 @@ void DSGM_Init(void) {
 }
 
 int main(int argc, char **argv) {
-	DSGM_Init();
+	DSGM_Init(argc, argv);
 	
 	DSGM_LoadRoom(&DSGM_Rooms[DSGM_currentRoom]);
 	
