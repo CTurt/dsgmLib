@@ -71,6 +71,6 @@ void DSGM_Log(bool wait, char *text, ...);
 void DSGM_InitGFX(void);
 void DSGM_InitCustomGFX(bool topScreenDrawable, bool bottomScreenDrawable, bool main3D);
 void DSGM_InitRand(void);
-void DSGM_InitNitro(void);
+void DSGM_InitFS(void);
 
 void DSGM_Update(void);

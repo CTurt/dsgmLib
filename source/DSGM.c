@@ -83,7 +83,7 @@ void DSGM_InitRand(void) {
 	srand(time(NULL));
 }
 
-void DSGM_InitNitro(void) {
+void DSGM_InitFS(void) {
 	if(!nitroFSInit(NULL)) {
 		DSGM_Debug("NitroFS failed\n");
 	}
