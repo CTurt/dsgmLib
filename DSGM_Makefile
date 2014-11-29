@@ -44,7 +44,7 @@ CFLAGS	:=	-g -Wall -O2 -fms-extensions\
 		-ffast-math \
 		$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM9
+CFLAGS	+=	$(INCLUDE) -DARM9 -DGAME_NAME=\"$(GAME_TITLE)\"
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
 
 ASFLAGS	:=	-g $(ARCH)
