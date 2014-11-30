@@ -9,18 +9,19 @@
 #define DSGM_GotoNextRoom(persistent) DSGM_SwitchRoom(DSGM_currentRoom + 1, persistent)
 
 void DSGM_InitSaving(int argc, char **argv) {
-	char saveName[256] = { '\0' };
-	
 	if(argc > 0 && strlen(argv[0]) > 4) {
-	  snprintf(saveName, 255, "fat:/%.*s.sav", strlen(argv[0]) - 4, argv[0]);
+	  snprintf(DSGM_saveName, 255, "%.*s.sav", strlen(argv[0]) - 4, argv[0]);
 	}
 	else {
-	  sprintf(saveName, "fat:/" GAME_NAME ".sav");
+	  sprintf(DSGM_saveName, "fat:/" GAME_NAME ".sav");
 	}
 	
-	if(!fopen(saveName, "rb")) fopen(saveName, "wb");
+	DSGM_save = fopen(DSGM_saveName, "r+b");
 	
-	DSGM_save = fopen(saveName, "r+b");
+	if(!DSGM_save) {
+		DSGM_save = fopen(DSGM_saveName, "wb");
+		fclose(DSGM_save);
+	}
 }
 
 void DSGM_Init(int argc, char **argv) {
