@@ -207,7 +207,8 @@ void hello_create(helloObjectInstance *me) {
 }
 
 void hello_loop(helloObjectInstance *me) {
-	unsigned short buffer[2 * sizeof(int)];
+	// Buffer must be aligned to 2 bytes, so use unsigned short
+	unsigned short buffer[(2 * sizeof(int)) / sizeof(unsigned short)];
 	
 	if(DSGM_held.Stylus) {
 		me->x = DSGM_stylus.x - 16;
