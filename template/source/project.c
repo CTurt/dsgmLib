@@ -199,5 +199,5 @@ void DSGM_SetupRooms(int room) {
 
 void hello_create(helloObjectInstance *me) {
 	//DSGM_DrawText(DSGM_BOTTOM, 1, 1, "Hello!");
-	DSGM_BoxText(DSGM_BOTTOM, 1, 1, 21, 0, 2, "Hello!\n\nThis is the box text function, the parameters are as follows:\n\n - screen\n - x\n - y\n - width\n - height (no limit if 0)\n - delay between each letter\n - text\n - any additional variables to be used in text format");
+	DSGM_BoxText(DSGM_BOTTOM, 5, 1, 22, 0, 2, "Hello!\n\nThis is the box text function, the parameters are as follows:\n\n - screen\n - x\n - y\n - width\n - height (no limit if 0)\n - delay between each letter\n - text\n - any additional variables to be used in text format");
 }
