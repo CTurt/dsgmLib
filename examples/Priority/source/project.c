@@ -3,7 +3,7 @@
 #include "DSGM_projectHelper.h"
 
 // User variables / declarations
-int timer = 0;
+int angle = 0;
 
 // Resources
 DSGM_Sound DSGM_Sounds[DSGM_SOUND_COUNT] = {
@@ -44,11 +44,11 @@ DSGM_Room DSGM_Rooms[DSGM_ROOM_COUNT] = {
 			{
 				// Layer 0
 				{
-					DSGM_NO_BACKGROUND,			// Background
+					DSGM_DEFAULT_FONT,			// Background
 					DSGM_BOTTOM,				// Screen
 					0,							// Layer
 					false,						// Attached to view system
-					0,							// Map base
+					7,							// Map base
 					0,							// Tile base
 					0, 0, 0
 				},
@@ -195,19 +195,27 @@ void DSGM_SetupRooms(int room) {
 	DSGM_SetupObjectGroups(&DSGM_Rooms[Room_1], DSGM_BOTTOM, 1);
 	
 	DSGM_SetupObjectInstances(&DSGM_Rooms[Room_1].objectGroups[DSGM_BOTTOM][0], &DSGM_Objects[ball], DSGM_BOTTOM, 2,
-		64, 64,
-		84, 64
+		112, 80,
+		112, 80
 	);
 	
 	if(room != DSGM_ALL_ROOMS) return;
 }
 
 void ball_loop(ballObjectInstance *me) {
-	// Only change first instance of ball
+	// Only move the first instance of ball
 	if((DSGM_ObjectInstance *)me == &DSGM_GetGroup(me)->objectInstances[0]) {
-		timer++;
-		timer %= 120;
-		// priority can be 0 - 3
-		me->priority = timer / 60;
+		me->x = 112 + (cosLerp(angle) * 32 >> 12);
+		me->y = 80 - (sinLerp(angle) * 16 >> 12);
+		
+		if(angle >= degreesToAngle(180)) {
+			me->priority = 0;
+		}
+		else {
+			me->priority = 1;
+		}
+		
+		angle += degreesToAngle(6);
+		angle %= degreesToAngle(360);
 	}
 }
