@@ -25,7 +25,7 @@ DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
 	// ball
 	{
 		&DSGM_Sprites[ballSprite],
-		DSGM_NO_EVENT,
+		(DSGM_Event)ball_create,
 		(DSGM_Event)ball_loop,
 		DSGM_NO_EVENT,
 		DSGM_NO_EVENT,
@@ -202,18 +202,28 @@ void DSGM_SetupRooms(int room) {
 	if(room != DSGM_ALL_ROOMS) return;
 }
 
+void ball_create(ballObjectInstance *me) {
+	// Only applies to the first instance of ball
+	if((DSGM_ObjectInstance *)me == &DSGM_GetGroup(me)->objectInstances[0]) {
+		// Enable object instance scaling to enhance the effect
+		// not needed when just changing an object instance's priority
+		DSGM_InitObjectInstanceRotScale(me);
+	}
+}
+
 void ball_loop(ballObjectInstance *me) {
-	// Only move the first instance of ball
 	if((DSGM_ObjectInstance *)me == &DSGM_GetGroup(me)->objectInstances[0]) {
 		me->x = 112 + (cosLerp(angle) * 32 >> 12);
 		me->y = 80 - (sinLerp(angle) * 16 >> 12);
 		
-		if(angle >= degreesToAngle(180)) {
-			me->priority = 0;
-		}
-		else {
-			me->priority = 1;
-		}
+		// Display on top of the other ball
+		if(angle >= degreesToAngle(180)) me->priority = 0;
+		
+		// Display behind the other ball
+		else  me->priority = 1;
+		
+		me->scale->x = 256 + (sinLerp(angle) >> 8);
+		me->scale->y = 256 + (sinLerp(angle) >> 8);
 		
 		angle += degreesToAngle(6);
 		angle %= degreesToAngle(360);

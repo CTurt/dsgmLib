@@ -55,4 +55,3 @@ void DSGM_SetupRooms(int room);
 
 void ball_create(ballObjectInstance *me);
 void ball_loop(ballObjectInstance *me);
-void ball_touch(ballObjectInstance *me);
