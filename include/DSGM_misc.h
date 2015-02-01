@@ -18,3 +18,5 @@ inline int DSGM_Random(int min, int max);
 void DSGM_Delay(unsigned int time);
 
 size_t DSGM_GetWordLength(char *text);
+
+bool DSGM_Intersection(int Ax, int Ay, int Bx, int By, int Cx, int Cy, int Dx, int Dy);
