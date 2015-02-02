@@ -167,8 +167,9 @@ void DSGM_CreateSprite(u8 screen, int spriteNumber, int x, int y, ObjPriority pr
 	//swiWaitForVBlank();
 	//oamUpdate(screen == DSGM_TOP ? &oamMain : &oamSub);
 	//DSGM_SetSpriteXY(screen, spriteNumber, x, y);
+	
 	oamSet(screen == DSGM_TOP ? &oamMain : &oamSub, spriteNumber, x, y, priority, sprite->palette->paletteNumber[screen], sprite->size, SpriteColorFormat_256Color, screen == DSGM_TOP ? sprite->topTiles[frame] : sprite->bottomTiles[frame], -1, false, false, hFlip, vFlip, false);
-	oamUpdate(screen == DSGM_TOP ? &oamMain : &oamSub);
+	//oamUpdate(screen == DSGM_TOP ? &oamMain : &oamSub);
 }
 
 void DSGM_SetRotset(u8 screen, int rotset, int angle, int scaleX, int scaleY) {
