@@ -126,8 +126,8 @@ unsigned int DSGM_GetWordLength(char *text) {
 }
 
 // Taken from: http://alienryderflex.com/intersect/
-bool DSGM_Intersection(int Ax, int Ay, int Bx, int By, int Cx, int Cy, int Dx, int Dy) {
-	int distAB, theCos, theSin, newX, ABpos;
+bool DSGM_Intersection(double Ax, double Ay, double Bx, double By, double Cx, double Cy, double Dx, double Dy) {
+	double distAB, theCos, theSin, newX, ABpos;
 	
 	//	Fail if either line segment is zero-length
 	if((Ax == Bx && Ay == By) || (Cx == Dx && Cy == Dy)) return false;
@@ -152,13 +152,13 @@ bool DSGM_Intersection(int Ax, int Ay, int Bx, int By, int Cx, int Cy, int Dx, i
 	Dy = Dy * theCos - Dx * theSin; Dx = newX;
 	
 	//	Fail if segment C-D doesn't cross line A-B
-	if((Cy < 0 && Dy < 0) || (Cy >= 0 && Dy >= 0)) return false;
+	if((Cy < 0. && Dy < 0.) || (Cy >= 0. && Dy >= 0.)) return false;
 	
 	// Discover the position of the intersection point along line A-B
 	ABpos = Dx + (Cx - Dx) * Dy / (Dy - Cy);
 	
 	//	Fail if segment C-D crosses line A-B outside of segment A-B
-	if(ABpos < 0 || ABpos > distAB) return false;
+	if(ABpos < 0. || ABpos > distAB) return false;
 	
 	// Apply the discovered position to line A-B in the original coordinate system
 	// *X = Ax + ABpos * theCos;

@@ -19,4 +19,4 @@ void DSGM_Delay(unsigned int time);
 
 size_t DSGM_GetWordLength(char *text);
 
-bool DSGM_Intersection(int Ax, int Ay, int Bx, int By, int Cx, int Cy, int Dx, int Dy);
+bool DSGM_Intersection(double Ax, double Ay, double Bx, double By, double Cx, double Cy, double Dx, double Dy);
