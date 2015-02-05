@@ -77,6 +77,7 @@ Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this
     Collision
     CustomFont
     DrawableBackground
+	FruitNinja
     LargeBackground
     MarioKart
     NiFi
