@@ -441,7 +441,7 @@ void DSGM_InitModelInstance(DSGM_ModelInstance *mi, DSGM_Model *mdl) {
 	mi->interpCounter = 0;
 	mi->currentFrame = 0;
 	mi->nextFrame = 0;
-	mi->animationSpeed = 4;
+	mi->animationSpeed = 1;
 	mi->palette = NULL;
 	mi->model = mdl;
 }
