@@ -80,6 +80,7 @@ Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this
 	FruitNinja
     LargeBackground
     MarioKart
+	MD2
     NiFi
     RoomPersistency
     RotationBackground
