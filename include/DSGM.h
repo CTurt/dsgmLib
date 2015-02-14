@@ -36,7 +36,6 @@ typedef char DSGM_CharStructLabel[0];
 typedef short DSGM_ShortStructLabel[0];
 typedef int DSGM_IntStructLabel[0];
 
-#include "DSGM_saving.h"
 #include "DSGM_vector.h"
 #include "DSGM_quaternion.h"
 #include "DSGM_3D.h"
@@ -57,6 +56,7 @@ typedef DSGM_SpriteEntry DSGM_OAMStructLabel[0];
 #include "DSGM_object.h"
 #include "DSGM_sound.h"
 #include "DSGM_room.h"
+#include "DSGM_saving.h"
 #include "DSGM_drawable.h"
 #include "DSGM_wireless.h"
 #include "DSGM_displayList.h"
