@@ -185,20 +185,20 @@ void DSGM_SetupRooms(int room) {
 }
 
 void Room_1_handler(void) {	
-	if(DSGM_held.Left/* && DSGM_view[DSGM_BOTTOM].x > 0*/) {
-		DSGM_view[DSGM_BOTTOM].x--;
+	if(DSGM_held.Left) {
+		DSGM_view[DSGM_BOTTOM].x -= 4;
 	}
 	
-	if(DSGM_held.Right/* && DSGM_view[DSGM_BOTTOM].x < DSGM_LargeBackgroundSizeToPixels(DSGM_Backgrounds[marioMap].size) - 256*/) {
-		DSGM_view[DSGM_BOTTOM].x++;
+	if(DSGM_held.Right) {
+		DSGM_view[DSGM_BOTTOM].x += 4;
 	}
 	
 	if(DSGM_held.Up && DSGM_view[DSGM_BOTTOM].y > 0) {
-		DSGM_view[DSGM_BOTTOM].y--;
+		DSGM_view[DSGM_BOTTOM].y -= 4;
 	}
 	
 	if(DSGM_held.Down && DSGM_view[DSGM_BOTTOM].y < 240 - 192) {
-		DSGM_view[DSGM_BOTTOM].y++;
+		DSGM_view[DSGM_BOTTOM].y += 4;
 	}
 	
 	DSGM_view[DSGM_TOP].x = DSGM_view[DSGM_BOTTOM].x;

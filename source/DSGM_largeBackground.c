@@ -23,9 +23,7 @@ void DSGM_LargeBackgroundUpdateFull(DSGM_View *view, DSGM_Layer *layer) {
 	
 	int minX = ((layer->x + (layer->attachedToView ? view->x : 0)) / 8) - 1;
 	int minXt = minX;
-	DSGM_Log(false, "minXt before: %d\n", minXt);
 	while(minXt < 0) minXt += tilesLength;
-	DSGM_Log(false, "minXt after:  %d\n", minXt);
 	
 	int maxX = ((layer->x + (layer->attachedToView ? view->x : 0) + 257) / 8);
 	int maxXt = maxX;
@@ -57,7 +55,7 @@ void DSGM_LargeBackgroundUpdateFull(DSGM_View *view, DSGM_Layer *layer) {
 	}
 	
 	int x;
-	for(x = minX; x < maxX; x++) {
+	for(x = minX - 1; x < maxX + 1; x++) {
 		int xa = x;
 		while(xa < 0) xa += (512 / 8);
 		while(xa > tilesLength) xa -= (512 / 8);
@@ -65,11 +63,11 @@ void DSGM_LargeBackgroundUpdateFull(DSGM_View *view, DSGM_Layer *layer) {
 		int ya = minY;
 		while(ya < 0) ya += (512 / 8);
 		while(ya > tilesLength) ya -= (512 / 8);
-		DSGM_SetTileForceVRAM(layer, xa, ya, layer->largeBackgroundMap[(minYt % tilesLength) * tilesLength + (x % tilesLength)]);
+		DSGM_SetTileForceVRAM(layer, xa, ya, layer->largeBackgroundMap[((minYt % tilesLength) + (x % tilesLength < 0)) * tilesLength + (x % tilesLength)]);
 		
 		ya = maxY;
 		while(ya < 0) ya += (512 / 8);
 		while(ya > tilesLength) ya -= (512 / 8);
-		DSGM_SetTileForceVRAM(layer, xa, ya, layer->largeBackgroundMap[(maxYt % tilesLength) * tilesLength + (x % tilesLength)]);
+		DSGM_SetTileForceVRAM(layer, xa, ya, layer->largeBackgroundMap[((maxYt % tilesLength) + (x % tilesLength < 0)) * tilesLength + (x % tilesLength)]);
 	}
 }
