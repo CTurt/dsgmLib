@@ -216,41 +216,6 @@ void DSGM_LeaveRoom(DSGM_Room *room) {
 	}
 }
 
-unsigned char DSGM_SaveRoom(DSGM_Room *room, char *filename) {
-	/*u8 screen;
-	int layerNumber;
-	int group;
-	int object;
-	FILE *f = fopen(filename, "ab");
-	if(!f) return 0;
-	
-	DSGM_Debug("Saving room...\n");
-	
-	for(screen = 0; screen < 2; screen++) {
-		// Save backgrounds
-		for(layerNumber = 0; layerNumber < 4; layerNumber++) {
-			// Store pointer to background
-			fwrite(&room->layers[screen][layerNumber].background, sizeof(DSGM_Background *), 1, f) {
-		}
-	}
-	
-	for(screen = 0; screen < 2; screen++) {
-		// Save object instances
-		for(group = 0; group < room->objectGroupCount[screen]; group++) {
-			for(object = 0; object < room->objectGroups[screen][group].objectInstanceCount; object++) {
-				DSGM_ObjectInstance *objectInstance = &room->objectGroups[screen][group].objectInstances[object];
-				fwrite(objectInstance, sizeof(DSGM_ObjectInstance), 1, f);
-			}
-		}
-	}
-	
-	fclose(f);
-	
-	DSGM_Debug("Saved\n");*/
-	
-	return 1;
-}
-
 inline int DSGM_GetRoomNumberFull(DSGM_Room *rooms, DSGM_Room *room) {
 	return room - rooms;
 }
