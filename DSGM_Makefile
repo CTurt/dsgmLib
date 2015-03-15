@@ -45,6 +45,11 @@ CFLAGS	:=	-g -Wall -O2 -fms-extensions\
 		$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -DARM9 -DGAME_NAME=\"$(GAME_TITLE)\"
+
+ifeq ($(USES_SAVING),YES)
+	CFLAGS += -DUSES_SAVING
+endif
+
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
 
 ASFLAGS	:=	-g $(ARCH)
