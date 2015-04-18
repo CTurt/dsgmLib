@@ -260,15 +260,13 @@ inline u16 DSGM_GetTileFull(DSGM_Layer *layer, int x, int y) {
 		y -= 32;
 		x += 64;
 	}
-	//x += 64 * ((y - 31) / 32);
-	//y %= 32;
 	while(x > 31) {
 		x -= 32;
 		y += 32;
 	}
-	//y += 64 * ((y - 31) / 32);
-	//x %= 32;
-	return map[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x];
+	
+	// DSGM_GetBGWidth(layer->screen, layer->layerNumber)
+	return map[y * 32 + x];
 }
 
 inline void DSGM_SetTileFull(DSGM_Layer *layer, int x, int y, u16 tile) {
@@ -289,7 +287,7 @@ inline void DSGM_SetTileFull(DSGM_Layer *layer, int x, int y, u16 tile) {
 		y += 32;
 	}
 	
-	map[y * DSGM_GetBGWidth(layer->screen, layer->layerNumber) / 16 + x] = tile;
+	map[y * 32 + x] = tile;
 }
 
 inline void DSGM_SetTileForceVRAM(DSGM_Layer *layer, int x, int y, u16 tile) {
