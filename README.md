@@ -87,17 +87,18 @@ Now open a terminal in the dsgmLib directory. Run `ls` to (hopefully) print this
     Collision
     CustomFont
     DrawableBackground
-	FruitNinja
+    FruitNinja
     LargeBackground
     MarioKart
-	MD2
+    MD2
     NiFi
+    Priority
     RoomPersistency
     RotationBackground
-    TopDownShooter
-    Priority
     RotsetEffects
     Saving
+    Tetris
+    TopDownShooter
     Unpossible
     Worms
     Makefile
