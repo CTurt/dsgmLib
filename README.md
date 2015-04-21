@@ -126,6 +126,56 @@ This is occurs when dsgmDSWiFi has not been installed. Download [dsgmDSWiFi](htt
 ###Game works fine in the emulator but when playing on a DS with a flashcard there is just a black screen
 DS Game Maker uses `NitroFS`, a method of loading data (sprites, backgrounds, music, etc...) for homebrew games from inside of the compiled .nds file. Unfortunately, many flashcards are designed soley for running pirated games and do not support this homebrew feature. Either you can make your game without using NitroFS (store files in RAM instead), or you can use the [Homebrew Menu](http://devkitpro.org/wiki/Homebrew_Menu) (which supports NitroFS) on your flashcard.
 
+###Crashes/unexpected behaviour due to creating/deleting object instances
+The most common cause of crashes is unsafe usage of the `DSGM_CreateObjectInstance` and `DSGM_DeleteObjectInstance` functions. These functions may relocate the location in memory of object groups and object instances, because of this, **you must assume that all object group pointers and object instance pointers, apart from `me` (which is automatically corrected), are invalid after using either of these functions**.
+
+Unsafe example:
+
+    bulletGroup = DSGM_GetObjectGroup(DSGM_BOTTOM, &DSGM_Objects[bullet]);
+    bulletInstance = &bulletGroup->objectInstances[0];
+    DSGM_CreateObjectInstance(DSGM_BOTTOM, x, y, &DSGM_Objects[coin]);
+    bulletInstance->x = x;
+    bulletInstance->y = y;
+
+After creating the coin object instance, `bulletInstance` is no longer valid and should not be used.
+
+Safe example:
+
+    bulletGroup = DSGM_GetObjectGroup(DSGM_BOTTOM, &DSGM_Objects[bullet]);
+    bulletInstance = &bulletGroup->objectInstances[0];
+    bulletInstance->x = x;
+    bulletInstance->y = y;
+    DSGM_CreateObjectInstance(DSGM_BOTTOM, x, y, &DSGM_Objects[coin]);
+
+The `bulletInstance` was used when it was still valid.
+
+Alternative safe example:
+
+    DSGM_CreateObjectInstance(DSGM_BOTTOM, x, y, &DSGM_Objects[coin]);
+    bulletGroup = DSGM_GetObjectGroup(DSGM_BOTTOM, &DSGM_Objects[bullet]);
+    bulletInstance = &bulletGroup->objectInstances[0];
+    bulletInstance->x = x;
+    bulletInstance->y = y;
+
+This is safe because `bulletInstance` was fetched and used without any creations or deletions _between_, even though a coin object instance was created previously.
+
+Safe example with `me`:
+
+    DSGM_CreateObjectInstance(DSGM_BOTTOM, x, y, &DSGM_Objects[coin]);
+    me->x = x;
+    me->y = y;
+
+This is safe because `me` is automatically updated during `DSGM_CreateObjectInstance` and `DSGM_DeleteObjectInstance` calls.
+
+Unusual behaviour with `me`:
+
+    DSGM_DeleteObjectInstance(me);
+    DSGM_DrawText(DSGM_TOP, 1, 1, "Deleted!");
+
+If `me` is deleted, the event will end, so the text will never be shown.
+
+If you understand the above examples, you should run into no problems creating and deleting object instances.
+
 Getting Help
 ------------
 [There's a forum](http://dsgamemaker.com/dsgmforum/viewforum.php?f=31) specifically for discussing bugs/feature requests, or [create a GitHub issue](https://github.com/DSGameMaker/dsgmLib/issues/new).
