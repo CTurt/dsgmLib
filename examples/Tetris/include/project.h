@@ -41,7 +41,6 @@ typedef enum {
 typedef struct {
 	DSGM_ObjectInstanceBase;
 	struct {
-		unsigned char index;
 	} *variables;
 } blockObjectInstance;
 

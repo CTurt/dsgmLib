@@ -107,7 +107,6 @@ void generateBlock(void) {
 		blockObjectInstance *blockInstance = (blockObjectInstance *)&group->objectInstances[i];
 		blockInstance->x = leadX + pattern[i][0];
 		blockInstance->y = leadY + pattern[i][1];
-		blockInstance->variables->index = i;
 		blockInstance->frame = type;
 	}
 }
@@ -474,6 +473,6 @@ void block_loop(blockObjectInstance *me) {
 	
 	signed char (*pattern)[2] = getPattern(type, rotate);
 	
-	me->x = leadX + pattern[me->variables->index][0];
-	me->y = leadY + pattern[me->variables->index][1];
+	me->x = leadX + pattern[DSGM_GetObjectInstanceID(me)][0];
+	me->y = leadY + pattern[DSGM_GetObjectInstanceID(me)][1];
 }
