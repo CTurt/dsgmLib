@@ -46,51 +46,6 @@ void updateLighting(void) {
 	}
 }
 
-Quaternion Quaternion_fromDirectionVector(vect3D vDirection) {
-	vDirection = normalize(vDirection);
-	
-	vect3D vUp = vect(0, 1 << 12, 0 << 12);
-	
-	// The perpendicular vector to Up and Direction
-	vect3D vRight = vectProduct(vUp, vDirection);
-	
-	// The actual up vector given the direction and the right vector
-	vUp = vectProduct(vDirection, vRight);
-	
-	// Step 2. Put the three vectors into the matrix to bulid a basis rotation matrix
-	// This step isnt necessary, but im adding it because often you would want to convert from matricies to quaternions instead of vectors to quaternions
-	// If you want to skip this step, you can use the vector values directly in the quaternion setup below
-	/*Matrix mBasis = new Matrix(vRight.X, vRight.Y, vRight.Z, 0.0f,
-								vUp.X, vUp.Y, vUp.Z, 0.0f,
-								vDirection.X, vDirection.Y, vDirection.Z, 0.0f,
-								0.0f, 0.0f, 0.0f, 1.0f);*/
-	
-	// Step 3. Build a quaternion from the matrix
-	Quaternion qrot = Quaternion_identity();
-	
-	//qrot.w = sqrtf32((1 << 12) + mBasis.M11 + mBasis.M22 + mBasis.M33) / 2.0f;
-	qrot.w = sqrtf32((1 << 12) + vRight.x + vUp.y + vDirection.z) / 2;
-	
-	//double dfWScale = qrot.W * 4.0;
-	
-	int32 dfWScale = qrot.w * 4;
-	
-	//qrot.x = ((mBasis.M32 - mBasis.M23) / dfWScale);
-	//qrot.x = ((vUp.z - vDirection.y) / dfWScale);
-	qrot.x = divf32((vUp.z - vDirection.y), dfWScale);
-	
-	//qrot.y = ((mBasis.M13 - mBasis.M31) / dfWScale);
-	//qrot.y = ((vDirection.x - vRight.z) / dfWScale);
-	qrot.y = divf32((vDirection.x - vRight.z), dfWScale);
-	
-	//qrot.z = ((mBasis.M21 - mBasis.M12) / dfWScale);
-	//qrot.z = ((vRight.y - vUp.x) / dfWScale);
-	qrot.z = divf32((vRight.y - vUp.x), dfWScale);
-
-	return qrot;
-}
-
-
 void centerCamera(DSGM_Camera *camera, Quaternion q) {
 	m4x4 initialMatrix, resultantMatrix;
 	
@@ -594,6 +549,7 @@ void mario_create(marioObjectInstance *me) {
 	DSGM_SetModelInstanceAnimation(&me->variables->modelInstance, MARIO_ANIM_WAIT, false);
 	me->variables->modelInstance.animationSpeed = 2;
 	me->variables->modelInstance.interpolate = true;
+	me->variables->modelInstance.fixTransformations = false;
 	
 	me->variables->q = Quaternion_identity();
 	centerCamera(&camera, me->variables->q);
