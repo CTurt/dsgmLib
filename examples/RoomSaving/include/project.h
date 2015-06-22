@@ -5,7 +5,7 @@
 #define DSGM_SOUND_COUNT (DSGM_SOUND_STREAM_COUNT + DSGM_SOUND_EFFECT_COUNT)
 #define DSGM_BACKGROUND_COUNT 0
 #define DSGM_PALETTE_COUNT 1
-#define DSGM_SPRITE_COUNT 2
+#define DSGM_SPRITE_COUNT 1
 #define DSGM_OBJECT_COUNT 1
 #define DSGM_ROOM_COUNT 1
 
@@ -24,7 +24,6 @@ typedef enum {
 } DSGM_PaletteNames;
 
 typedef enum {
-	taptapman,
 	ballSprite,
 } DSGM_SpriteNames;
 

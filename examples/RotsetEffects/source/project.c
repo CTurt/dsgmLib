@@ -17,7 +17,6 @@ DSGM_Palette DSGM_Palettes[DSGM_PALETTE_COUNT] = {
 
 DSGM_Sprite DSGM_Sprites[DSGM_SPRITE_COUNT] = {
 	DSGM_FORM_NITRO_SPRITE(taptapman, DSGMPal0, SpriteSize_32x32, 9),
-	DSGM_FORM_NITRO_SPRITE(ball, DSGMPal0, SpriteSize_32x32, 1),
 };
 
 DSGM_Object DSGM_Objects[DSGM_OBJECT_COUNT] = {
