@@ -114,19 +114,22 @@ You'll see `Collision.nds` is generated which you can run with an emulator like 
 
 Additionally, you can compile all of the examples at once by running `make` on the `examples` directory.
 
+## Converting graphics
+Use [dsgmGfx](https://github.com/CTurt/dsgmGfx/releases/) to convert graphics in the `gfx` directory of a project. Copy the resulting binaries to either the `data` directory (to be loaded from RAM), or the `nitrofiles` directory (to be loaded from NitroFS).
+
 Recompiling the Library
 ---------
 If you make changes to the library's source code (dsgmLib directory), you'll need to recompile it by running `make` in the directory. Now recompile any projects that link against the library.
 
 FAQs
 ---------
-###Compile error of "cannot find -ldsgmdswifi9"
+### Compile error of "cannot find -ldsgmdswifi9"
 This is occurs when dsgmDSWiFi has not been installed. Download [dsgmDSWiFi](https://github.com/DSGameMaker/dsgmDSWiFi/releases) and extract the lib and include files to your libnds paths (for example `C:\devkitPro\libnds\lib` and `C:\devkitPro\libnds\include`).
 
-###Game works fine in the emulator but when playing on a DS with a flashcard there is just a black screen
+### Game works fine in the emulator but when playing on a DS with a flashcard there is just a black screen
 DS Game Maker uses `NitroFS`, a method of loading data (sprites, backgrounds, music, etc...) for homebrew games from inside of the compiled .nds file. Unfortunately, many flashcards are designed soley for running pirated games and do not support this homebrew feature. Either you can make your game without using NitroFS (store files in RAM instead), or you can use the [Homebrew Menu](http://devkitpro.org/wiki/Homebrew_Menu) (which supports NitroFS) on your flashcard.
 
-###Crashes/unexpected behaviour due to creating/deleting object instances
+### Crashes/unexpected behaviour due to creating/deleting object instances
 The most common cause of crashes is unsafe usage of the `DSGM_CreateObjectInstance` and `DSGM_DeleteObjectInstance` functions. These functions may relocate the location in memory of object groups and object instances, because of this, **you must assume that all object group pointers and object instance pointers, apart from `me` (which is automatically corrected), are invalid after using either of these functions**.
 
 Unsafe example:
