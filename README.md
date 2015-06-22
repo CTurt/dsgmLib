@@ -114,8 +114,10 @@ You'll see `Collision.nds` is generated which you can run with an emulator like 
 
 Additionally, you can compile all of the examples at once by running `make` on the `examples` directory.
 
-## Converting graphics
+## Converting graphics and models
 Use [dsgmGfx](https://github.com/CTurt/dsgmGfx/releases/) to convert graphics in the `gfx` directory of a project. Copy the resulting binaries to either the `data` directory (to be loaded from RAM), or the `nitrofiles` directory (to be loaded from NitroFS).
+
+Use [DisplayMan](https://gbatemp.net/threads/displayman.291517/) to convert models from `obj` to `bin` format, this is just for static models that you don't want to use the `md2` format for. Using the `md2` format for your models is preferable since they do not need to be converted, and will support animation.
 
 Recompiling the Library
 ---------
