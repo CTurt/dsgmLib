@@ -9,7 +9,7 @@ inline int DSGM_GetBrightness(u8 screen) {
 }
 
 void DSGM_FadeIn(u8 screen, u8 delay) {
-	int brightness = DSGM_GetBrightness(DSGM_BOTTOM);
+	int brightness = DSGM_GetBrightness(screen);
 	if(brightness == -15) {
 		// Fade in from black
 		while(brightness < 0) {
@@ -29,24 +29,20 @@ void DSGM_FadeIn(u8 screen, u8 delay) {
 }
 
 void DSGM_FadeOutToBlack(u8 screen, u8 delay) {
-	int brightness = DSGM_GetBrightness(DSGM_BOTTOM);
-	if(brightness == 0) {
-		while(brightness > -15) {
-			brightness -= 1;
-			DSGM_SetBrightness(screen, brightness);
-			int i; for(i = 0; i < delay; i++) swiWaitForVBlank();
-		}
+	int brightness = DSGM_GetBrightness(screen);
+	while(brightness > -15) {
+		brightness -= 1;
+		DSGM_SetBrightness(screen, brightness);
+		int i; for(i = 0; i < delay; i++) swiWaitForVBlank();
 	}
 }
 
 void DSGM_FadeOutToWhite(u8 screen, u8 delay) {
-	int brightness = DSGM_GetBrightness(DSGM_BOTTOM);
-	if(brightness == 0) {
-		while(brightness < 15) {
-			brightness += 1;
-			DSGM_SetBrightness(screen, brightness);
-			int i; for(i = 0; i < delay; i++) swiWaitForVBlank();
-		}
+	int brightness = DSGM_GetBrightness(screen);
+	while(brightness < 15) {
+		brightness += 1;
+		DSGM_SetBrightness(screen, brightness);
+		int i; for(i = 0; i < delay; i++) swiWaitForVBlank();
 	}
 }
 
